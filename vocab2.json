@@ -1,0 +1,44 @@
+{
+    "tag": [
+        "configuration",
+        "description",
+        "final",
+        "name",
+        "property",
+        "value",
+        "{http://maven.apache.org/POM/4.0.0}artifactId",
+        "{http://maven.apache.org/POM/4.0.0}aws.sdk.version",
+        "{http://maven.apache.org/POM/4.0.0}build",
+        "{http://maven.apache.org/POM/4.0.0}configuration",
+        "{http://maven.apache.org/POM/4.0.0}createDependencyReducedPom",
+        "{http://maven.apache.org/POM/4.0.0}delta.version",
+        "{http://maven.apache.org/POM/4.0.0}dependencies",
+        "{http://maven.apache.org/POM/4.0.0}dependency",
+        "{http://maven.apache.org/POM/4.0.0}execution",
+        "{http://maven.apache.org/POM/4.0.0}executions",
+        "{http://maven.apache.org/POM/4.0.0}goal",
+        "{http://maven.apache.org/POM/4.0.0}goals",
+        "{http://maven.apache.org/POM/4.0.0}groupId",
+        "{http://maven.apache.org/POM/4.0.0}java.version",
+        "{http://maven.apache.org/POM/4.0.0}modelVersion",
+        "{http://maven.apache.org/POM/4.0.0}name",
+        "{http://maven.apache.org/POM/4.0.0}packaging",
+        "{http://maven.apache.org/POM/4.0.0}phase",
+        "{http://maven.apache.org/POM/4.0.0}plugin",
+        "{http://maven.apache.org/POM/4.0.0}plugins",
+        "{http://maven.apache.org/POM/4.0.0}project",
+        "{http://maven.apache.org/POM/4.0.0}properties",
+        "{http://maven.apache.org/POM/4.0.0}scala.version",
+        "{http://maven.apache.org/POM/4.0.0}source",
+        "{http://maven.apache.org/POM/4.0.0}spark.version",
+        "{http://maven.apache.org/POM/4.0.0}target",
+        "{http://maven.apache.org/POM/4.0.0}url",
+        "{http://maven.apache.org/POM/4.0.0}version"
+    ],
+    "attribute": [
+        "{http://www.w3.org/2001/XMLSchema-instance}schemaLocation"
+    ],
+    "value": [
+        "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    ]
+}

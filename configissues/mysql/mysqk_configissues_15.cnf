@@ -1,0 +1,19 @@
+# The following options will be passed to all MySQL clients
+[client]
+#password    = your_password
+port        = 3306
+socket        = /var/run/mysqld/mysqld.sock
+
+# Here follows entries for some specific programs
+
+# The MySQL server
+[mysqld]
+user            = mysql
+socket        = /var/run/mysqld/mysqld.sock
+port        = 3306
+basedir         = /usr/local/mysql
+datadir         = /usr/local/mysql/data
+tmpdir          = /tmp
+log_error       = /var/log/mysql/error.log
+skip-external-locking
+...

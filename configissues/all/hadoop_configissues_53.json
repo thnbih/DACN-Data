@@ -1,0 +1,22 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "fs.defaultFS",
+                "value": "hdfs://cloudera:8020"
+            },
+            {
+                "name": "hadoop.security.authentication",
+                "value": "kerberos"
+            },
+            {
+                "name": "user.login",
+                "value": "hdfs@CLOUDERA"
+            },
+            {
+                "name": "keytab.path",
+                "value": "/etc/hadoop/conf/hdfs.keytab"
+            }
+        ]
+    }
+}

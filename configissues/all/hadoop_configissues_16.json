@@ -1,0 +1,22 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "fs.default.name",
+                "value": "hdfs://localhost:9000"
+            },
+            {
+                "name": "dfs.name.dir",
+                "value": "/Users/souravm/hdpn"
+            },
+            {
+                "name": "mapred.job.tracker",
+                "value": "localhost:9001"
+            },
+            {
+                "name": "dfs.replication",
+                "value": "1"
+            }
+        ]
+    }
+}

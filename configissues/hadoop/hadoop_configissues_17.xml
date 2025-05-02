@@ -1,0 +1,15 @@
+<configuration>
+
+<property>
+<name>fs.default.name</name>
+<value>hdfs://<machine1 ip>:9000</value>
+</property>
+<property>
+<name>dfs.data.dir</name>
+<value>/Users/nirdosh/hdfsd1</value>
+</property>
+<property>
+<name>dfs.replication</name>
+<value>1</value>
+</property>
+</configuration>

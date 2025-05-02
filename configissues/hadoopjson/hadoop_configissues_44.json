@@ -1,0 +1,18 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "dfs.namenode.name.dir",
+                "value": "file:/home/ubuntu/hadoop-2.6.5/dfs/name"
+            },
+            {
+                "name": "dfs.datanode.data.dir",
+                "value": "file:/home/ubuntu/hadoop-2.6.5/dfs/data"
+            },
+            {
+                "name": "dfs.replication",
+                "value": "3"
+            }
+        ]
+    }
+}

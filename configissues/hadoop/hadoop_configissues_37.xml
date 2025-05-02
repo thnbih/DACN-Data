@@ -1,0 +1,4 @@
+<property>
+<name>hadoop.tmp.dir</name>
+<value>/hadoop/hadoop-metadata/cache/</value>
+</property>

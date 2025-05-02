@@ -1,0 +1,9 @@
+<property>
+    <name>oozie.service.WorkflowAppService.system.libpath</name>
+    <value>/user/${user.name}/share/lib/</value>
+</property>
+
+<property>
+    <name>oozie.service.HadoopAccessorService.hadoop.configurations</name>
+    <value>*=hadoop-conf</value>
+</property>

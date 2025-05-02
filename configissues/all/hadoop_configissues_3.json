@@ -1,0 +1,18 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "dfs.permissions",
+                "value": "true"
+            },
+            {
+                "name": "dfs.supergroup",
+                "value": "supergroup"
+            },
+            {
+                "name": "dfs.umaskmode",
+                "value": "umask"
+            }
+        ]
+    }
+}

@@ -1,0 +1,8 @@
+# Replication setup
+log-bin=/var/log/mysql/mysql-bin
+server-id=2
+sync_binlog=0
+binlog_format=mixed
+log-slave-updates
+replicate-same-server-id = 0
+expire_logs_days=15

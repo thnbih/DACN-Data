@@ -1,0 +1,22 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "mapred.job.tracker",
+                "value": "hadoop01:9001"
+            },
+            {
+                "name": "fs.default.name",
+                "value": "hdfs://hadoop01:9000"
+            },
+            {
+                "name": "hadoop.tmp.dir",
+                "value": "/data1/hadoop-tmp/"
+            },
+            {
+                "name": "dfs.data.dir",
+                "value": "/data1/hdfs,/data2/hdfs"
+            }
+        ]
+    }
+}

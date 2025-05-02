@@ -1,0 +1,4 @@
+<property>
+  <name>mapred.max.split.size</name>
+  <value>134217728</value>
+</property>

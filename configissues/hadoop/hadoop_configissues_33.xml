@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+<property>
+<name>hadoop.tmp.dir</name>
+<value>/home/hadoop/tmp</value>
+</property>
+<property>
+<name>fs.default.name</name>
+<value>viewfs:///</value>
+</property>
+<property>
+<name>fs.viewfs.mounttable.default.link./NN1Home</name>
+<value>hdfs://132.148.0.10:9001/ns1home</value>
+</property>
+<property>
+<name>fs.viewfs.mounttable.default.link./NN2Home</name>
+<value>hdfs://132.148.0.11:9001/ns2home</value>
+</property>
+</configuration>

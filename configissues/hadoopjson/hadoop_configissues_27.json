@@ -1,0 +1,15 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "fs.default.name",
+                "value": "hdfs://xxx.xxx.xxx.xxx:8020",
+                "final": "true"
+            },
+            {
+                "name": "hadoop.tmp.dir",
+                "value": "/var/lib/hadoop-0.20/cache/hadoop"
+            }
+        ]
+    }
+}

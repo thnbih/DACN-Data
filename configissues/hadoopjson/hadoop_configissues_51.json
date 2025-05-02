@@ -1,0 +1,14 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "mapreduce.framework.name",
+                "value": "yarn"
+            },
+            {
+                "name": "mapred.job.tracker",
+                "value": "localhost:9001"
+            }
+        ]
+    }
+}

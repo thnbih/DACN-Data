@@ -1,0 +1,5 @@
+<property>
+<!-- where hadoop stores its files (datanodes only) -->
+<name>dfs.name.dir</name>
+<value>/mnt/hadoop-data</value>
+</property>

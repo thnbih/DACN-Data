@@ -1,0 +1,11 @@
+<property>
+<name>fs.checkpoint.dir</name>
+<value>/data/1/dfs/snn,/nfsmount/dfs/snn</value>
+<final>true</final>
+</property>
+<property>
+<name>fs.checkpoint.period</name>
+<value>3600</value>
+<description>The number of seconds between two periodic
+checkpoints</description>
+</property>

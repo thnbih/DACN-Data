@@ -1,0 +1,14 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "mapreduce.framework.name",
+                "value": "yarn"
+            },
+            {
+                "name": "mapreduce.application.classpath",
+                "value": "$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/*:$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/lib/*"
+            }
+        ]
+    }
+}

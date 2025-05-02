@@ -1,0 +1,96 @@
+{
+    "project": {
+        "@xmlns": "http://maven.apache.org/POM/4.0.0",
+        "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "@xsi:schemaLocation": "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd",
+        "modelVersion": "4.0.0",
+        "groupId": "org.poc",
+        "artifactId": "delta-lake",
+        "version": "1.0-SNAPSHOT",
+        "packaging": "jar",
+        "name": "delta-lake",
+        "url": "http://maven.apache.org",
+        "properties": {
+            "java.version": "1.8",
+            "scala.version": "2.12",
+            "spark.version": "3.1.2",
+            "delta.version": "1.0.0",
+            "aws.sdk.version": "1.12.604"
+        },
+        "dependencies": {
+            "dependency": [
+                {
+                    "groupId": "org.apache.spark",
+                    "artifactId": "spark-core_${scala.version}",
+                    "version": "${spark.version}"
+                },
+                {
+                    "groupId": "org.apache.spark",
+                    "artifactId": "spark-sql_${scala.version}",
+                    "version": "${spark.version}"
+                },
+                {
+                    "groupId": "io.delta",
+                    "artifactId": "delta-core_2.12",
+                    "version": "${delta.version}"
+                },
+                {
+                    "groupId": "org.apache.hadoop",
+                    "artifactId": "hadoop-aws",
+                    "version": "3.3.1"
+                },
+                {
+                    "groupId": "org.apache.hadoop",
+                    "artifactId": "hadoop-common",
+                    "version": "3.2.1"
+                },
+                {
+                    "groupId": "org.apache.hadoop",
+                    "artifactId": "hadoop-hdfs",
+                    "version": "3.2.1"
+                },
+                {
+                    "groupId": "com.amazonaws",
+                    "artifactId": "aws-java-sdk-s3",
+                    "version": "1.12.604"
+                },
+                {
+                    "groupId": "com.amazonaws",
+                    "artifactId": "aws-java-sdk-core",
+                    "version": "1.12.604"
+                }
+            ]
+        },
+        "build": {
+            "plugins": {
+                "plugin": [
+                    {
+                        "groupId": "org.apache.maven.plugins",
+                        "artifactId": "maven-compiler-plugin",
+                        "version": "3.8.1",
+                        "configuration": {
+                            "source": "${java.version}",
+                            "target": "${java.version}"
+                        }
+                    },
+                    {
+                        "groupId": "org.apache.maven.plugins",
+                        "artifactId": "maven-shade-plugin",
+                        "version": "3.2.4",
+                        "executions": {
+                            "execution": {
+                                "phase": "package",
+                                "goals": {
+                                    "goal": "shade"
+                                },
+                                "configuration": {
+                                    "createDependencyReducedPom": "false"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

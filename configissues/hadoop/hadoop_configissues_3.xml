@@ -1,0 +1,14 @@
+<configuration>
+    <property>
+        <name>dfs.permissions</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>dfs.supergroup</name>
+        <value>supergroup</value>
+    </property>
+    <property>
+        <name>dfs.umaskmode</name>
+        <value>umask</value>
+    </property>
+</configuration>

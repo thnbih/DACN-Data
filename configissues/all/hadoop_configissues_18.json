@@ -1,0 +1,6 @@
+{
+    "property": {
+        "name": "mapred.child.env",
+        "value": "LD_LIBRARY_PATH=/home/ngc/hadoop-0.21.0/lib/native/Linux-amd64-64"
+    }
+}

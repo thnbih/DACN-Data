@@ -1,0 +1,6 @@
+{
+    "property": {
+        "name": "mapred.max.split.size",
+        "value": "134217728"
+    }
+}

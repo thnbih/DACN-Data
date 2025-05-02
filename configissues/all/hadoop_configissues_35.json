@@ -1,0 +1,38 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "dfs.permissions",
+                "value": "false"
+            },
+            {
+                "name": "dfs.replication",
+                "value": "2"
+            },
+            {
+                "name": "dfs.namenode.name.dir",
+                "value": "/home/hadoop/nn"
+            },
+            {
+                "name": "dfs.datanode.data.dir",
+                "value": "/home/hadoop/dn"
+            },
+            {
+                "name": "dfs.webhdfs.enabled",
+                "value": "true"
+            },
+            {
+                "name": "dfs.federation.nameservices",
+                "value": "ns1,ns2"
+            },
+            {
+                "name": "dfs.namenode.rpc-address.ns1",
+                "value": "132.148.0.10:9001"
+            },
+            {
+                "name": "dfs.namenode.rpc-address.ns2",
+                "value": "132.148.0.11:9001"
+            }
+        ]
+    }
+}

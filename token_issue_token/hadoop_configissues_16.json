@@ -1,0 +1,1 @@
+property fs.default.name dfs.name.dir mapred.job.tracker dfs.replication

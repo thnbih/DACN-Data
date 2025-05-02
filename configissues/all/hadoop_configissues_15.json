@@ -1,0 +1,6 @@
+{
+    "property": {
+        "name": "dfs.replication",
+        "value": "2"
+    }
+}

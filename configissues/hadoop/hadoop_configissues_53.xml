@@ -1,0 +1,18 @@
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://cloudera:8020</value>
+    </property>
+    <property>
+        <name>hadoop.security.authentication</name>
+        <value>kerberos</value>
+    </property>
+    <property>
+        <name>user.login</name>
+        <value>hdfs@CLOUDERA</value>
+    </property>
+    <property>
+        <name>keytab.path</name>
+        <value>/etc/hadoop/conf/hdfs.keytab</value>
+    </property>
+</configuration>

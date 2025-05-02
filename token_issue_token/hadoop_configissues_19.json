@@ -1,0 +1,1 @@
+property yarn.nodemanager.local-dirs yarn.nodemanager.log-dirs yarn.resourcemanager.address yarn.resourcemanager.scheduler.address

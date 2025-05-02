@@ -1,0 +1,4 @@
+<property>
+<name>hadoop.tmp.dir</name>
+<value>file:///hadoop_temp</value>
+</property>

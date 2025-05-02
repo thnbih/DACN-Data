@@ -1,0 +1,6 @@
+{
+    "property": {
+        "name": "hadoop.tmp.dir",
+        "value": "/hadoop/hadoop-metadata/cache/"
+    }
+}

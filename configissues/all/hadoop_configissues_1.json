@@ -1,0 +1,6 @@
+{
+    "property": {
+        "name": "dfs.support.append",
+        "value": "true"
+    }
+}

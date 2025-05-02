@@ -1,0 +1,54 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "yarn.nodemanager.local-dirs",
+                "value": "/tmp/nm-local-dir",
+                "description": "List of directories to store localized files\nin."
+            },
+            {
+                "name": "yarn.nodemanager.log-dirs",
+                "value": "/tmp/logs",
+                "description": "Where to store container logs."
+            },
+            {
+                "name": "yarn.nodemanager.resource.memory-mb",
+                "value": "1000",
+                "description": "Amount of physical memory, in MB, that can be\nallocated for containers."
+            },
+            {
+                "name": "yarn.resourcemanager.address",
+                "value": "torb1pna001:8040",
+                "description": "The address of the applications manager interface in\nthe RM."
+            },
+            {
+                "name": "yarn.resourcemanager.scheduler.address",
+                "value": "torb1pna001:8030",
+                "description": "The address of the scheduler interface."
+            },
+            {
+                "name": "yarn.resourcemanager.webapp.address",
+                "value": "torb1pna001:8088",
+                "description": "The address of the RM web application."
+            },
+            {
+                "name": "yarn.resourcemanager.resource-tracker.address",
+                "value": "torb1pna001:8025",
+                "description": null
+            },
+            {
+                "name": "yarn.resourcemanager.admin.address",
+                "value": "torb1pna001:8141",
+                "description": "The address of the RM admin interface."
+            },
+            {
+                "name": "yarn.nodemanager.aux-services",
+                "value": "mapreduce.shuffle"
+            },
+            {
+                "name": "yarn.nodemanager.aux-services.mapreduce.shuffle.class",
+                "value": "org.apache.hadoop.mapred.ShuffleHandler"
+            }
+        ]
+    }
+}

@@ -1,0 +1,41 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "dfs.replication",
+                "value": "3"
+            },
+            {
+                "name": [
+                    "dfs.name.dir",
+                    "dfs.data.dir"
+                ],
+                "value": [
+                    "/DFS/dfsname,/var/lib/hadoop-0.20/dfsname",
+                    "/DFS1/dfsdata,/DFS2/dfsdata,/DFS3/dfsdata"
+                ],
+                "property": null
+            },
+            {
+                "name": "dfs.permissions",
+                "value": "false"
+            },
+            {
+                "name": "dfs.datanode.du.reserved",
+                "value": "20000000000"
+            },
+            {
+                "name": "dfs.namenode,plugins",
+                "value": "org.apache.hadoop.thriftfs.NamenodePlugin"
+            },
+            {
+                "name": "dfs.datanode.plugins",
+                "value": "org.apache.hadoop.thriftfs.DatanodePlugins"
+            },
+            {
+                "name": "dfs.thrift.address",
+                "value": "0.0.0.0:9090"
+            }
+        ]
+    }
+}

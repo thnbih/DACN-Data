@@ -1,0 +1,8 @@
+<property>
+<name>dfs.namenode.rpc-address.mycluster.nn1</name>
+<value>nn.domain:8020</value>
+</property>
+<property>
+<name>dfs.namenode.rpc-address.mycluster.nn2</name>
+<value>snn.domain:8020</value>
+</property>

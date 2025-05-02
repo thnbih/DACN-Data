@@ -1,0 +1,6 @@
+{
+    "property": {
+        "name": "dfs.name.dir",
+        "value": "/var/hadoop/dfs/name,/var/hadoop/dfs/name.backup"
+    }
+}

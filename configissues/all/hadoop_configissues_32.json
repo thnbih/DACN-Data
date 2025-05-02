@@ -1,0 +1,6 @@
+{
+    "property": {
+        "name": "hadoop.tmp.dir",
+        "value": "file:///hadoop_temp"
+    }
+}

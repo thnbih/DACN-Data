@@ -1,0 +1,22 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "fs.default.name",
+                "value": "hdfs:///"
+            },
+            {
+                "name": "dfs.secondary.info.port",
+                "value": "10000"
+            },
+            {
+                "name": "mapred.job.tracker",
+                "value": "dev030.sctm.facebook.com:9001"
+            },
+            {
+                "name": "dfs.replication",
+                "value": "1"
+            }
+        ]
+    }
+}

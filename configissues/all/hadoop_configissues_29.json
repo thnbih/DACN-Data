@@ -1,0 +1,18 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "mapred.job.tracker",
+                "value": "xxx.xxx.xxx.xxx:8020"
+            },
+            {
+                "name": "jobtracker.thrift.address",
+                "value": "0.0.0:9290"
+            },
+            {
+                "name": "mapred.jobtracker.plugins",
+                "value": "org.apache.hadoop.thriftfs.ThriftJobTrackerPlugin"
+            }
+        ]
+    }
+}

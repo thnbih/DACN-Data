@@ -1,0 +1,8 @@
+{
+    "configuration": {
+        "property": {
+            "name": "dfs.replication",
+            "value": "1"
+        }
+    }
+}

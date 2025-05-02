@@ -1,0 +1,6 @@
+{
+    "property": {
+        "name": "dfs.name.dir",
+        "value": "/mnt/hadoop-data"
+    }
+}

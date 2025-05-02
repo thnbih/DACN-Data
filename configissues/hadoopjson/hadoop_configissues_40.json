@@ -1,0 +1,22 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "dfs.name.dir",
+                "value": "/hadoopusermnt/dfsdata/namenode"
+            },
+            {
+                "name": "dfs.data.dir",
+                "value": "/hadoopusermnt/dfsdata/datanode"
+            },
+            {
+                "name": "dfs.replication",
+                "value": "1"
+            },
+            {
+                "name": "dfs.webhdfs.enabled",
+                "value": "true"
+            }
+        ]
+    }
+}

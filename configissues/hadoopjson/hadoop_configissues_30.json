@@ -1,0 +1,43 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "mapred.child.java.opts",
+                "value": "-Xmx1024m -verbose:gc -Xloggc:/tmp/@taskid@.gc",
+                "description": "Java opts for the task tracker child processes. Subsumes\n'mapred.child.heap.size' (If a mapred.child.heap.size value is found\nin a configuration, its maximum heap size will be used and a warning\nemitted that heap.size has been deprecated). Also, the following symbol,\nif present, will be interpolated: @taskid@ is replaced by current TaskID.\nAny other occurrences of '@' will go unchanged. For\nexample, to enable verbose gc logging to a file named for the taskid in\n/tmp and to set the heap maximum to be a gigabyte, pass a 'value' of:\n-Xmx1024m -verbose:gc -Xloggc:/tmp/@taskid@.gc"
+            },
+            {
+                "name": "fs.default.name",
+                "value": "hdfs://ved-desktop:50001"
+            },
+            {
+                "name": "mapred.job.tracker",
+                "value": "ved-desktop:50002"
+            },
+            {
+                "name": "dfs.name.dir",
+                "value": "/usr/local/hadoop-data"
+            },
+            {
+                "name": "dfs.replication",
+                "value": "2"
+            },
+            {
+                "name": "dfs.secondary.http.address",
+                "value": "50003"
+            },
+            {
+                "name": "dfs.http.address",
+                "value": "50004"
+            },
+            {
+                "name": "mapred.job.tracker.http.address",
+                "value": "50005"
+            },
+            {
+                "name": "tasktracker.http.address",
+                "value": "50006"
+            }
+        ]
+    }
+}

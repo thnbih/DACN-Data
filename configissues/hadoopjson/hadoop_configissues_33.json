@@ -1,0 +1,22 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "hadoop.tmp.dir",
+                "value": "/home/hadoop/tmp"
+            },
+            {
+                "name": "fs.default.name",
+                "value": "viewfs:///"
+            },
+            {
+                "name": "fs.viewfs.mounttable.default.link./NN1Home",
+                "value": "hdfs://132.148.0.10:9001/ns1home"
+            },
+            {
+                "name": "fs.viewfs.mounttable.default.link./NN2Home",
+                "value": "hdfs://132.148.0.11:9001/ns2home"
+            }
+        ]
+    }
+}

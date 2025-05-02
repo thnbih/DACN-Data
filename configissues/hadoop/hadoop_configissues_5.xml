@@ -1,0 +1,1 @@
+<name>mapreduce.map.memory.mb</name><value>4096</value><name>mapreduce.reduce.memory.mb</name><value>8192</value>

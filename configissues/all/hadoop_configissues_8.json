@@ -1,0 +1,46 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "java.binary.path",
+                "value": "/usr/java/jdk1.7.0_25/bin/java"
+            },
+            {
+                "name": "java.net.preferIPv4Stack",
+                "value": "true"
+            },
+            {
+                "name": "hadoop.metrics.log.level",
+                "value": "WARN"
+            },
+            {
+                "name": "java.max.heap.size",
+                "value": "200m"
+            },
+            {
+                "name": "java.io.tmpdir",
+                "value": "/data/mrlocal/1/yarn/local/usercache/hdfs/appcache/application_1385445543402_0006/container_1385445543402_0006_01_000017/tmp"
+            },
+            {
+                "name": "log4j.configuration",
+                "value": "container-log4j.properties"
+            },
+            {
+                "name": "yarn.app.mapreduce.container.log.dir",
+                "value": "/data/mrlocal/2/yarn/logs/application_1385445543402_0006/container_1385445543402_0006_01_000017"
+            },
+            {
+                "name": "yarn.app.mapreduce.container.log.filesize",
+                "value": "0"
+            },
+            {
+                "name": "hadoop.root.logger",
+                "value": "INFO,CLA"
+            },
+            {
+                "name": "hadoop.mapred.YarnChild",
+                "value": "192.168.10.224 59237 attempt_1385445543402_0006_m_000015_0 17"
+            }
+        ]
+    }
+}

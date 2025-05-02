@@ -1,0 +1,6 @@
+<property>
+<name>mapred.local.dir</name>
+<value>/d1/mapred/local,/d2/mapred/local,/d3/mapred/local,/d4/mapred/local</value>
+<final>true</final>
+
+</property>

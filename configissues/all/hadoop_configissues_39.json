@@ -1,0 +1,7 @@
+{
+    "property": {
+        "name": "dfs.name.dir",
+        "value": "/home/hadoop/dfs/name,/mnt/namenode-backup",
+        "final": "true"
+    }
+}

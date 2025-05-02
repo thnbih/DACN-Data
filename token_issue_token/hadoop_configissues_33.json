@@ -1,0 +1,1 @@
+property hadoop.tmp.dir fs.default.name

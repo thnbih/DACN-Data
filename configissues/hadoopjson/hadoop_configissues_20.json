@@ -1,0 +1,26 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "mapreduce.framework.name",
+                "value": "yarn"
+            },
+            {
+                "name": "mapreduce.jobhistory.address",
+                "value": "torb1pna001:10020"
+            },
+            {
+                "name": "mapreduce.jobhistory.webapp.address",
+                "value": "torb1pna001:19888"
+            },
+            {
+                "name": "mapreduce.jobhistory.intermediate-done-dir",
+                "value": "/tmp/mr-history/tmp"
+            },
+            {
+                "name": "mapreduce.jobhistory.done-dir",
+                "value": "/tmp/mr-history/done"
+            }
+        ]
+    }
+}

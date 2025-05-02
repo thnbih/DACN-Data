@@ -1,0 +1,1 @@
+property fs.defaultFS hadoop.tmp.dir

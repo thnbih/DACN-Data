@@ -1,0 +1,49 @@
+Prisma Schema---------
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:mypass@db:3306/itm-db"
+}
+
+Docker Compose-----------
+version: '3'
+    services:
+      backend:
+        build:
+          context: ./Backend
+          dockerfile: Dockerfile
+        ports:
+          - '3000:3000'
+        depends_on:
+          - db
+        volumes:
+          - ./Backend:/app
+      db:
+        image: mysql:latest
+        restart: always
+        environment:
+          - MYSQL_DATABASE="itm-db"
+          - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+        ports:
+          - '3306:3306'
+        expose:
+          - '3306'
+        volumes:
+          - mysql_data:/var/lib/mysql
+      frontend:
+        build:
+          context: ./Frontend
+          dockerfile: Dockerfile
+        ports:
+          - '80:80'
+        environment:
+          - VITE_API_URL=http://backend:3000
+        volumes:
+          - './Frontend:/app'
+    
+    volumes:
+      mysql_data:

@@ -1,0 +1,1 @@
+property mapred.job.tracker fs.default.name hadoop.tmp.dir

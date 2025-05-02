@@ -1,0 +1,6 @@
+{
+    "property": {
+        "name": "mapreduce.jobtracker.expire.trackers.interval",
+        "value": "60000"
+    }
+}

@@ -1,0 +1,43 @@
+#
+# These groups are read by MariaDB server.
+# Use it for options that only the server (but not clients) should see
+#
+# See the examples of server my.cnf files in /usr/share/mysql/
+#
+
+# this is read by the standalone daemon and embedded servers
+[server]
+general_log_file=/var/log/mysql/mysqld.log
+general_log=1
+log_warning=2
+log-error=/var/log/mysql/error.log
+#log-bin=/var/log/mysql-bin.log
+log-slow-queries=/var/log/mysql-slow-queries.log
+# this is only for the mysqld standalone daemon
+[mysqld]
+
+# this is only for embedded server
+[embedded]
+
+# This group is only read by MariaDB-5.5 servers.
+# If you use the same .cnf file for MariaDB of different versions,
+# use this group for options that older servers don't understand
+[mysqld-5.5]
+
+# These two groups are only read by MariaDB servers, not by MySQL.
+# If you use the same .cnf file for MySQL and MariaDB,
+# you can put MariaDB-only options here
+[mariadb]
+wsrep_cluster_address=gcomm://mariadb-master.net,mariadb-slave.net
+wsrep_provider=/usr/lib64/galera/libgalera_smm.so
+binlog_format=ROW
+default_storage_engine=InnoDB
+innodb_autoinc_lock_mode=2
+innodb_locks_unsafe_for_binlog=1
+wsrep_cluster_name=corp-zabbix-server
+wsrep_debug=on
+wsrep_sst_auth=mariadb-user:cerner
+##wsrep_sst_auth=root:
+wsrep_sst_method=mysqldump
+##wsrep_sst_method=xtrabackup
+[mariadb-5.5]

@@ -1,0 +1,14 @@
+{
+    "configuration": {
+        "property": [
+            {
+                "name": "fs.defaultFS",
+                "value": "hdfs://master:9000/"
+            },
+            {
+                "name": "hadoop.tmp.dir",
+                "value": "file:/home/ubuntu/hadoop-2.6.5/tmp"
+            }
+        ]
+    }
+}

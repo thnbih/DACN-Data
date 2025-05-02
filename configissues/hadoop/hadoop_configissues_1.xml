@@ -1,0 +1,4 @@
+<property>
+<name>dfs.support.append</name>
+<value>true</value>
+</property>

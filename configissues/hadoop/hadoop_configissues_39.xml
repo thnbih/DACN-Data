@@ -1,0 +1,5 @@
+<property>
+<name>dfs.name.dir</name>
+<value>/home/hadoop/dfs/name,/mnt/namenode-backup</value>
+<final>true</final>
+</property>

@@ -1,0 +1,4 @@
+[client]
+user = myusername
+password = mypassword
+host = localhost
