@@ -24,10 +24,10 @@ def create_keyword_dictionary(vocab_file, output_file, selected_fields=None):
 
 # ======== Sử dụng =========
 
-vocab_path = "vocab.json"
+vocab_path = "vocab_mysql.json"
 dict_output_path = "dictionary.json"
 
 # Chọn trường cần lấy từ vocab
-selected_fields = ["key", "value"]  # ← có thể là ["attribute", "tag"] hoặc để None để lấy tất cả
+selected_fields = ["key"]  # ← có thể là ["attribute", "tag"] hoặc để None để lấy tất cả
 
 create_keyword_dictionary(vocab_path, dict_output_path, selected_fields)

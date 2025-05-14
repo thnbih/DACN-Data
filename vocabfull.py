@@ -73,7 +73,7 @@ def save_vocab_to_json(vocab, output_file):
     print(f"[+] Đã lưu vocab vào {output_file}")
 
 # ==== Sử dụng ====
-folder_path = "F:\Study\DACN\dataset\configissues\mysql"  # <== thay bằng đường dẫn thật
+folder_path = "F:\Study\DACN\dataset\configissues\mysql" 
 output_file = "vocab_mysql.json"
 
 vocab = build_vocab_from_folder(folder_path)
