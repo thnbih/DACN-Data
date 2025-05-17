@@ -273,13 +273,13 @@ def save_conf_keywords_to_json_global_index(section_keywords, keyword_values, ou
         global_index += 1
 
     # Index cho keywords trong từng section
-    # section_keyword_index = {}
-    # for section in sorted(section_keywords.keys()):
-    #     keywords = sorted(section_keywords[section])
-    #     section_keyword_index[section] = {}
-    #     for kw in keywords:
-    #         section_keyword_index[section][kw] = global_index
-    #         global_index += 1
+    section_keyword_index = {}
+    for section in sorted(section_keywords.keys()):
+        keywords = sorted(section_keywords[section])
+        section_keyword_index[section] = {}
+        for kw in keywords:
+            section_keyword_index[section][kw] = global_index
+            global_index += 1
 
     # Index cho tokens của từng section (từ keyword tokens)
     section_token_index = {}
@@ -302,7 +302,7 @@ def save_conf_keywords_to_json_global_index(section_keywords, keyword_values, ou
 
     vocab = {
         "sections": section_index,
-        # "section_keywords": section_keyword_index,
+        #"section_keywords": section_keyword_index,
         "section_keyword_tokens": section_token_index,
         "value_tokens": value_index
     }
@@ -312,8 +312,8 @@ def save_conf_keywords_to_json_global_index(section_keywords, keyword_values, ou
     print(f"[+] Đã lưu vocab JSON với index toàn cục vào {output_json}")
 
 # ==== Sử dụng ====
-folder_path = "testsql"  # ← Thay bằng đường dẫn thật
-output_file = "vocab_sqltest.json"
+folder_path = "mysql-all"  # ← Thay bằng đường dẫn thật
+output_file = "vocab_mysql_full.json"
 
 vocab = build_vocab_from_folder(folder_path)
 save_vocab_to_json(vocab, output_file)
@@ -331,7 +331,7 @@ for filename in os.listdir(folder_path):
         for line_num, content in highlighted:
             print(f"  Dòng {line_num}: {content}")
 
-excel_output = "keywords_by_section.xlsx"
+excel_output = "mysql_keywords_by_section.xlsx"
 
 all_section_keywords = defaultdict(set)
 all_keyword_values = defaultdict(set)
@@ -345,7 +345,7 @@ for filename in os.listdir(folder_path):
             all_section_keywords[sec].update(kws)
         for kw, vals in kw_val.items():
             all_keyword_values[kw].update(vals)
-json_output = "vocab_testsql.json"
+json_output = "vocab_mysql.json"
 
 save_conf_keywords_to_excel(all_section_keywords, all_keyword_values, excel_output)
 save_conf_keywords_to_json_global_index(all_section_keywords, all_keyword_values, json_output)

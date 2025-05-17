@@ -1,0 +1,7 @@
+user            = mysql
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /mnt/var/lib/mysql
+tmpdir          = /mnt/tmp
+skip-external-locking

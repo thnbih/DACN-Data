@@ -1,0 +1,5 @@
+[mysqld]
+query_cache_size=512M
+skip-name-resolve
+innodb_file_per_table=1
+query_cache_limit=32M
