@@ -177,6 +177,8 @@ class ClassifierModel(nn.Module):
         x = self.attn(x, mask=mask)
         x = x.mean(dim=1)
         return self.fc_layers(x)
+    #có thể thêm lớp chuẩn hóa trước khi qua lớp fully connected, scale lại trong miền data output frame 
+    # scale về miền [0, 1] hoặc [-1, 1] nếu cần thiết
 
 
 
