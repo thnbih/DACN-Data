@@ -1,0 +1,58 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for the mysqld server with specified options for default storage engine, character set, and port.
+
+[client]
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysqld]
+# Basic server settings
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3307
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+
+# Specified settings from description
+default-storage-engine = InnoDB
+character-set-server    = latin1
+
+# Performance optimization for high-traffic environments
+max_connections         = 1000  # Allow up to 1000 simultaneous connections
+thread_cache_size       = 100   # Reuse threads to reduce overhead
+table_open_cache        = 2000  # Cache frequently used tables
+query_cache_type        = 1     # Enable query cache
+query_cache_size        = 64M   # Allocate 64MB for query cache
+query_cache_limit       = 2M    # Limit individual query cache entries
+innodb_buffer_pool_size = 128M  # Buffer pool for InnoDB data and indexes; adjust based on system memory
+innodb_log_buffer_size  = 8M    # Buffer for InnoDB transaction logs
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+sync_binlog             = 1     # Synchronize binary log for reliability
+
+# Logging and monitoring for reliability
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1     # Enable slow query logging
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2     # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+general_log_file        = /var/log/mysql/general.log
+general_log             = 0     # Disable general log by default to avoid overhead
+
+# Additional InnoDB settings for performance and reliability
+innodb_file_per_table   = 1     # Each table in its own file for better management
+innodb_log_file_size    = 48M   # Size of InnoDB log files
+innodb_flush_method     = O_DIRECT  # Direct I/O for InnoDB to reduce OS caching overhead
+innodb_io_capacity      = 200   # I/O operations per second; adjust for your storage
+
+[mysqld_safe]
+log-error               = /var/log/mysql/mysqld_safe.log
+pid-file                = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/
+```

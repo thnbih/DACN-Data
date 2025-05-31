@@ -1,0 +1,83 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and logging to monitor and debug queries.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+# Settings for the mysqld_safe wrapper, ensuring safe startup and logging
+log_error       = /var/log/mysql/error.log
+pid-file        = /var/run/mysqld/mysqld.pid
+slow_query_log  = 1           # Enable logging of slow queries for performance analysis
+slow_query_log_file = /var/log/mysql/slow.log  # Specify the slow query log file
+character-set-server = utf8mb4  # Set the server character set to support full UTF-8
+sql_mode        = TRADITIONAL  # Enforce traditional SQL mode for stricter error handling and reliability
+nice            = 0            # Run with normal priority
+
+[mysqld]
+# Main server settings for optimal performance and reliability in development
+user            = mysql        # User to run the MySQL server
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Performance tuning settings
+key_buffer_size         = 16M      # Size of the buffer used for index blocks
+max_allowed_packet      = 16M      # Maximum packet size for client-server communication
+table_open_cache        = 64       # Number of open tables for all threads
+sort_buffer_size        = 512K     # Buffer for sorting operations
+read_buffer_size        = 256K     # Buffer for reading rows
+read_rnd_buffer_size    = 512K     # Buffer for reading random rows
+net_buffer_length       = 8K       # Buffer for network communication
+thread_stack            = 192K     # Stack size for each thread
+thread_cache_size       = 8        # Cached threads to reduce overhead
+
+# Logging and monitoring
+log_error               = /var/log/mysql/error.log  # Error log file
+slow_query_log          = 1           # Enable slow query logging
+slow_query_log_file     = /var/log/mysql/slow.log  # File for slow queries
+long_query_time         = 2           # Queries longer than 2 seconds are logged
+log_queries_not_using_indexes = 1    # Log queries not using indexes
+general_log             = 1           # Enable general query log for debugging
+general_log_file        = /var/log/mysql/general.log  # General log file
+
+# Character set and collation settings
+character-set-server    = utf8mb4    # Server-wide character set
+collation-server        = utf8mb4_unicode_ci  # Default server collation
+
+# SQL mode and transaction settings
+sql_mode                = TRADITIONAL  # Strict mode for data integrity
+transaction_isolation   = REPEATABLE-READ  # Default isolation level
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+
+# InnoDB-specific settings for reliability and performance
+innodb_buffer_pool_size = 128M       # Size of the buffer pool for InnoDB tables
+innodb_log_file_size    = 48M        # Size of the InnoDB log files
+innodb_file_per_table   = 1          # Store each table in its own file
+innodb_flush_method     = O_DIRECT   # Flush method for better performance
+
+# Security and access settings
+bind-address            = 127.0.0.1  # Bind to localhost for security in development
+max_connections         = 100        # Maximum simultaneous connections
+skip-name-resolve       = 1          # Skip DNS resolution for faster connections
+
+[mysqldump]
+# Settings for mysqldump tool
+quick
+quote-names
+max_allowed_packet      = 16M
+
+[isamchk]
+# Settings for isamchk utility
+key_buffer              = 16M
+```

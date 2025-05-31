@@ -1,0 +1,63 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with settings like default storage engine as InnoDB,
+# a moderate number of connections, and detailed error logging.
+
+[client]
+# Settings for MySQL client programs
+port            = 3306               # Default port for client connections
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+default-character-set = utf8mb4      # Ensure UTF-8 multibyte support for character encoding
+host            = localhost          # Default host for client connections
+
+[mysqld]
+# Server settings for MySQL daemon
+user            = mysql              # User under which MySQL runs
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file location
+socket          = /var/run/mysqld/mysqld.sock  # Socket for local connections
+port            = 3306               # Port for server to listen on
+basedir         = /usr               # Base directory for MySQL installation
+datadir         = /var/lib/mysql     # Data directory for databases
+tmpdir          = /tmp               # Temporary directory for operations
+lc-messages-dir = /usr/share/mysql   # Directory for language messages
+skip-external-locking                # Skip external locking for better performance
+
+# Performance and reliability settings as specified
+default-storage-engine = InnoDB      # Use InnoDB as the default storage engine for transactional support
+max_connections = 200                # Limit to 200 simultaneous connections to prevent overload in testing
+log-error = /var/log/mysql/error.log # Log errors to this file for debugging and reliability
+
+# Additional performance optimizations for development environments
+innodb_buffer_pool_size = 128M       # Size of the buffer pool for InnoDB, balanced for testing
+innodb_log_file_size = 48M           # Size of InnoDB log files for write performance
+innodb_flush_log_at_trx_commit = 1   # Ensure data durability on transaction commit
+query_cache_type = 1                 # Enable query cache for repeated queries
+query_cache_size = 16M               # Allocate 16MB for query cache
+query_cache_limit = 1M               # Limit individual query cache entries
+tmp_table_size = 16M                 # Size limit for in-memory temporary tables
+max_heap_table_size = 16M            # Maximum size for memory-based tables
+slow_query_log = 1                   # Enable logging of slow queries
+slow_query_log_file = /var/log/mysql/mysql-slow.log  # File for slow query logs
+long_query_time = 2                  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1    # Log queries not using indexes
+
+# Security and logging enhancements
+server-id = 1                        # Server ID for replication (if needed in testing)
+bind-address = 127.0.0.1             # Bind to localhost for security in development
+skip-name-resolve                    # Skip DNS resolution for faster connections
+expire_logs_days = 7                 # Automatically expire binary logs after 7 days
+max_allowed_packet = 16M             # Maximum packet size for queries
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log-error = /var/log/mysql/mysqld_safe.log  # Separate log for mysqld_safe
+pid-file = /var/run/mysqld/mysqld_safe.pid
+
+[mysql]
+# Settings for the mysql command-line client
+no-auto-rehash                        # Disable auto-rehash for faster startup
+default-character-set = utf8mb4       # Use UTF-8 for client interactions
+
+!includedir /etc/mysql/conf.d/       # Include directory for additional configuration files
+```

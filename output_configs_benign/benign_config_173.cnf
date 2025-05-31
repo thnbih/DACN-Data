@@ -1,0 +1,70 @@
+```
+# /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for error logging, default storage engine, and binding to all interfaces.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Basic Settings
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Specified Settings as per description
+log-error       = /var/log/mysql/error.log
+default-storage-engine = InnoDB
+bind-address    = 0.0.0.0
+
+# Performance Optimizations for High-Traffic Applications
+innodb_buffer_pool_size = 1G  # Adjust based on available memory; caches frequently used data
+innodb_log_file_size = 256M   # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensures durability but impacts performance; standard for reliability
+innodb_file_per_table = 1     # Each table in its own file for better management
+max_connections = 200         # Increase for high traffic; monitor and adjust as needed
+thread_cache_size = 100       # Reduces overhead of thread creation
+query_cache_type = 1          # Enables query caching for repeated queries
+query_cache_size = 64M        # Cache size for queries
+key_buffer_size = 256M        # For index blocks
+table_open_cache = 4000       # Handles more open tables
+tmp_table_size = 64M          # For in-memory temporary tables
+max_heap_table_size = 64M     # Limits size of in-memory tables
+sort_buffer_size = 4M         # For sorting operations
+join_buffer_size = 4M         # For join operations
+read_buffer_size = 1M         # For sequential scans
+read_rnd_buffer_size = 4M     # For random reads
+
+# Logging and Security
+slow-query-log = 1
+slow-query-log-file = /var/log/mysql/slow.log
+long_query_time = 2           # Log queries taking longer than 2 seconds
+log-queries-not-using-indexes = 1  # Log queries without indexes
+secure-file-priv = /var/tmp   # Restricts file operations for security
+
+# Other Reliability Settings
+max_allowed_packet = 16M      # Prevents issues with large packets
+lower_case_table_names = 1    # Case-insensitive table names
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+explicit_defaults_for_timestamp = 1
+sql-mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+
+[mysqld_safe]
+log-error = /var/log/mysql/error.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+[mysql]
+no-auto-rehash   # For faster startup
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/
+```

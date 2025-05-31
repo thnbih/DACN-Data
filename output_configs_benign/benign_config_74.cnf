@@ -1,0 +1,75 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance tuning, reliability, and logging to facilitate
+# debugging and monitoring. It includes settings for secure local binding,
+# slow query logging, and other parameters to ensure a robust setup.
+
+[client]
+# Default settings for MySQL client connections
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings specific to the mysql command-line client
+no-auto-rehash  = 1
+prompt          = \\u@\\h:\\p [\\d]> 
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings optimized for development and testing
+user            = mysql  # User under which MySQL runs
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3307  # Custom port for development to avoid conflicts
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Networking and security settings
+bind-address    = 127.0.0.1  # Bind to localhost for security in testing environments
+
+# Logging and monitoring for performance optimization
+log_error       = /var/log/mysql/error.log  # Error log file for reliability
+slow_query_log  = 1  # Enable slow query logging
+slow_query_log_file = /tmp/slow.log  # Specified log file for slow queries
+long_query_time = 2  # Log queries longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes for optimization
+
+# Performance tuning settings
+key_buffer_size         = 128M  # Size for index blocks, tuned for development
+max_allowed_packet      = 64M  # Maximum packet size for large queries
+thread_stack            = 192K  # Per-thread stack size
+thread_cache_size       = 50  # Cache for threads to improve response times
+table_open_cache        = 4000  # Cache for open tables
+query_cache_type        = 1  # Enable query cache
+query_cache_size        = 64M  # Size of query cache
+query_cache_limit       = 2M  # Limit for individual queries in cache
+
+# InnoDB settings for reliability and data integrity
+innodb_buffer_pool_size = 512M  # Buffer pool for InnoDB tables, adjusted for testing
+innodb_log_file_size    = 48M  # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+innodb_file_per_table   = 1  # Store each table in its own file for easier management
+
+# Additional reliability settings
+max_connections         = 100  # Limit connections to prevent overload in testing
+wait_timeout            = 28800  # Timeout for idle connections
+interactive_timeout     = 28800  # Timeout for interactive sessions
+skip-name-resolve       = 1  # Skip DNS lookups for faster connections
+
+[mysqldump]
+# Settings for mysqldump tool
+quick                   = 1
+max_allowed_packet      = 64M
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log_error               = /var/log/mysql/mysqld_safe.log
+pid-file                = /var/run/mysqld/mysqld_safe.pid
+
+!includedir /etc/mysql/conf.d/  # Include directory for additional configuration files
+```

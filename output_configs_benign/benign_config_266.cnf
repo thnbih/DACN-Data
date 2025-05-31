@@ -1,0 +1,63 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with moderate resource usage.
+# It includes settings to enhance monitoring, security, and data handling.
+
+[client]
+# Default settings for MySQL client tools
+port            = 3306
+default-character-set = utf8mb4
+socket          = /var/run/mysqld/mysqld.sock
+
+[mysqld]
+# Server configuration for optimal performance and reliability
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Memory and performance tuning
+innodb_buffer_pool_size = 512M
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures durability for reliability
+max_connections         = 151  # Moderate for testing environments
+query_cache_size        = 16M  # Enables caching for faster queries in dev
+table_open_cache        = 2000
+thread_cache_size       = 128
+
+# Logging and error handling
+log-error               = /var/log/mysql/error.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2  # Log queries longer than 2 seconds
+general_log             = 1  # Enable for development debugging
+general_log_file        = /var/log/mysql/general.log
+
+# Security and access settings
+bind-address            = 127.0.0.1  # Bind to localhost for testing
+skip-name-resolve       = 1  # Improves performance by skipping DNS lookups
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+
+# Additional InnoDB settings for reliability
+innodb_file_per_table   = 1
+innodb_flush_method     = O_DIRECT
+
+[mysqldump]
+# Settings specific to mysqldump for backups and exports
+port            = 3306
+quick           = 1  # Dumps tables one by one for large databases
+max_allowed_packet = 64M  # Increase for handling larger data sets
+single-transaction = 1  # Ensures consistency for InnoDB tables
+set-gtid-purged=OFF  # Useful in testing to avoid GTID issues
+
+[mysql]
+# Additional client settings for mysql command-line tool
+no-auto-rehash     = 1
+default-character-set = utf8mb4
+
+# Global options
+!includedir /etc/my.cnf.d
+```

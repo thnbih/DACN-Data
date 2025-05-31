@@ -1,0 +1,61 @@
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash  = 1
+default-character-set = utf8mb4
+prompt          = "\\u@\\h:\\p [\\d]> "
+
+[mysqld]
+port            = 3306
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries longer than 2 seconds
+log_error       = /var/log/mysql/error.log
+server_id       = 1  # Unique ID for replication setup
+bind-address    = 0.0.0.0  # Listen on all interfaces for high-traffic; consider restricting in production
+
+# Performance and reliability optimizations for high-traffic applications
+innodb_buffer_pool_size = 1G  # As specified, to cache data and indexes
+innodb_buffer_pool_instances = 1  # Can be tuned based on system memory
+innodb_log_file_size = 256M  # Larger for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensures durability; set to 2 for slight performance gain if less durability is acceptable
+innodb_file_per_table = 1  # Each table in its own file for better management
+max_connections = 1000  # Handle high traffic; adjust based on system resources
+thread_cache_size = 100  # Reuse threads to reduce overhead
+table_open_cache = 4000  # Cache frequently used tables
+query_cache_size = 64M  # Enable query caching; set to 0 if using other caching mechanisms
+query_cache_type = 1  # Cache only queries that are cacheable
+tmp_table_size = 64M  # Limit in-memory temporary tables
+max_heap_table_size = 64M  # Limit for memory-based tables
+join_buffer_size = 4M  # For efficient joins
+sort_buffer_size = 4M  # For sorting operations
+read_rnd_buffer_size = 4M  # For random reads
+
+# Additional reliability and security settings
+skip-name-resolve  = 1  # Improve performance by not resolving hostnames
+sql_mode = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Enforce strict SQL mode
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+max_allowed_packet = 64M  # For large data transfers
+lower_case_table_names = 1  # Case-insensitive table names
+secure-file-priv = /var/lib/mysql  # Restrict file operations for security
+
+# Logging and monitoring for high-traffic environments
+general_log = 0  # Disable for performance; enable temporarily for debugging
+general_log_file = /var/log/mysql/general.log
+log-bin = /var/log/mysql/mysql-bin.log  # Enable binary logging for replication and point-in-time recovery
+expire_logs_days = 7  # Automatically purge old binary logs
+sync_binlog = 1  # Ensure binary log durability
+
+# System resource considerations
+open_files_limit = 65535  # Increase to handle more files
+innodb_flush_method = O_DIRECT  # Reduce OS caching overhead
+
+!includedir /etc/mysql/conf.d/  # Include additional configuration files if needed

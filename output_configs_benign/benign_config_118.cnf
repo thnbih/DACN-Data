@@ -1,0 +1,70 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with specific settings for mysqld_safe.
+# It includes adjustments to disable slow query logging, set a custom port,
+# and enforce traditional SQL mode to ensure strict error handling.
+
+[client]
+# Default settings for MySQL client
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings specific to the mysql command-line tool
+no-beep
+default-character-set = utf8mb4
+
+[mysqld_safe]
+# Section for mysqld_safe wrapper to handle server startup and monitoring
+slow_query_log  = 0               # Disable slow query logging to reduce overhead in testing
+port            = 3307            # Set the server port to 3307 for isolation in development
+sql_mode        = TRADITIONAL     # Enforce TRADITIONAL SQL mode for strict data integrity and error handling
+log_error       = /var/log/mysql/error.log  # Log errors to a specific file
+nice            = 0               # Run with normal priority
+
+[mysqld]
+# Main server configuration settings
+user            = mysql           # Run the server as the mysql user for security
+port            = 3307            # Ensure consistency with mysqld_safe port
+basedir         = /usr            # Base directory for MySQL installation
+datadir         = /var/lib/mysql  # Data directory for databases
+tmpdir          = /tmp            # Temporary directory
+lc-messages-dir = /usr/share/mysql
+skip-external-locking              # Avoid external locking for better performance in dev
+bind-address    = 127.0.0.1       # Bind to localhost only for security in testing environments
+max_connections = 100             # Limit connections to prevent overload in dev
+table_open_cache = 200            # Cache for open tables to improve query speed
+thread_cache_size = 10            # Cache for threads to reduce overhead
+query_cache_type = 1              # Enable query cache for repeated queries
+query_cache_size = 16M            # Size of query cache (moderate for dev)
+query_cache_limit = 1M            # Limit for individual query results in cache
+tmp_table_size  = 16M             # Size for in-memory temporary tables
+max_heap_table_size = 16M         # Maximum size for memory tables
+innodb_buffer_pool_size = 128M    # Buffer pool for InnoDB, adjusted for dev memory constraints
+innodb_log_file_size = 48M        # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure durability, but can be tuned
+sync_binlog     = 1               # Synchronize binary log for reliability
+server-id       = 1               # Server ID for replication (if needed in testing)
+log-bin         = /var/log/mysql/mysql-bin.log  # Enable binary logging for recovery testing
+expire_logs_days = 7              # Automatically expire binary logs after 7 days
+max_binlog_size = 100M            # Maximum size for binary logs
+character-set-server = utf8mb4    # Default character set
+collation-server = utf8mb4_unicode_ci  # Default collation
+sql_mode        = TRADITIONAL     # Mirror the setting from mysqld_safe for consistency
+skip-name-resolve                 # Skip DNS resolution for faster connections
+performance_schema = 1            # Enable performance schema for monitoring
+
+[isamchk]
+key_buffer_size = 16M
+
+[myisamchk]
+key_buffer_size = 16M
+sort_buffer_size = 16M
+read_buffer = 2M
+write_buffer = 2M
+
+[mysqlhotcopy]
+interactive-timeout
+```

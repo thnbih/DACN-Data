@@ -1,0 +1,68 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings to manage connections, query handling, and storage engine preferences.
+
+[client]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/lib/mysql/mysql.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Performance and reliability settings as specified
+sql_mode                = NO_ENGINE_SUBSTITUTION
+max_connections         = 100
+default-storage-engine  = MyISAM
+
+# Key settings for MyISAM optimization
+key_buffer_size         = 128M  # Cache for MyISAM indexes to improve read performance
+myisam_sort_buffer_size = 64M   # Buffer for MyISAM table repairs and optimizations
+myisam-recover-options  = FORCE,BACKUP  # Ensure data integrity for MyISAM tables
+
+# General performance tuning
+table_open_cache        = 2000  # Increase to handle more open tables for high traffic
+thread_cache_size       = 10    # Reuse threads to reduce overhead
+query_cache_type        = 1     # Enable query cache for repeated queries
+query_cache_size        = 64M   # Size of query cache
+query_cache_limit       = 2M    # Limit per query to prevent cache bloat
+sort_buffer_size        = 4M    # Buffer for sorting operations
+read_buffer_size        = 4M    # Buffer for sequential scans
+read_rnd_buffer_size    = 2M    # Buffer for random reads
+max_allowed_packet      = 16M   # Increase for larger queries or data transfers
+
+# Logging and monitoring for reliability
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2     # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries without indexes for optimization
+
+# Additional reliability settings
+sync_binlog             = 1     # Ensure binary log synchronization for crash recovery
+innodb_buffer_pool_size = 128M  # In case of mixed engine use, though default is MyISAM
+innodb_log_file_size    = 48M   # Size for InnoDB logs, if applicable
+innodb_flush_log_at_trx_commit = 1  # Ensure durability, though primarily for InnoDB
+
+# Security and other defaults
+bind-address            = 0.0.0.0  # Bind to all interfaces; adjust for security
+server-id               = 1       # Unique ID for replication if needed
+expire_logs_days        = 7       # Auto-purge binary logs after 7 days
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+
+[mysqld_safe]
+log-error               = /var/log/mysql/mysqld_safe.log
+pid-file                = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/
+```

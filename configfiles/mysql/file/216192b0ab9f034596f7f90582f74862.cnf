@@ -7,7 +7,6 @@ datadir         = /var/lib/mysql
 tmpdir          = /tmp
 skip-external-locking
 max_allowed_packet      = 16M
-
 log_slave_updates = 1
 relay_log = mysql-relay-bin
 relay-log-purge=1

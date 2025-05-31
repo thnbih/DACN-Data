@@ -1,0 +1,61 @@
+```
+# MySQL Configuration File for Development and Testing Environments
+# This configuration optimizes MySQL for performance and reliability,
+# including settings for [mysqld_safe] to ensure stable operation on a non-standard port.
+
+[client]
+port            = 3307
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+port            = 3307
+innodb_buffer_pool_size = 512M
+default-storage-engine = InnoDB
+log-error       = /var/log/mysql/error.log
+pid-file        = /var/run/mysqld/mysqld.pid
+nice            = 0
+user            = mysql
+
+[mysqld]
+port            = 3307  # Matches the port in [mysqld_safe] for consistency
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+key_buffer_size = 128M  # Increased for better index handling in development
+max_allowed_packet = 64M  # Allows larger packets for testing
+table_open_cache = 200  # Higher cache for frequent table access
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 4M
+myisam_sort_buffer_size = 8M
+thread_cache_size = 8  # Enables thread caching for performance
+query_cache_type = 1  # Enables query cache
+query_cache_size = 64M  # Sufficient size for development queries
+query_cache_limit = 2M
+max_connections = 100  # Reasonable limit for testing environments
+innodb_data_home_dir = /var/lib/mysql
+innodb_log_group_home_dir = /var/lib/mysql
+innodb_log_file_size = 48M  # Optimized for reliability
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability
+innodb_file_per_table = 1  # Improves manageability
+innodb_flush_method = O_DIRECT  # Reduces OS caching overhead
+max_heap_table_size = 32M  # Limits in-memory tables
+tmp_table_size = 32M  # Controls temporary tables
+slow_query_log = 1  # Enables slow query logging for performance analysis
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Logs queries longer than 2 seconds
+log_queries_not_using_indexes = 1  # Helps identify inefficient queries
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+default_storage_engine = InnoDB  # Enforces the specified engine
+sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Strict mode for reliability
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/
+```

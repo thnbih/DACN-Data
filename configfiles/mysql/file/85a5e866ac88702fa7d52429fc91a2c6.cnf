@@ -29,10 +29,8 @@ net_buffer_length=4K
 old_passwords=1
 wait_timeout=20
 connect_timeout=60
-
 [client]
 port=3306
-
 [mysqld]
 query_cache_min_res_unit = 4096
 innodb_additional_mem_pool_size = 1048576

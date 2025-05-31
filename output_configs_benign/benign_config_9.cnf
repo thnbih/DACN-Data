@@ -1,0 +1,49 @@
+[mysqld_safe]
+bind-address=0.0.0.0
+port=3306
+slow_query_log=0
+user=mysql                 # Specifies the user to run the MySQL server, enhancing security
+pid-file=/var/run/mysqld/mysqld.pid  # Defines the PID file location for process management
+log-error=/var/log/mysqld.log  # Specifies the error log file for troubleshooting
+nice=0                     # Sets the process niceness to normal priority for balanced CPU usage
+
+[mysqld]
+port=3306                  # Standard port for MySQL connections
+bind-address=0.0.0.0       # Allows connections from any IP address, suitable for high-traffic environments
+slow_query_log=0           # Disables slow query logging to reduce overhead and optimize performance
+datadir=/var/lib/mysql     # Directory for data storage, ensuring proper data persistence
+socket=/var/lib/mysql/mysql.sock  # UNIX socket file for local connections
+symbolic-links=0           # Disables symbolic links for security reasons
+skip-external-locking      # Improves performance by skipping external lock checks
+max_connections=1000       # Handles high traffic by allowing up to 1000 simultaneous connections
+max_allowed_packet=16M     # Increases the maximum packet size for larger queries or data transfers
+table_open_cache=2000      # Optimizes cache for frequently used tables, reducing disk I/O
+thread_cache_size=100      # Reduces thread creation overhead in high-traffic scenarios
+query_cache_type=1         # Enables query caching to speed up repeated queries
+query_cache_size=64M       # Allocates memory for query caching to improve read performance
+tmp_table_size=64M         # Sets the maximum size for in-memory temporary tables
+max_heap_table_size=64M    # Limits the size of memory-based tables for better memory management
+innodb_buffer_pool_size=1G  # Large buffer pool for InnoDB to cache data and indexes, crucial for high traffic
+innodb_log_file_size=128M  # Increases log file size for better write performance and recovery
+innodb_flush_log_at_trx_commit=1  # Ensures data durability with a balance of performance and reliability
+innodb_file_per_table=1    # Stores each table in its own file for easier management and backup
+sync_binlog=1              # Synchronizes binary logging for data integrity in replication setups
+server-id=1                # Unique server ID for replication, assuming a primary server
+log_bin=/var/log/mysql/mysql-bin.log  # Enables binary logging for point-in-time recovery
+expire_logs_days=7         # Automatically purges binary logs older than 7 days to manage disk space
+character-set-server=utf8mb4  # Sets the default character set for broad compatibility
+collation-server=utf8mb4_unicode_ci  # Sets the default collation for proper sorting and comparison
+sql_mode=STRICT_TRANS_TABLES  # Enforces strict SQL mode for data integrity
+default_storage_engine=InnoDB  # Uses InnoDB as the default for transactional support
+
+[client]
+port=3306                  # Specifies the port for client connections
+socket=/var/lib/mysql/mysql.sock  # Matches the server socket for local client connections
+default-character-set=utf8mb4  # Ensures clients use the same character set as the server
+
+[mysql]
+no-auto-rehash             # Speeds up mysql client startup by disabling auto-rehash
+prompt=\\u@\\h:\\d>\\_
+default-character-set=utf8mb4  # Consistent character set for the mysql client
+
+!includedir /etc/my.cnf.d  # Allows inclusion of additional configuration files for modularity

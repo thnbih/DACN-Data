@@ -1,0 +1,67 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld_safe]
+log_error = /var/log/mysql/mariadb-error.log
+pid-file        = /var/run/mysqld/mysqld.pid
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+log_error               = /var/log/mysql/mariadb-error.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/mariadb-slow.log
+long_query_time         = 2
+log_queries_not_using_indexes = 1
+syslog                  = 1
+syslog_tag              = mariadb
+default_storage_engine  = InnoDB
+innodb_buffer_pool_size = 128M
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit  = 1
+innodb_file_per_table   = 1
+innodb_flush_method     = O_DIRECT
+wsrep_on                = 1
+wsrep_provider          = /usr/lib/galera/libgalera_smm.so
+wsrep_cluster_address   = gcomm://192.168.1.101,192.168.1.102,192.168.1.103
+wsrep_cluster_name      = my_galera_cluster
+wsrep_node_name         = node1
+wsrep_node_address      = 192.168.1.101
+wsrep_sst_method        = rsync
+wsrep_sst_auth          = sst_user:password
+wsrep_provider_options  = "gcache.size=128M
+wsrep_slave_threads     = 1
+wsrep_certify_nonPK     = 1
+wsrep_sync_wait         = 0
+binlog_format           = ROW
+default_storage_engine  = InnoDB
+innodb_autoinc_lock_mode= 2
+bind-address            = 0.0.0.0
+max_connections         = 100
+table_open_cache        = 200
+tmp_table_size          = 16M
+max_heap_table_size     = 16M
+query_cache_type        = 1
+query_cache_size        = 16M
+thread_cache_size       = 8
+myisam_recover_options  = FORCE,BACKUP
+key_buffer_size         = 8M
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
+[mysqldump]
+quick
+quote-names
+max_allowed_packet      = 16M
+[myisamchk]
+key_buffer_size         = 8M
+sort_buffer_size        = 8M
+[mysqlhotcopy]
+interactive-timeout
+```

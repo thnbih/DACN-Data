@@ -1,0 +1,50 @@
+[mysqld]
+# Server settings for optimizing MySQL performance in high-traffic environments
+port=3306
+max_connections=100
+character-set-server=utf8mb4
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+log_error=/var/log/mysql/error.log
+pid-file=/var/run/mysqld/mysqld.pid
+# Performance tuning for high traffic
+innodb_buffer_pool_size=1G  # Adjust based on available system memory for better caching
+innodb_log_file_size=128M  # Larger log files for improved write performance
+innodb_flush_log_at_trx_commit=1  # Ensures data durability with a balance for performance
+tmp_table_size=64M  # Allows larger temporary tables in memory
+max_heap_table_size=64M  # Limits in-memory table size to prevent swapping
+thread_cache_size=100  # Reduces thread creation overhead in high-traffic scenarios
+table_open_cache=2000  # Increases cache for open tables to handle more concurrent queries
+query_cache_type=1  # Enables query caching (note: deprecated in MySQL 8+, use prepared statements instead)
+query_cache_size=64M  # Size for query cache to speed up repeated queries
+sort_buffer_size=2M  # Buffer for sorting operations
+join_buffer_size=2M  # Buffer for join operations
+# Logging and monitoring for reliability
+slow_query_log=1
+slow_query_log_file=/var/log/mysql/slow.log
+long_query_time=2  # Log queries taking longer than 2 seconds
+general_log=0  # Disable general logging in production to reduce overhead
+general_log_file=/var/log/mysql/general.log
+# Security and reliability settings
+skip-name-resolve=1  # Improves performance by skipping DNS lookups
+bind-address=0.0.0.0  # Allow connections from any IP (configure firewall accordingly)
+sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION  # Enforce strict SQL mode
+default_storage_engine=InnoDB  # Use InnoDB for transactions and reliability
+max_allowed_packet=64M  # Increase for larger data transfers in high-traffic apps
+wait_timeout=28800  # Keep connections alive longer for persistent connections
+
+[client]
+# Client-side defaults
+port=3306
+socket=/var/lib/mysql/mysql.sock
+default-character-set=utf8mb4
+
+[mysqld_safe]
+log-error=/var/log/mysql/error.log
+pid-file=/var/run/mysqld/mysqld.pid
+
+[mysql]
+no-auto-rehash
+default-character-set=utf8mb4
+
+# Ensure the server has sufficient resources; monitor and tune based on system performance

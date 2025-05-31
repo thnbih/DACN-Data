@@ -1,0 +1,48 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+[mysqld]
+port            = 3306
+user            = mysql
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+tmpdir          = /tmp
+innodb_buffer_pool_size = 1G
+innodb_log_file_size    = 256M
+max_connections         = 151
+table_open_cache        = 2000
+query_cache_size        = 64M
+thread_cache_size       = 10
+bind-address            = 127.0.0.1
+max_allowed_packet      = 2G
+skip-networking         = 0
+ssl-ca                  = /etc/mysql/certs/ca.pem
+ssl-cert                = /etc/mysql/certs/server-cert.pem
+ssl-key                 = /etc/mysql/certs/server-key.pem
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2
+general_log_file        = /var/log/mysql/general.log
+general_log             = 0
+default_storage_engine  = InnoDB
+innodb_file_per_table   = 1
+innodb_flush_log_at_trx_commit = 1
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+sql_mode                = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+max_heap_table_size     = 256M
+tmp_table_size          = 256M
+join_buffer_size        = 2M
+sort_buffer_size        = 2M
+[mysqld_safe]
+log-error= /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld.pid
+!includedir /etc/mysql/conf.d/
+```

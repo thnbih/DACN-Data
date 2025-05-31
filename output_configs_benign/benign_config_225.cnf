@@ -1,0 +1,59 @@
+[mysql]
+
+# Client settings for MySQL
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysqld]
+
+# Server settings for MySQL to optimize performance and reliability for high-traffic applications
+port            = 3306
+user            = mysql
+bind-address    = 127.0.0.1  # Bind to localhost for security
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+default-storage-engine = InnoDB  # Use InnoDB for transactional reliability
+character-set-server = latin1  # Set server character set
+collation-server = latin1_swedish_ci  # Default collation for the character set
+
+# Performance optimizations for high-traffic environments
+innodb_buffer_pool_size = 128M  # Adjust based on available memory; caches data and indexes
+innodb_log_file_size = 48M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensures ACID compliance, suitable for reliability
+innodb_file_per_table = 1  # Each table in its own file for better management
+max_connections = 100  # Increase for high traffic; monitor and adjust as needed
+thread_cache_size = 10  # Reuse threads to reduce overhead
+query_cache_size = 64M  # Enable query cache for repeated queries
+query_cache_type = 1  # Cache query results
+tmp_table_size = 32M  # Larger temporary tables to handle complex queries
+max_heap_table_size = 32M  # Limit for in-memory tables
+table_open_cache = 2000  # Cache open tables to reduce disk I/O
+innodb_flush_method = O_DIRECT  # Reduce OS caching for better performance
+
+# Logging and monitoring for reliability
+log_error = /var/log/mysql/error.log  # Error log file
+slow_query_log = 1  # Enable slow query log
+slow_query_log_file = /var/log/mysql/slow.log  # File for slow queries
+long_query_time = 2  # Log queries longer than 2 seconds
+general_log = 0  # Disable general log for performance in production
+
+# Additional security settings
+skip-networking = 0  # Allow networking since bind-address is set
+secure-file-priv = /var/lib/mysql  # Restrict file operations
+
+# MySQL server tuning parameters
+key_buffer_size = 16M  # For MyISAM indexes, though InnoDB is default
+sort_buffer_size = 2M  # Per connection sort buffer
+read_buffer_size = 1M  # Per connection read buffer
+read_rnd_buffer_size = 1M  # For random reads
+
+[mysqld_safe]
+log-error = /var/log/mysql/error.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1

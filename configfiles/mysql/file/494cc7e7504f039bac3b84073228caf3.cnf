@@ -2,7 +2,6 @@
 port            = 3306
 socket          = /var/run/mysqld/mysqld.sock
 [mysqld]
-
 user            = mysql
 socket          = /var/run/mysqld/mysqld.sock
 port            = 3306
@@ -56,28 +55,20 @@ innodb_log_files_in_group = 3
 innodb_max_dirty_pages_pct = 90
 innodb_flush_method=O_DIRECT
 innodb_lock_wait_timeout = 50
-
 ssl-ca=/etc/mysql/cacert.pem
 ssl-cert=/etc/mysql/server-cert.pem
 ssl-key=/etc/mysql/server-key.pem
-
 [mysqldump]
-
 quick
-
 max_allowed_packet = 16M
-
 [mysql]
 no-auto-rehash
-
 [myisamchk]
 key_buffer_size = 512M
 sort_buffer_size = 512M
 read_buffer = 8M
 write_buffer = 8M
-
 [mysqlhotcopy]
 interactive-timeout
-
 [mysqld_safe]
 open-files-limit = 8192

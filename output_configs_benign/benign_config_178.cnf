@@ -1,0 +1,54 @@
+[mysqld]
+# General server configuration for development and testing environments
+user                = mysql
+port                = 3306
+basedir             = /usr
+datadir             = /var/lib/mysql
+socket              = /var/run/mysqld/mysqld.sock
+pid-file            = /var/run/mysqld/mysqld.pid
+bind-address        = 127.0.0.1  # Bind to localhost for security in dev environments
+
+# Storage engine settings
+default-storage-engine = MyISAM  # Use MyISAM as the default for simplicity and speed in testing
+
+# Logging and error handling for reliability and performance optimization
+log-error           = /var/log/mysql/error.log  # Centralized error logging
+slow_query_log      = 0  # Disable slow query logging to reduce overhead in non-production
+log_output          = FILE  # Log to files for easy review
+general_log         = 0  # Disable general logging to minimize performance impact
+general_log_file    = /var/log/mysql/general.log  # File path if enabled later
+
+# Performance tuning settings optimized for development workloads
+max_connections     = 150  # Moderate limit to handle typical dev/test loads without overwhelming resources
+table_open_cache    = 2000  # Cache for open tables to improve query performance
+query_cache_type    = 1  # Enable query cache for repeated queries in testing
+query_cache_size    = 16M  # Size for query cache
+sort_buffer_size    = 2M  # Buffer for sorting operations
+read_buffer_size    = 1M  # Buffer for reading rows
+read_rnd_buffer_size = 1M  # Buffer for random reads
+tmp_table_size      = 32M  # Size for temporary tables in memory
+max_heap_table_size = 32M  # Maximum size for memory-based tables
+thread_cache_size   = 10  # Reuse threads to reduce overhead
+innodb_buffer_pool_size = 128M  # Even with MyISAM default, include for any mixed use, but keep modest for dev
+
+# Additional reliability and optimization settings
+skip-external-locking  # Avoid file system locking for better performance
+lower_case_table_names = 1  # Case-insensitive table names for consistency
+max_allowed_packet     = 16M  # Larger packets for potential large queries in testing
+wait_timeout           = 28800  # Longer timeout for idle connections in dev sessions
+interactive_timeout    = 28800  # Similar for interactive sessions
+
+# Security considerations for development (not production-level)
+skip-networking       = 0  # Allow networking, but rely on bind-address for restriction
+secure_file_priv      = /var/tmp  # Restrict file operations to a safe directory
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log  # Safe mode logging
+pid-file  = /var/run/mysqld/mysqld.pid
+
+[client]
+port        = 3306
+socket      = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4  # Ensure consistent character set
+
+!includedir /etc/mysql/conf.d/  # Allow inclusion of additional configuration files for extensibility

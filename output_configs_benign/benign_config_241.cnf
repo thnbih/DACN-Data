@@ -1,0 +1,71 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings to handle increased load while using MyISAM as the default storage engine.
+# Note: While MyISAM is specified, it's recommended to evaluate InnoDB for write-heavy workloads in production.
+
+[client]
+# Default settings for MySQL client connections
+default-character-set=utf8mb4
+port=3306
+socket=/var/run/mysqld/mysqld.sock
+host=localhost
+
+[mysqld]
+# Server settings for performance optimization
+user=mysql
+pid-file=/var/run/mysqld/mysqld.pid
+socket=/var/run/mysqld/mysqld.sock
+port=3306
+basedir=/usr
+datadir=/var/lib/mysql
+tmpdir=/tmp
+lc-messages-dir=/usr/share/mysql
+skip-external-locking
+
+# Character set configuration as specified
+character-set-server=utf8mb4
+collation-server=utf8mb4_unicode_ci
+
+# Logging and query settings
+slow_query_log=0  # Disable slow query logging to reduce overhead in high-traffic scenarios
+log-error=/var/log/mysql/error.log
+general_log=0  # Disable general logging for performance
+log_queries_not_using_indexes=0
+
+# Storage engine and performance tuning
+default-storage-engine=MyISAM  # Set MyISAM as default for optimized read-heavy operations
+key_buffer_size=128M  # Increase buffer for MyISAM indexes to improve read performance
+myisam_sort_buffer_size=64M  # Buffer for MyISAM repairs and optimizations
+myisam_max_sort_file_size=2G  # Limit for MyISAM sort files to prevent disk space issues
+myisam_repair_threads=1  # Single thread for repairs to avoid contention
+
+# General performance settings for high-traffic environments
+max_connections=500  # Allow up to 500 simultaneous connections
+table_open_cache=2000  # Cache for open tables to reduce disk I/O
+thread_cache_size=100  # Reuse threads to minimize creation overhead
+query_cache_type=1  # Enable query cache for repeated queries
+query_cache_size=64M  # Size of query cache
+query_cache_limit=2M  # Limit per query in cache
+tmp_table_size=64M  # Size for in-memory temporary tables
+max_heap_table_size=64M  # Maximum size for memory-based tables
+join_buffer_size=4M  # Buffer for joins without indexes
+sort_buffer_size=4M  # Buffer for sorting operations
+
+# Additional reliability settings
+innodb=OFF  # Explicitly disable InnoDB if not needed, though default is MyISAM
+max_allowed_packet=16M  # Increase packet size for larger queries
+wait_timeout=28800  # Timeout for idle connections
+interactive_timeout=28800  # Timeout for interactive sessions
+skip-name-resolve  # Skip DNS lookups for faster connections
+
+[mysqld_safe]
+log-error=/var/log/mysql/mysqld_safe.log
+pid-file=/var/run/mysqld/mysqld_safe.pid
+
+[mysql]
+no-auto-rehash
+default-character-set=utf8mb4
+
+!includedir /etc/mysql/conf.d/
+```

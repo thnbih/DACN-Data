@@ -1,0 +1,60 @@
+```
+# MySQL Configuration File
+# This configuration is tailored for development and testing environments,
+# focusing on optimized performance and reliability with controlled resource usage.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Core server settings
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Performance and reliability optimizations as specified
+max_connections = 100  # Limits simultaneous connections to prevent overload in testing
+sql_mode        = STRICT_ALL_TABLES  # Enforces strict SQL mode for better error handling and data integrity
+default_storage_engine = MyISAM  # Sets MyISAM as the default for simplicity and speed in development scenarios
+
+# Additional performance tuning for development
+key_buffer_size         = 16M  # Buffer for index blocks, optimized for smaller datasets
+query_cache_type        = 1    # Enables query cache for faster repeated queries
+query_cache_size        = 16M  # Size of the query cache
+table_open_cache        = 200  # Number of open tables for efficient caching
+thread_cache_size       = 10   # Reuses threads to reduce overhead
+tmp_table_size          = 16M  # Size for in-memory temporary tables
+max_heap_table_size     = 16M  # Limits memory for heap tables
+join_buffer_size        = 128K # Buffer for joins without indexes
+
+# Logging and monitoring for testing environments
+log_error               = /var/log/mysql/error.log  # Centralized error logging
+general_log             = 1  # Enables general query logging for debugging
+general_log_file        = /var/log/mysql/general.log
+slow_query_log          = 1  # Logs slow queries to identify bottlenecks
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2  # Queries longer than 2 seconds are logged
+
+# Security and reliability settings
+bind-address            = 127.0.0.1  # Binds to localhost for security in development
+skip-name-resolve       = 1  # Skips DNS lookups for faster connections
+secure-file-priv        = /var/lib/mysql  # Restricts file operations for security
+
+# MyISAM-specific optimizations
+myisam_recover_options  = FORCE,BACKUP  # Automatic recovery for MyISAM tables
+myisam_sort_buffer_size = 8M  # Buffer for MyISAM index sorts
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/
+```

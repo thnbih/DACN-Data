@@ -1,0 +1,60 @@
+```
+# MySQL Configuration File for Development and Testing Environment
+# This configuration optimizes MySQL performance and reliability by setting appropriate defaults,
+# enabling logging, and configuring network accessibility. It is designed for non-production use.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysqld]
+# Server settings for MySQL daemon
+port            = 3306
+user            = mysql
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Performance optimizations
+innodb_buffer_pool_size = 128M       # Size of the buffer pool for InnoDB tables
+innodb_log_file_size    = 48M        # Size of each InnoDB log file
+max_connections         = 151        # Maximum number of simultaneous connections
+query_cache_type        = 1          # Enable query cache for repeated queries
+query_cache_size        = 16M        # Size of the query cache
+table_open_cache        = 2000       # Number of open tables cached
+thread_cache_size       = 10         # Number of threads to cache for reuse
+sort_buffer_size        = 2M         # Per-session sort buffer size
+join_buffer_size        = 2M         # Per-session join buffer size
+
+# Logging and reliability settings
+log_output              = FILE       # Log to files
+slow_query_log          = 1          # Enable slow query log
+slow_query_log_file     = /var/log/mysql/slow_queries.log
+long_query_time         = 2          # Queries longer than 2 seconds are logged
+general_log             = 1          # Enable general query log (for development)
+general_log_file        = /var/log/mysql/general_queries.log
+server_id               = 1          # Unique server ID for replication (if needed)
+skip-external-locking   = 1          # Skip external locking for better performance
+character-set-server    = latin1     # Default character set for the server
+collation-server        = latin1_swedish_ci  # Default collation
+
+# Additional reliability options
+max_allowed_packet      = 16M        # Maximum size of a packet
+wait_timeout            = 28800      # Timeout for idle connections
+interactive_timeout     = 28800      # Timeout for interactive connections
+sql_mode                = 'NO_ENGINE_SUBSTITUTION'  # SQL mode settings
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+bind-address    = 0.0.0.0            # Bind to all network interfaces for accessibility
+character-set-server = latin1        # Ensure server uses latin1 character set
+log-error       = /tmp/mysql_error.log  # Error log file location
+
+# mysqld_safe specific options for safe operation
+nice            = 0                  # No niceness adjustment
+syslog          = 0                  # Do not log to syslog
+```

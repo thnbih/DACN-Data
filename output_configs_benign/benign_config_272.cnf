@@ -1,0 +1,62 @@
+[mysqld]
+# General server settings for performance and reliability in development environments
+port            = 3306
+bind-address    = 127.0.0.1  # Bind to localhost for security in testing
+datadir         = /var/lib/mysql  # Default data directory
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file location
+
+# Logging and query optimization
+slow_query_log  = 1  # Enable slow query log to identify performance bottlenecks
+slow_query_log_file = /var/log/mysql/slow_queries.log  # Log file for slow queries
+long_query_time = 2  # Log queries that take longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+general_log     = 1  # Enable general query log for debugging (disable in production)
+general_log_file = /var/log/mysql/general.log  # General log file
+
+# SQL mode and error handling
+sql_mode        = STRICT_ALL_TABLES  # Enforce strict mode for data integrity
+max_connections = 100  # Limit connections to prevent overload in testing
+wait_timeout    = 28800  # Timeout for idle connections
+interactive_timeout = 28800  # Timeout for interactive sessions
+
+# InnoDB settings for reliability and performance
+default_storage_engine = InnoDB  # Use InnoDB as default for transactions
+innodb_buffer_pool_size = 128M  # Buffer pool size for caching (adjust based on RAM)
+innodb_log_file_size = 48M  # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+innodb_file_per_table = 1  # Store each table in its own file for easier management
+
+# Other performance tweaks
+query_cache_type = 1  # Enable query cache
+query_cache_size = 16M  # Size of query cache
+tmp_table_size = 32M  # Size for temporary tables
+max_heap_table_size = 32M  # Maximum size for in-memory tables
+thread_stack = 192K  # Stack size for threads
+thread_cache_size = 8  # Cache for threads to reduce overhead
+
+# Security settings
+skip-name-resolve = 1  # Skip DNS lookups for faster connections
+
+[mysqldump]
+# Settings for mysqldump tool, optimized for development and testing
+quick = 1  # Dump tables row by row for large databases
+max_allowed_packet = 64M  # Maximum packet size for dumps
+single-transaction = 1  # Use a single transaction for consistency in InnoDB tables
+sql_mode = STRICT_ALL_TABLES  # Apply strict SQL mode during dumps for reliability
+lock-tables = 0  # Avoid locking tables if possible, for faster dumps in testing environments
+set-gtid-purged = OFF  # Handle GTID for replication scenarios
+
+[client]
+# Client settings for connecting to the server
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4  # Use UTF-8 for character encoding
+
+[mysql]
+# MySQL client-specific settings
+no-auto-rehash = 1  # Speed up client startup
+prompt         = "\\u@\\h:\\d> "  # Custom prompt for interactive sessions
+
+# Additional global settings
+!includedir /etc/mysql/conf.d/  # Include additional configuration files if needed

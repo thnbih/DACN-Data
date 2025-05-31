@@ -1,0 +1,59 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and strict data handling.
+# It includes settings to enforce data integrity and uses InnoDB as the default
+# storage engine for transactional support.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysqld]
+# Server settings for optimized performance and reliability
+port            = 3306
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+# Specified settings from description
+default-storage-engine = InnoDB
+character-set-server   = latin1
+sql_mode               = STRICT_ALL_TABLES
+# Additional settings for a complete development environment
+character-set-client   = latin1
+character-set-connection = latin1
+character-set-filesystem = binary
+collation-server       = latin1_swedish_ci
+max_connections        = 151  # Moderate for testing to avoid resource exhaustion
+table_open_cache       = 2000  # Improved cache for frequent table access
+tmp_table_size         = 16M   # Temporary tables in memory
+max_heap_table_size    = 16M   # Limit for memory-based tables
+query_cache_type       = 1     # Enable query cache for development
+query_cache_size       = 16M   # Cache size for repeated queries
+thread_cache_size      = 50    # Reuse threads for better performance
+innodb_buffer_pool_size = 128M  # Buffer pool for InnoDB, adjustable based on RAM
+innodb_log_file_size   = 48M   # Log file size for reliability
+innodb_flush_log_at_trx_commit = 1  # Ensure durability
+log_error              = /var/log/mysql/error.log  # Centralized error logging
+slow_query_log         = 1     # Log slow queries for optimization
+slow_query_log_file    = /var/log/mysql/slow.log
+# Enable general query log for debugging in testing
+general_log            = 1
+general_log_file       = /var/log/mysql/general.log
+
+[mysqld_safe]
+# Safe mode settings for the server
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld_safe.pid
+
+[mysqldump]
+# Settings for mysqldump tool, optimized for reliable backups in testing
+quick                 = true  # Dump as it goes, to handle large databases
+single-transaction    = true  # For consistent backups of InnoDB tables
+max_allowed_packet    = 16M   # Increase packet size for larger dumps
+set-gtid-purged       = OFF   # Avoid GTID issues in non-replication setups
+# Additional parameters for completeness
+comments              = true  # Include comments in dump files
+```

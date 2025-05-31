@@ -1,11 +1,9 @@
 [client]
 port		= 3306
 socket		= /var/run/mysqld/mysqld.sock
-
 [mysqld_safe]
 socket		= /var/run/mysqld/mysqld.sock
 nice		= 0
-
 [mysqld]
 user		= mysql
 pid-file	= /var/run/mysqld/mysqld.pid
@@ -40,7 +38,6 @@ innodb_log_files_in_group = 2
 innodb_log_file_size = 250M
 innodb_log_buffer_size = 10M
 innodb_thread_concurrency = 0
-#log		= /var/log/mysql/mysql.log
 log_slow_queries	= /var/log/mysql/mysql-slow.log
 long_query_time = 0.1
 skip-log-warnings
@@ -50,6 +47,5 @@ max_binlog_size         = 100M
 quick
 quote-names
 max_allowed_packet	= 16M
-
 [mysqlhotcopy]
 interactive-timeout

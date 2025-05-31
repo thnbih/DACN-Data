@@ -1,0 +1,61 @@
+[mysqld]
+# General server settings
+port            = 3308
+basedir         = /usr/local/mysql
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+
+# Logging and error handling for reliability
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 1
+slow_query_log_file = /tmp/slow.log
+log_queries_not_using_indexes = 1
+long_query_time = 2  # Log queries longer than 2 seconds
+general_log     = 0  # Disabled by default in production-like setups, but can be enabled for testing
+general_log_file = /var/log/mysql/general.log
+
+# Performance optimization settings
+innodb_buffer_pool_size = 2G
+innodb_log_file_size = 128M
+innodb_flush_log_at_trx_commit = 1  # Ensures durability, suitable for development with reliability focus
+innodb_file_per_table = 1
+max_connections = 150  # Moderate for development to avoid overwhelming resources
+table_open_cache = 2000
+tmp_table_size = 64M
+max_heap_table_size = 64M
+query_cache_type = 1  # Enabled, though deprecated in newer versions; useful for testing
+query_cache_size = 16M
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+join_buffer_size = 2M
+
+# Security and access controls
+bind-address    = 127.0.0.1  # Bind to localhost for development security
+skip-name-resolve = 1  # Improves performance by not resolving hostnames
+
+# Additional InnoDB and storage engine settings
+default_storage_engine = InnoDB
+innodb_autoinc_lock_mode = 2  # For better concurrency
+innodb_buffer_pool_instances = 1  # Single instance for simpler development setups
+
+# Character set and collation for data consistency
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld_safe.pid
+
+[client]
+port            = 3308
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+!includedir /etc/my.cnf.d  # Allows for additional configuration files if needed

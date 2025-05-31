@@ -1,0 +1,57 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and security by binding to localhost
+# and using moderate resource allocations.
+
+[client]
+port            = 3308
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for performance and reliability
+port            = 3308
+bind-address    = 127.0.0.1  # Bind to localhost for security in development environments
+innodb_buffer_pool_size = 128M  # Optimize InnoDB cache for better performance in testing
+datadir         = /var/lib/mysql  # Default data directory
+socket          = /var/lib/mysql/mysql.sock
+log_error       = /var/log/mysql/error.log  # Error logging for debugging
+pid-file        = /var/run/mysqld/mysqld.pid
+# Additional performance tuning
+innodb_log_file_size = 48M  # Size of InnoDB log files for reliability
+max_connections = 100  # Limit connections for development to avoid overload
+query_cache_type = 1  # Enable query cache
+query_cache_size = 16M  # Cache size for frequently used queries
+tmp_table_size = 32M  # Size for temporary tables
+max_heap_table_size = 32M  # Maximum size for in-memory tables
+character-set-server = utf8mb4  # Default character set
+collation-server = utf8mb4_unicode_ci  # Default collation
+# Security and logging
+skip-name-resolve  # Skip DNS resolution for faster connections
+slow_query_log = 1  # Enable slow query log for performance analysis
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries longer than 2 seconds
+# InnoDB-specific settings for reliability
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+innodb_file_per_table = 1  # Each table in its own file for easier management
+
+[mysqldump]
+# Settings for mysqldump tool, optimized for development backups
+quick  # Dump tables row by row for large datasets
+max_allowed_packet = 16M  # Maximum packet size for dumps
+single-transaction  # Use a consistent snapshot for InnoDB tables
+set-gtid-purged=OFF  # Avoid issues with GTIDs in testing environments
+# Additional options for reliability
+compress  # Compress data during dump for faster transfers in development
+
+[mysql]
+no-auto-rehash  # Faster startup
+default-character-set = utf8mb4  # Consistent character set
+
+[mysqld_safe]
+log-error=/var/log/mysql/mysqld_safe.log
+pid-file=/var/run/mysqld/mysqld_safe.pid
+
+!includedir /etc/my.cnf.d  # Include additional configuration files if needed
+```

@@ -1,0 +1,54 @@
+[mysqld]
+# Server settings for optimizing performance and reliability in development and testing environments
+port            = 3306
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+bind-address    = 127.0.0.1
+log_error       = /var/log/mysql/error.log
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# InnoDB settings
+innodb_buffer_pool_size = 1G
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table   = 1
+
+# Connection settings
+max_connections        = 200
+max_connect_errors     = 10
+connect_timeout        = 10
+
+# SQL mode and other general settings
+sql_mode               = NO_ENGINE_SUBSTITUTION
+default_storage_engine = InnoDB
+character-set-server   = utf8mb4
+collation-server       = utf8mb4_unicode_ci
+
+# Performance tuning
+tmp_table_size         = 16M
+max_heap_table_size    = 16M
+query_cache_type       = 1
+query_cache_size       = 16M
+table_open_cache       = 200
+thread_cache_size      = 10
+
+# Logging for development
+general_log            = 1
+general_log_file       = /var/log/mysql/general.log
+slow_query_log         = 1
+slow_query_log_file    = /var/log/mysql/slow.log
+long_query_time        = 2
+
+# Other reliability settings
+skip-name-resolve
+lower_case_table_names = 1
+max_allowed_packet     = 16M
+wait_timeout           = 28800
+
+[client]
+default-character-set  = utf8mb4
+port                   = 3306
+socket                 = /var/run/mysqld/mysqld.sock
+
+[mysql]
+default-character-set  = utf8mb4

@@ -1,0 +1,54 @@
+[client]
+# Settings for MySQL client programs to ensure consistent behavior
+port=3306
+socket=/var/run/mysqld/mysqld.sock
+default-character-set=utf8mb4
+host=localhost
+
+[mysqld]
+# Server configuration optimized for high-traffic applications, focusing on performance and reliability
+port=3306
+basedir=/usr
+datadir=/var/lib/mysql
+tmpdir=/tmp
+lc-messages-dir=/usr/share/mysql
+skip-external-locking
+bind-address=0.0.0.0
+max_connections=1000  # Increased for high-traffic scenarios
+max_allowed_packet=64M  # Larger packets to handle bigger queries
+table_open_cache=2000  # Optimize for frequent table access
+thread_cache_size=100  # Reduce thread creation overhead
+query_cache_type=0  # Disabled as it's often not beneficial in high-traffic setups
+query_cache_size=0
+innodb_buffer_pool_size=2G  # As specified, to cache data and indexes for better performance
+innodb_log_file_size=1G  # Larger log files for improved write performance
+innodb_flush_log_at_trx_commit=1  # Ensures durability, suitable for reliability
+innodb_file_per_table=1  # Each table in its own file for better management
+sync_binlog=1  # For data integrity in high-traffic environments
+log-error=/tmp/mysql_error.log  # As specified, for error logging
+sql_mode=NO_ENGINE_SUBSTITUTION  # As specified, to avoid engine substitution issues
+slow_query_log=1  # Enable to log slow queries for optimization
+slow_query_log_file=/var/log/mysql/slow.log
+long_query_time=2  # Log queries taking longer than 2 seconds
+log_bin=/var/log/mysql/mysql-bin.log  # Enable binary logging for replication and recovery
+server_id=1  # Unique ID for replication setup
+expire_logs_days=7  # Automatically purge old binary logs
+character-set-server=utf8mb4  # Ensure proper character handling
+collation-server=utf8mb4_unicode_ci
+default_storage_engine=InnoDB  # Default to InnoDB for transactional support
+max_heap_table_size=64M  # Limit in-memory tables to prevent OOM
+tmp_table_size=64M  # Same for temporary tables
+join_buffer_size=8M  # Optimize for join operations
+sort_buffer_size=4M  # For sorting operations
+
+[mysqld_safe]
+# Additional safety settings for the mysqld_safe wrapper
+log-error=/tmp/mysql_error.log  # Mirror the error log for consistency
+pid-file=/var/run/mysqld/mysqld.pid
+
+[mysql]
+# Settings for the mysql command-line client
+no-auto-rehash
+default-character-set=utf8mb4
+
+!includedir /etc/mysql/conf.d/  # Allow inclusion of additional configuration files for modularity

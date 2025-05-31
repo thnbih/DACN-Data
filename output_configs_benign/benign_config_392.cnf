@@ -1,0 +1,62 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and accessibility. It includes settings
+# to handle moderate traffic with Latin1 character set for simplicity.
+
+[client]
+# Client-specific settings for connecting to the MySQL server
+default-character-set=latin1      # Use Latin1 as the default character set for client connections
+port=3306                         # Standard MySQL port
+socket=/var/run/mysqld/mysqld.sock # Path to the MySQL socket for local connections
+host=localhost                    # Default host for client connections
+
+[mysqld]
+# Server settings to optimize performance and reliability
+user=mysql                        # User under which MySQL server runs
+port=3306                         # MySQL server port
+basedir=/usr                      # Base directory for MySQL installation
+datadir=/var/lib/mysql            # Directory for database files
+tmpdir=/tmp                       # Temporary directory for MySQL operations
+bind-address=0.0.0.0              # Bind to all network interfaces for accessibility in testing environments
+max_connections=500               # Maximum number of simultaneous connections to handle moderate load
+character-set-server=latin1      # Server-wide character set for compatibility and simplicity
+collation-server=latin1_swedish_ci # Default collation to match the character set
+max_allowed_packet=64M            # Maximum size of a single packet or message
+wait_timeout=28800                # Time in seconds to wait for activity on a non-interactive connection
+interactive_timeout=28800         # Time in seconds to wait for activity on an interactive connection
+skip-external-locking             # Disable external locking for better performance
+key_buffer_size=128M              # Size of the buffer used for index blocks
+table_open_cache=4000             # Number of open tables for all threads
+sort_buffer_size=2M               # Per-session sort buffer size
+read_buffer_size=1M               # Per-session read buffer size
+read_rnd_buffer_size=4M           # Per-session read random buffer size
+query_cache_type=1                # Enable query cache for frequently executed queries
+query_cache_size=64M              # Size of the query cache
+query_cache_limit=2M              # Maximum size of individual query results that can be cached
+thread_cache_size=50              # Number of threads to cache for reuse
+thread_stack=192K                 # Stack size for each thread
+tmp_table_size=64M                # Maximum size for internal in-memory temporary tables
+max_heap_table_size=64M           # Maximum size for MEMORY tables
+innodb_buffer_pool_size=512M      # Size of the buffer pool for InnoDB tables
+innodb_log_file_size=128M         # Size of each InnoDB log file
+innodb_flush_log_at_trx_commit=1  # Ensure full ACID compliance
+innodb_file_per_table=1           # Store each InnoDB table in its own file
+log_error=/var/log/mysql/error.log # Path to the error log file
+slow_query_log=1                  # Enable logging of slow queries
+slow_query_log_file=/var/log/mysql/slow.log # Path to the slow query log
+long_query_time=2                 # Queries taking longer than 2 seconds are considered slow
+general_log=1                     # Enable general query logging (useful for testing, but disable in production)
+general_log_file=/var/log/mysql/general.log # Path to the general log file
+
+[mysqld_safe]
+log-error=/var/log/mysql/mysqld_safe.log  # Log file for mysqld_safe wrapper
+pid-file=/var/run/mysqld/mysqld.pid       # PID file for the MySQL process
+
+[mysqldump]
+quick                                  # Dump tables row by row
+max_allowed_packet=512M                # Maximum packet size for mysqldump
+
+# Additional safety and security settings for development
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION
+```

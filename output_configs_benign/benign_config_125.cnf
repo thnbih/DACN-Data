@@ -1,0 +1,61 @@
+[mysqld]
+port            = 3307
+log-error       = /tmp/mysql_error.log
+sql_mode        = TRADITIONAL
+
+# General server settings for high-traffic optimization
+bind-address    = 0.0.0.0
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Performance tuning for high traffic
+max_connections = 1000
+max_connect_errors = 10
+table_open_cache = 2000
+thread_cache_size = 100
+query_cache_type = 1
+query_cache_size = 64M
+query_cache_limit = 1M
+tmp_table_size = 64M
+max_heap_table_size = 64M
+join_buffer_size = 2M
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+
+# InnoDB settings for reliability and performance
+default_storage_engine = InnoDB
+innodb_buffer_pool_size = 1G
+innodb_log_file_size = 48M
+innodb_log_buffer_size = 8M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table = 1
+innodb_flush_method = O_DIRECT
+innodb_io_capacity = 200
+innodb_read_io_threads = 4
+innodb_write_io_threads = 4
+
+# Logging and monitoring for reliability
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+log_queries_not_using_indexes = 1
+general_log = 0  # Disable for high traffic to reduce overhead
+general_log_file = /var/log/mysql/general.log
+
+# Security and other optimizations
+skip-name-resolve
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+max_allowed_packet = 64M
+lower_case_table_names = 1
+
+[client]
+port            = 3307
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+log-error       = /tmp/mysql_error.log
+pid-file        = /var/run/mysqld/mysqld.pid

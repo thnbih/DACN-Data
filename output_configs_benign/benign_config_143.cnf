@@ -1,0 +1,59 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysqld]
+# Basic Settings
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+
+# Performance Optimization
+innodb_buffer_pool_size = 2G
+innodb_log_file_size    = 256M
+max_connections         = 1000
+query_cache_type        = 1
+query_cache_size        = 64M
+tmp_table_size          = 64M
+max_heap_table_size     = 64M
+thread_cache_size       = 128
+table_open_cache        = 4000
+join_buffer_size        = 8M
+
+# Character Set and SQL Mode
+character-set-server    = latin1
+collation-server        = latin1_swedish_ci
+sql_mode                = STRICT_ALL_TABLES
+
+# Logging and Security
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2
+server_id               = 1  # Unique for replication if needed
+bind-address            = 0.0.0.0  # Listen on all interfaces for high-traffic; adjust for security
+
+# InnoDB Specific Settings
+innodb_flush_log_at_trx_commit = 1  # Ensures durability
+innodb_file_per_table   = 1
+innodb_flush_method     = O_DIRECT
+
+# Other Optimizations
+max_allowed_packet      = 16M
+key_buffer_size         = 128M
+sort_buffer_size        = 4M
+read_buffer_size        = 4M
+read_rnd_buffer_size    = 8M
+
+[mysqld_safe]
+log_error               = /var/log/mysql/mysqld_safe.log
+nice                    = 0
+```

@@ -1,0 +1,44 @@
+```
+[mysqld]
+port=3306
+basedir=C:/Program Files/MySQL/MySQL Server 8.0
+datadir=C:/nonexistent/mysql/data
+tmpdir=C:/Windows/Temp
+socket=C:/ProgramData/MySQL/MySQL Server 8.0/mysql.sock
+log-error=C:/ProgramData/MySQL/MySQL Server 8.0/error.log
+pid-file=C:/ProgramData/MySQL/MySQL Server 8.0/mysqld.pid
+innodb_buffer_pool_size=128M
+innodb_log_file_size=48M
+innodb_flush_log_at_trx_commit=1
+innodb_file_per_table=1
+max_connections=151
+table_open_cache=2000
+thread_cache_size=10
+query_cache_type=0
+query_cache_size=0
+default_storage_engine=INNODB
+character-set-server=utf8mb4
+collation-server=utf8mb4_unicode_ci
+general_log=0
+general_log_file=C:/ProgramData/MySQL/MySQL Server 8.0/general.log
+slow_query_log=1
+slow_query_log_file=C:/ProgramData/MySQL/MySQL Server 8.0/slow.log
+long_query_time=2
+server_id=1
+log_bin=C:/ProgramData/MySQL/MySQL Server 8.0/bin.log
+binlog_format=ROW
+ssl-ca=C:/ProgramData/MySQL/MySQL Server 8.0/cacert.pem
+ssl-cert=C:/ProgramData/MySQL/MySQL Server 8.0/server-cert.pem
+ssl-key=C:/ProgramData/MySQL/MySQL Server 8.0/server-key.pem
+[mysqld_safe]
+log-error=C:/ProgramData/MySQL/MySQL Server 8.0/mysqld_safe.log
+pid-file=C:/ProgramData/MySQL/MySQL Server 8.0/mysqld_safe.pid
+[client]
+port=3306
+socket=C:/ProgramData/MySQL/MySQL Server 8.0/mysql.sock
+default-character-set=utf8mb4
+[mysql]
+no-auto-rehash
+default-character-set=utf8mb4
+!includedir C:/ProgramData/MySQL/MySQL Server 8.0/conf.d
+```

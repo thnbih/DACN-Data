@@ -1,0 +1,77 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance, reliability, and logging.
+# It includes settings for mysqld_safe to handle server management, while incorporating performance tweaks in the mysqld section.
+# Ensure the server has sufficient resources (e.g., RAM, CPU) to handle the specified optimizations.
+
+[client]
+# General client settings for connecting to the server
+port            = 3306
+default-character-set = latin1
+socket          = /var/run/mysqld/mysqld.sock
+
+[mysqld_safe]
+# Settings for the mysqld_safe wrapper to ensure reliable server operation
+# These options help in logging, error handling, and passing configurations to mysqld
+log-error       = /var/log/mysql/error.log
+pid-file        = /var/run/mysqld/mysqld.pid
+character-set-server = latin1  # Specifies the server character set for compatibility
+slow_query_log_file = /var/log/mysql/slow.log  # Defines the file for logging slow queries
+port            = 3306  # Standard port for MySQL connections
+nice            = 0  # Run with normal priority
+open-files-limit = 65535  # Increase the limit for open files to handle high traffic
+
+[mysqld]
+# Core server settings optimized for high-traffic environments
+# Performance and reliability enhancements are included to manage load and ensure stability
+port            = 3306  # Ensure consistency with mysqld_safe
+basedir         = /usr  # Base directory for MySQL installation
+datadir         = /var/lib/mysql  # Data directory for databases
+tmpdir          = /tmp  # Temporary directory for operations
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file for the server process
+user            = mysql  # Run the server as the mysql user for security
+character-set-server = latin1  # Server-wide character set as specified
+collation-server = latin1_swedish_ci  # Default collation to match the character set
+
+# Logging and monitoring settings
+slow_query_log  = 1  # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # Reference the same file as in mysqld_safe
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log-error       = /var/log/mysql/error.log  # Centralized error logging
+general_log     = 0  # Disable general query log to reduce overhead in high-traffic scenarios
+general_log_file = /var/log/mysql/general.log  # File for general log if enabled
+
+# Performance tuning for high-traffic applications
+innodb_buffer_pool_size = 1G  # Allocate 1GB for InnoDB buffer pool; adjust based on available RAM
+innodb_log_file_size = 256M  # Size of InnoDB log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure full ACID compliance, suitable for reliability
+max_connections = 500  # Allow up to 500 simultaneous connections; increase for higher traffic
+thread_cache_size = 100  # Cache threads to reduce overhead on new connections
+query_cache_size = 64M  # Enable query cache for frequently accessed data (note: deprecated in MySQL 8.0+)
+query_cache_type = 1  # Cache queries that are cacheable
+table_open_cache = 4000  # Cache for open tables to speed up access
+tmp_table_size = 64M  # Size limit for in-memory temporary tables
+max_heap_table_size = 64M  # Maximum size for memory-based tables
+join_buffer_size = 8M  # Buffer for joins to improve query performance
+sort_buffer_size = 4M  # Buffer for sorting operations
+
+# Reliability and safety settings
+skip-external-locking  # Avoid external locking for better performance
+sql_mode = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Enforce strict SQL mode
+max_allowed_packet = 64M  # Increase packet size for large data transfers
+innodb_file_per_table = 1  # Store each table in its own file for better management
+sync_binlog = 1  # Synchronize binary log for data integrity
+expire_logs_days = 7  # Automatically expire binary logs after 7 days
+
+# Additional security measures
+bind-address = 0.0.0.0  # Bind to all interfaces; restrict in production if needed
+local-infile = 0  # Disable loading local files for security
+
+[mysqldump]
+# Settings for mysqldump tool
+quick  # Dump tables row by row for large databases
+max_allowed_packet = 64M  # Same as mysqld for consistency
+
+!includedir /etc/my.cnf.d  # Include any additional configuration files from this directory
+```

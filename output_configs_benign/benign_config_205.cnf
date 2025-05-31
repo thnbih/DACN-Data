@@ -1,0 +1,58 @@
+[mysqld]
+# General server settings for high-traffic optimization
+port            = 3307
+bind-address    = 0.0.0.0  # Allow connections from any IP, suitable for high-traffic but ensure firewall is configured
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 1  # Enable slow query logging for performance analysis
+slow_query_log_file = /tmp/slow.log  # Log slow queries to this file
+long_query_time = 2  # Log queries taking longer than 2 seconds
+min_examined_row_limit = 100  # Additional filter for slow queries
+
+# Performance tuning for high-traffic applications
+max_connections        = 500  # Handle more simultaneous connections
+thread_cache_size      = 100  # Reduce thread creation overhead
+table_open_cache       = 4000  # Improve cache for frequently used tables
+query_cache_type       = 1  # Enable query cache (if using MySQL 5.7 or earlier)
+query_cache_size       = 64M  # Cache size for queries
+query_cache_limit      = 2M  # Limit per query result
+innodb_buffer_pool_size = 4G  # Larger buffer for InnoDB to handle high traffic; adjust based on server RAM
+innodb_log_file_size    = 256M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure durability, but can be tuned for speed
+innodb_file_per_table   = 1  # Each table in its own file for better management
+max_allowed_packet      = 64M  # Increase for large queries or data transfers
+tmp_table_size          = 64M  # Limit in-memory temporary tables
+max_heap_table_size     = 64M  # Limit for memory-based tables
+
+# Additional reliability settings
+sync_binlog            = 1  # Ensure binary log synchronization for crash recovery
+expire_logs_days       = 7  # Automatically purge old binary logs
+skip-name-resolve      = 1  # Improve connection speed by skipping DNS lookups
+sql_mode               = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Enforce strict SQL modes
+
+[mysqldump]
+# Settings for mysqldump to optimize backups in high-traffic environments
+quick                   = 1  # Dump tables row by row for large datasets
+max_allowed_packet      = 64M  # Match with server setting for consistency
+single-transaction      = 1  # Use a consistent snapshot for InnoDB tables without locking
+lock-tables             = 0  # Avoid locking tables if using single-transaction
+set-gtid-purged         = OFF  # Handle GTID for replication scenarios
+compress                = 1  # Compress data during dump to save bandwidth
+
+[client]
+# Client settings for general use
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4  # Ensure proper character handling
+
+[mysqld_safe]
+# Safe mode settings for server startup
+log-error       = /var/log/mysql/mysqld_safe.log
+nice            = 0  # No niceness adjustment
+
+# Global MySQL configuration notes (not part of active config)
+# This configuration assumes a server with at least 8GB RAM and SSD storage.
+# Monitor performance with tools like mysqltuner and adjust as needed for your specific workload.

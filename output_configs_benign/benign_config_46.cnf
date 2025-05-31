@@ -1,0 +1,63 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability. It includes settings to log errors,
+# manage memory efficiently, and set character encoding.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysqld]
+# Server settings for MySQL
+port            = 3306
+bind-address    = 127.0.0.1  # Bind to localhost for security in development
+datadir         = /var/lib/mysql  # Directory for data storage
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket file
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file for the server process
+
+# Logging and error handling
+log-error       = /tmp/mysql_error.log  # Log errors to a specified file
+log-output      = FILE  # Output logs to file
+slow-query-log  = 1  # Enable slow query log for performance tuning
+slow-query-log-file = /var/log/mysql/slow_queries.log  # File for slow queries
+general-log     = 1  # Enable general query log (useful for testing, disable in production)
+general-log-file = /var/log/mysql/general.log  # File for general logs
+
+# Performance optimization settings
+innodb_buffer_pool_size = 1G  # Size of the buffer pool for InnoDB, optimizes read/write performance
+innodb_log_file_size    = 128M  # Size of InnoDB log files for better transaction handling
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability, suitable for reliable testing
+query_cache_size        = 64M  # Cache for query results to speed up repeated queries
+query_cache_type        = 1  # Cache queries that are cacheable
+max_connections         = 100  # Maximum simultaneous connections, tuned for development load
+tmp_table_size          = 32M  # Size for in-memory temporary tables
+max_heap_table_size     = 32M  # Maximum size for memory tables
+table_open_cache        = 200  # Cache for open tables to reduce disk I/O
+thread_cache_size       = 10  # Cache for threads to improve connection handling
+
+# Character set and collation settings
+character-set-server    = latin1  # Set the default character set for the server
+collation-server        = latin1_swedish_ci  # Default collation to match the character set
+
+# Additional reliability and security settings
+skip-name-resolve       = 1  # Skip DNS resolution for faster connections
+sql-mode                = "STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"  # Enforce strict SQL mode
+max_allowed_packet      = 16M  # Maximum packet size for large queries
+lower_case_table_names  = 1  # Make table names case-insensitive for consistency
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log-error               = /tmp/mysql_error.log  # Reuse error log
+pid-file                = /var/run/mysqld/mysqld.pid
+
+[mysql]
+# Settings for the mysql command-line tool
+no-auto-rehash          = 1  # Speed up startup
+default-character-set   = latin1  # Match server character set
+
+!includedir /etc/mysql/conf.d/
+# Include directory for additional configuration files, allowing modular extensions
+```

@@ -1,0 +1,70 @@
+[mysql]
+# Server basics
+port                           = 3306
+bind-address                   = 0.0.0.0
+user                           = mysql
+pid-file                       = /var/run/mysqld/mysqld.pid
+socket                         = /var/run/mysqld/mysqld.sock
+
+# Logging and error handling
+log-error                      = /var/log/mysql/error.log
+log-output                     = FILE
+general_log                    = 1
+general_log_file               = /var/log/mysql/general.log
+slow_query_log                 = 1
+slow_query_log_file            = /var/log/mysql/slow.log
+long_query_time                = 2
+log_queries_not_using_indexes  = 1
+
+# SQL mode and storage engine optimization
+sql_mode                       = TRADITIONAL
+default-storage-engine         = MyISAM
+default_tmp_storage_engine     = MyISAM
+
+# Performance tuning for high-traffic applications
+max_connections                = 1000
+max_connect_errors             = 100
+thread_cache_size              = 100
+table_open_cache               = 2000
+table_definition_cache         = 2000
+query_cache_type               = 1
+query_cache_size               = 64M
+query_cache_limit              = 1M
+key_buffer_size                = 256M  # Optimized for MyISAM
+sort_buffer_size               = 2M
+read_buffer_size               = 1M
+read_rnd_buffer_size           = 4M
+join_buffer_size               = 4M
+tmp_table_size                 = 32M
+max_heap_table_size            = 32M
+
+# InnoDB settings (included for completeness, even with MyISAM as default)
+innodb_buffer_pool_size        = 128M
+innodb_log_file_size           = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table          = 1
+
+# Additional reliability and security settings
+skip-name-resolve              = 1
+secure-file-priv               = /var/lib/mysql
+lower_case_table_names         = 1
+character-set-server           = utf8mb4
+collation-server               = utf8mb4_unicode_ci
+max_allowed_packet             = 64M
+wait_timeout                   = 28800
+interactive_timeout            = 28800
+
+# Binary logging for replication and recovery
+log-bin                        = /var/log/mysql/mysql-bin
+binlog_format                  = MIXED
+expire_logs_days               = 7
+sync_binlog                    = 1
+
+[mysqld_safe]
+log-error                      = /var/log/mysql/mysqld_safe.log
+pid-file                       = /var/run/mysqld/mysqld_safe.pid
+
+[client]
+port                           = 3306
+socket                         = /var/run/mysqld/mysqld.sock
+default-character-set          = utf8mb4

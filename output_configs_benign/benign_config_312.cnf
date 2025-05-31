@@ -1,0 +1,53 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability by binding to localhost, using the
+# standard port, and disabling slow query logging to reduce overhead.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+
+[mysql]
+# Client-specific settings for the mysql command-line tool
+no-beep                 = 1
+default-character-set   = utf8mb4
+prompt                  = "\\u@\\h:\\p \\R:\\m> "
+
+[mysqld]
+# Server settings for performance and reliability
+port                    = 3306
+bind-address            = 127.0.0.1  # Bind to localhost for security in development
+slow_query_log          = 0  # Disable slow query logging to optimize performance
+datadir                 = /var/lib/mysql  # Default data directory
+socket                  = /var/run/mysqld/mysqld.sock
+pid-file                = /var/run/mysqld/mysqld.pid
+log-error               = /var/log/mysql/error.log  # Log errors for reliability
+# Performance tuning for development environments
+max_connections         = 100  # Limit connections to avoid resource exhaustion
+table_open_cache        = 200  # Cache for open tables
+query_cache_type        = 1  # Enable query cache
+query_cache_size        = 16M  # Size of query cache
+tmp_table_size          = 16M  # Size for temporary tables
+max_heap_table_size     = 16M  # Maximum size for memory tables
+innodb_buffer_pool_size = 128M  # Buffer pool for InnoDB, balanced for testing
+innodb_log_buffer_size  = 8M  # Buffer for transaction logs
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+# Additional reliability settings
+skip-external-locking   # Avoid external locking for better performance
+key_buffer_size         = 16M  # Buffer for MyISAM indexes
+max_allowed_packet      = 16M  # Maximum packet size for queries
+thread_stack            = 192K  # Stack size for threads
+thread_cache_size       = 8  # Cache for threads to reduce overhead
+# Security and logging
+server-id               = 1  # Unique server ID for replication if needed
+log-bin                 = mysql-bin  # Enable binary logging for reliability
+expire_logs_days        = 10  # Automatically expire binary logs after 10 days
+sync_binlog             = 1  # Synchronize binary log for data integrity
+
+[mysqld_safe]
+log-error               = /var/log/mysql/error.log
+pid-file                = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/
+```

@@ -1,18 +1,7 @@
-
 [client]
-#password       = [your_password]
 port            = 3306
 socket          = /tmp/mysql.sock
-
-# *** Application-specific options follow here ***
-
-#
-# The MySQL server
-#
 [mysqld]
-#large-pages
-
-# generic configuration options
 port            = 3306
 socket          = /tmp/mysql.sock
 skip-locking
@@ -25,18 +14,13 @@ read_buffer_size        = 4M
 read_rnd_buffer_size    = 4M
 table_cache             = 1000
 max_allowed_packet      = 160M
-
 max_connections=50
 max_user_connections=200
-
 key_buffer              = 300M
 key_buffer_size         = 300M
-#thread_cache           = 400
 thread_stack            = 192K
 thread_cache_size       = 96
 thread_concurrency      = 8
-#thread_stack           = 128K
-
 default-character-set   = utf8
 innodb_flush_method=O_DSYNC
 innodb_buffer_pool_size= 15G

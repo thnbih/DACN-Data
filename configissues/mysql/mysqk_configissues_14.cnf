@@ -1,14 +1,11 @@
 Prisma Schema---------
-
 generator client {
   provider = "prisma-client-js"
 }
-
 datasource db {
   provider = "mysql"
   url      = "mysql://root:mypass@db:3306/itm-db"
 }
-
 Docker Compose-----------
 version: '3'
     services:
@@ -44,6 +41,5 @@ version: '3'
           - VITE_API_URL=http://backend:3000
         volumes:
           - './Frontend:/app'
-    
     volumes:
       mysql_data:

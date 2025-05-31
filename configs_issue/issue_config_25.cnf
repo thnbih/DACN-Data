@@ -1,0 +1,59 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+key_buffer_size         = 16M
+myisam-recover-options  = FORCE+BACKUP
+max_allowed_packet      = 16M
+max_connect_errors      = 10
+log_error               = /var/log/mysql/error.log
+slow_query_log_file     = /var/log/mysql/slow.log
+slow_query_log          = 1
+long_query_time         = 2
+server-id               = 2
+relay-log               = /var/lib/mysql/relay-bin
+relay-log-index         = /var/lib/mysql/relay-bin.index
+relay-log-info-file     = /var/lib/mysql/relay-log.info
+log-bin                 = /var/lib/mysql/mysql-bin
+binlog-format           = ROW
+expire-logs-days        = 10
+max-binlog-size         = 100M
+sync-binlog             = 1
+default-storage-engine  = InnoDB
+innodb_buffer_pool_size = 128M
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table   = 1
+query_cache_type        = 1
+query_cache_size        = 16M
+query_cache_limit       = 1M
+thread_stack            = 192K
+thread_cache_size       = 8
+max_connections         = 100
+table_open_cache        = 200
+open_files_limit        = 1024
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+[mysqldump]
+quick
+quote-names
+max_allowed_packet      = 16M
+[mysqld_safe]
+log-error               = /var/log/mysql/mysqld_safe.log
+pid-file                = /var/run/mysqld/mysqld.pid
+!includedir /etc/mysql/conf.d/
+```

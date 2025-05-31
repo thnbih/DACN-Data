@@ -1,0 +1,34 @@
+[ODBC Data Sources]
+MySQLDSN = MySQL ODBC Driver (Configured for Issue Demonstration)
+[MySQLDSN]
+Driver = MySQL
+Description = Example DSN for MySQL ODBC connection
+Server = localhost
+Port = 3306
+Database = testdb
+User = root
+Password =
+Option = 3
+Socket = /var/run/mysqld/mysqld.sock
+Trace = No
+TraceFile = /tmp/odbc_trace.log
+[ODBC]
+InstallDir = /usr/lib/odbc
+IANAAppCodes = Yes
+Trace = No
+TraceFile = /tmp/odbc_global_trace.log
+[Default]
+Driver =
+Description = Default DSN configuration
+[MySQL]
+Driver = MySQL
+Description = Additional MySQL configuration
+Server = 127.0.0.1
+Port = 3306
+Database = anotherdb
+User = user1
+Password = pass1
+SSLMode = Preferred
+[Environment]
+ODBCINST = /etc/odbcinst.ini
+ODBCINI = /etc/odbc.ini

@@ -1,0 +1,45 @@
+[mysqld]
+# Server settings for optimized performance and reliability in high-traffic environments
+port            = 3306
+bind-address    = 0.0.0.0
+sql_mode        = STRICT_ALL_TABLES
+default-storage-engine = InnoDB
+max_connections = 200
+max_allowed_packet = 64M  # Increased for handling larger queries in high-traffic scenarios
+innodb_buffer_pool_size = 128M  # Adjust based on available memory for better InnoDB performance
+innodb_log_file_size = 48M  # Helps with write-intensive workloads
+query_cache_type = 1  # Enable query cache for frequently accessed data
+query_cache_size = 64M  # Size for query cache to improve read performance
+tmp_table_size = 64M  # Larger temporary tables for complex queries
+max_heap_table_size = 64M  # Limits for in-memory tables
+thread_cache_size = 50  # Reduces thread creation overhead in high-traffic
+table_open_cache = 4000  # More open tables for faster access
+innodb_flush_log_at_trx_commit = 1  # Ensures data integrity with some performance trade-off
+sync_binlog = 1  # For reliability in replication setups
+skip-name-resolve  # Improves connection speed by skipping DNS lookups
+
+[mysqldump]
+# Settings for mysqldump to ensure efficient backups
+quick  # Dump tables row by row for large databases
+single-transaction  # For consistent backups without locking tables on InnoDB
+max_allowed_packet = 64M  # Match with server to handle large dumps
+comments  # Include comments in the dump file for clarity
+lock-tables = false  # Avoid locking tables if using single-transaction
+
+[client]
+# General client settings
+port            = 3306
+default-character-set = utf8mb4  # Ensure proper character handling
+
+[mysqld_safe]
+# Safe mode settings
+log-error = /var/log/mysql/error.log  # Log errors for troubleshooting
+pid-file = /var/run/mysqld/mysqld.pid  # Standard PID file location
+
+[mysql]
+# Interactive mysql client settings
+no-auto-rehash  # Speeds up client startup
+
+# Global MySQL configuration notes
+# This configuration is tuned for high-traffic applications, balancing performance, reliability, and resource usage.
+# Ensure the server has sufficient memory and CPU resources to handle the specified settings.

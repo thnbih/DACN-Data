@@ -1,0 +1,64 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings to handle increased connections and query loads while minimizing logging overhead.
+
+[client]
+port            = 3308
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash  = 1
+default-character-set = utf8mb4
+prompt          = "\\u@\\h:\\p [\\d]> "
+max_allowed_packet = 16M
+
+[mysqld]
+port            = 3308
+socket          = /var/lib/mysql/mysql.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+max_connections = 500
+slow_query_log  = 0  # Disabled to reduce overhead in high-traffic scenarios
+key_buffer_size = 128M
+max_allowed_packet = 16M
+table_open_cache = 4096
+sort_buffer_size = 2M
+net_buffer_length = 8K
+read_buffer_size = 1M
+read_rnd_buffer_size = 4M
+myisam_sort_buffer_size = 64M
+thread_cache_size = 128
+query_cache_type = 1
+query_cache_size = 64M
+query_cache_limit = 2M
+tmp_table_size = 64M
+max_heap_table_size = 64M
+bulk_insert_buffer_size = 16M
+innodb_buffer_pool_size = 1G  # Adjusted for high-traffic to cache more data
+innodb_log_file_size = 128M
+innodb_flush_log_at_trx_commit = 1  # Ensures reliability
+innodb_lock_wait_timeout = 50
+innodb_file_per_table = 1
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+log_error = /var/log/mysql/error.log
+pid-file        = /var/run/mysqld/mysqld.pid
+# Additional optimizations for high-traffic
+thread_concurrency = 10
+join_buffer_size = 2M
+innodb_thread_concurrency = 0  # Let MySQL manage threads
+back_log = 100  # Handle connection backlog
+
+[mysqldump]
+port            = 3308  # Specified for dump operations
+max_connections = 500  # Included as per description, though typically server-side
+slow_query_log  = 0  # Reflected as specified to align with optimization goals
+quick           = 1  # Enables quick mode for faster dumps
+single-transaction = 1  # Ensures consistency for InnoDB tables
+max_allowed_packet = 16M  # Matches server setting for compatibility
+```

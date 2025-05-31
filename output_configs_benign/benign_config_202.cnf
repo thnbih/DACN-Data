@@ -1,0 +1,58 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with settings like InnoDB as the
+# default storage engine, enabled slow query logging, and a modest InnoDB
+# buffer pool size.
+
+[client]
+# Default settings for MySQL client connections
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for optimized performance and reliability
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 127.0.0.1  # Bind to localhost for security in development
+
+# Specified settings for optimization
+default-storage-engine = InnoDB
+slow_query_log  = 1
+innodb_buffer_pool_size = 128M
+
+# Additional performance and reliability settings
+max_connections         = 150  # Allow a reasonable number of connections for testing
+table_open_cache        = 400  # Cache for open tables to reduce overhead
+query_cache_type        = 1    # Enable query cache
+query_cache_size        = 16M  # Size of query cache
+query_cache_limit       = 1M   # Limit for individual query cache entries
+tmp_table_size          = 16M  # Size for in-memory temporary tables
+max_heap_table_size     = 16M  # Maximum size for memory tables
+join_buffer_size        = 128K # Buffer for joins
+sort_buffer_size        = 256K # Buffer for sorts
+read_buffer_size        = 128K # Buffer for reads
+read_rnd_buffer_size    = 256K # Buffer for random reads
+innodb_log_file_size    = 48M  # Size of InnoDB log files
+innodb_log_buffer_size  = 8M   # Buffer for InnoDB logs
+innodb_flush_log_at_trx_commit = 1  # Ensure durability
+innodb_file_per_table   = 1    # Each table in its own file for easier management
+log_error               = /var/log/mysql/error.log  # Error logging
+slow_query_log_file     = /var/log/mysql/slow.log  # File for slow queries
+long_query_time         = 2    # Log queries longer than 2 seconds
+max_allowed_packet      = 16M  # Maximum packet size for large queries
+
+[mysqld_safe]
+log_error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/  # Include additional configuration files if needed
+```

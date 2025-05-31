@@ -1,0 +1,69 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and ease of debugging.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash  # Faster startup for the mysql client
+default-character-set = utf8mb4
+prompt          = "\\u@\\h:\\p [\\d]> "
+
+[mysqld]
+# Basic server settings
+port            = 3306
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Logging and error handling
+log-error       = /var/log/mysql/error.log  # Specified setting for error logging
+log_warnings    = 2
+slow-query-log  = 1
+slow-query-log-file = /var/log/mysql/slow.log
+long-query-time = 2  # Log queries taking longer than 2 seconds
+
+# Connection and performance settings
+max_connections = 500  # Specified setting to handle up to 500 connections
+max_connect_errors = 10
+table_open_cache = 2000
+thread_cache_size = 100
+query_cache_type = 1  # Enable query cache for development
+query_cache_size = 16M
+innodb_buffer_pool_size = 128M  # Specified setting for InnoDB buffer pool
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures reliability, suitable for testing
+innodb_file_per_table = 1
+
+# Additional performance optimizations for development
+key_buffer_size = 16M
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+join_buffer_size = 2M
+
+# Security and other settings
+bind-address    = 127.0.0.1  # Bind to localhost for security in development
+skip-name-resolve
+sql_mode        = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet = 16M
+
+[mysqld_safe]
+log-error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld.pid
+```

@@ -1,0 +1,53 @@
+[mysqld_safe]
+# Options for mysqld_safe to manage the MySQL server process
+slow_query_log_file     = /tmp/slow.log
+character-set-server    = latin1
+slow_query_log          = 0
+log-error               = /var/log/mysql/error.log
+pid-file                = /var/run/mysqld/mysqld.pid
+
+[mysqld]
+# General server configuration for performance and reliability in development/testing
+user                    = mysql
+port                    = 3306
+socket                  = /var/run/mysqld/mysqld.sock
+basedir                 = /usr
+datadir                 = /var/lib/mysql
+tmpdir                  = /tmp
+lc-messages-dir         = /usr/share/mysql
+skip-external-locking
+bind-address            = 127.0.0.1
+max_connections         = 100
+table_open_cache        = 2000
+query_cache_type        = 1
+query_cache_size        = 16M
+thread_cache_size       = 10
+innodb_buffer_pool_size = 128M
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit  = 1
+sync_binlog             = 1
+max_allowed_packet      = 16M
+sort_buffer_size        = 2M
+read_buffer_size        = 1M
+read_rnd_buffer_size    = 1M
+key_buffer_size         = 16M
+
+[client]
+# Client defaults for development environments
+port                    = 3306
+socket                  = /var/run/mysqld/mysqld.sock
+default-character-set   = latin1
+
+[mysqldump]
+# Settings for mysqldump to ensure compatibility in testing
+quick
+quote-names
+max_allowed_packet      = 16M
+
+[isamchk]
+# ISAM table maintenance, though rarely used in modern setups
+key_buffer              = 16M
+
+!includedir /etc/mysql/conf.d/
+# This directive allows for additional configuration files in the specified directory,
+# making the setup extensible for real-world development and testing scenarios.

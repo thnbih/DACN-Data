@@ -1,0 +1,68 @@
+```
+# /etc/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for the MySQL server to handle increased connections, logging, and character sets.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysql]
+no-auto-rehash
+default-character-set = latin1
+
+[mysqld]
+# Basic server settings
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Specified settings for optimization
+character-set-server  = latin1
+slow_query_log_file   = /tmp/slow.log
+max_connections       = 500
+
+# Performance tuning for high-traffic environments
+innodb_buffer_pool_size = 1G          # Adjust based on available RAM; caches frequently accessed data
+innodb_log_file_size    = 256M        # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1    # Ensures durability but can be tuned for speed
+query_cache_type        = 1           # Enable query cache for repeated queries (if supported in version)
+query_cache_size        = 64M         # Cache size for queries
+table_open_cache        = 4000        # Increases the number of open tables to handle more concurrent users
+thread_cache_size       = 100         # Reduces thread creation overhead
+tmp_table_size          = 64M         # Limits in-memory temporary tables
+max_heap_table_size     = 64M         # Limits the size of memory-based tables
+join_buffer_size        = 8M          # Improves join performance
+sort_buffer_size        = 4M          # Improves sorting performance
+read_buffer_size        = 4M          # Improves read performance
+read_rnd_buffer_size    = 8M          # Improves random read performance
+
+# Logging and monitoring
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1           # Enables slow query logging
+long_query_time         = 2           # Logs queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1    # Logs queries not using indexes for optimization
+
+# Security and reliability settings
+sql_mode                = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+bind-address            = 0.0.0.0     # Allows connections from any IP; restrict in production if needed
+max_allowed_packet      = 64M         # Handles larger packets for big data transfers
+innodb_file_per_table   = 1           # Each table in its own file for better management
+
+[mysqldump]
+quick
+max_allowed_packet     = 64M         # Allows larger dumps
+quote-names
+set-charset            = latin1      # Ensures dumps use the specified character set
+
+[mysqld_safe]
+log-error              = /var/log/mysql/mysqld_safe.log
+pid-file               = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/my.cnf.d
+```

@@ -1,0 +1,45 @@
+[mysqld]
+# Server configuration for high-traffic applications
+port            = 3306
+max_connections = 500
+character-set-server = utf8mb4
+datadir         = /var/lib/mysql
+socket         = /var/run/mysqld/mysqld.sock
+pid-file       = /var/run/mysqld/mysqld.pid
+bind-address   = 0.0.0.0  # Allow connections from any interface, adjust for security
+log_error      = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries longer than 2 seconds
+innodb_buffer_pool_size = 4G  # Adjust based on available RAM for high traffic
+innodb_log_file_size = 256M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure durability, but can be tuned for speed
+thread_cache_size = 100  # Reuse threads to handle high connections efficiently
+table_open_cache = 4000  # Cache more tables for frequent access
+query_cache_type = 1  # Enable query cache for repeated queries
+query_cache_size = 128M  # Size for query cache, helps in high-traffic scenarios
+tmp_table_size = 64M  # Larger temporary tables to handle complex queries
+max_heap_table_size = 64M  # Limit for in-memory tables
+skip-name-resolve  # Skip DNS lookups for faster connections
+default_storage_engine = InnoDB  # Use InnoDB for transactions and reliability
+sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION  # Enforce strict SQL mode
+character_set_client = utf8mb4  # Ensure client encoding matches
+collation_server = utf8mb4_unicode_ci  # Set default collation for better sorting
+
+[client]
+# Client-side settings for consistency
+port            = 3306
+default-character-set = utf8mb4
+socket         = /var/run/mysqld/mysqld.sock
+
+[mysql]
+# MySQL client-specific settings
+no-auto-rehash  # Faster startup
+prompt         = \\u@\\h:\\d\\>  # Custom prompt for clarity
+connect-timeout = 10  # Timeout for connections in high-traffic environments
+
+[mysqld_safe]
+log_error = /var/log/mysql/mysqld_safe.log
+pid-file    = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/  # Allow inclusion of additional configuration files for modularity

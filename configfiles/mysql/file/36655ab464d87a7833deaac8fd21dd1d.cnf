@@ -1,8 +1,6 @@
-# cat /etc/my.cnf
 [client]
 port            = ****
 socket          = /var/lib/mysql/mysql.sock
-
 [mysqld]
 datadir=/mnt/persistent/mysql
 port=****
@@ -36,7 +34,6 @@ innodb_flush_log_at_trx_commit = 1
 innodb_lock_wait_timeout = 50
 innodb_thread_concurrency = 48
 ft_min_word_len=3
-
 [myisamchk]
 ft_min_word_len=3
 key_buffer = 128M

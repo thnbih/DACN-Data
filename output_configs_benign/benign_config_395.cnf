@@ -1,0 +1,75 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for the MySQL server and tools like mysqldump.
+
+[client]
+# Default settings for MySQL clients
+port                           = 3306
+socket                         = /var/run/mysqld/mysqld.sock
+default-character-set          = utf8mb4
+
+[mysqld]
+# Main server configuration for optimal performance and reliability
+user                           = mysql
+pid-file                       = /var/run/mysqld/mysqld.pid
+socket                         = /var/run/mysqld/mysqld.sock
+port                           = 3306
+basedir                        = /usr
+datadir                        = /var/lib/mysql
+tmpdir                         = /tmp
+lc-messages-dir                = /usr/share/mysql
+skip-external-locking
+
+# Security and access settings
+bind-address                   = 127.0.0.1  # Bind to localhost for security in high-traffic environments
+log-error                      = /tmp/mysql_error.log  # Log errors to a specific file for easy monitoring
+
+# Performance tuning for high-traffic applications
+innodb_buffer_pool_size        = 128M  # Size of the buffer pool for InnoDB to cache data and indexes
+innodb_log_file_size           = 48M  # Larger log file size to handle more transactions
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability with minimal performance impact
+innodb_file_per_table          = 1  # Store each table in its own file for better management
+max_connections                = 200  # Allow more simultaneous connections for high traffic
+thread_cache_size              = 100  # Cache threads to reduce overhead
+table_open_cache               = 4000  # Cache more open tables to speed up queries
+query_cache_type               = 1  # Enable query cache for frequently run queries
+query_cache_size               = 64M  # Size of the query cache
+tmp_table_size                 = 32M  # Limit in-memory temporary tables
+max_heap_table_size            = 32M  # Maximum size for memory-based tables
+sort_buffer_size               = 2M  # Buffer for sorting operations
+read_buffer_size               = 1M  # Buffer for reading rows
+join_buffer_size               = 2M  # Buffer for join operations
+
+# Logging and monitoring
+slow_query_log                 = 1  # Enable slow query logging
+slow_query_log_file            = /var/log/mysql/slow.log  # File for slow queries
+long_query_time                = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes  = 1  # Log queries not using indexes
+
+# General reliability settings
+max_allowed_packet             = 16M  # Maximum packet size for large queries
+default_storage_engine         = InnoDB  # Use InnoDB for transactional support
+character-set-server           = utf8mb4
+collation-server               = utf8mb4_unicode_ci
+sql_mode                       = STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+
+[mysqldump]
+# Settings for mysqldump tool to ensure efficient and reliable backups
+quick                          # Dump tables row by row for large datasets
+single-transaction             # Perform a consistent dump without locking tables
+add-drop-table                 = 1  # Add DROP TABLE statements for easier restores
+add-locks                      = 1  # Add LOCK TABLES statements
+extended-insert                = 1  # Use multiple-row INSERT syntax for efficiency
+disable-keys                   = 1  # Disable keys during dump to speed up
+max_allowed_packet             = 16M  # Match with server setting for large dumps
+set-gtid-purged                = OFF  # Handle GTID for replication scenarios
+
+[mysql]
+# Settings for the mysql command-line tool
+no-auto-rehash                 = 1
+default-character-set          = utf8mb4
+
+# Additional global settings
+!includedir /etc/mysql/conf.d/
+```

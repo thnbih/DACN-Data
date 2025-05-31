@@ -1,0 +1,46 @@
+[mysqld]
+port            = 3306
+basedir         = /usr/local/mysql
+datadir         = /usr/local/mysql/data
+tmpdir          = /tmp
+lc_messages_dir = /usr/local/mysql/share
+lc_messages     = en_US
+skip-external-locking
+max_connections        = 50
+max_connect_errors     = 10
+connect_timeout        = 10
+wait_timeout           = 28800
+interactive_timeout    = 28800
+max_allowed_packet     = 16M
+thread_stack           = 192K
+thread_cache_size      = 8
+log_error              = /usr/local/mysql/data/error.log
+slow_query_log         = 1
+slow_query_log_file    = /usr/local/mysql/data/slow.log
+long_query_time        = 2
+log_queries_not_using_indexes = 1
+default_storage_engine = InnoDB
+innodb_buffer_pool_size = 128M
+innodb_log_file_size   = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table   = 1
+query_cache_type       = 1
+query_cache_size       = 16M
+query_cache_limit      = 1M
+table_open_cache       = 200
+tmp_table_size         = 16M
+max_heap_table_size    = 16M
+skip-name-resolve
+secure_file_priv       = /usr/local/mysql/secure_files
+character-set-server   = utf8mb4
+collation-server       = utf8mb4_unicode_ci
+[mysqld_safe]
+log-error              = /usr/local/mysql/data/mysqld_safe.log
+pid-file               = /usr/local/mysql/data/mysqld.pid
+[client]
+port            = 3306
+socket          = /tmp/mysql.sock
+default-character-set = utf8mb4
+[mysql]
+default-character-set = utf8mb4
+!includedir /etc/my.cnf.d/

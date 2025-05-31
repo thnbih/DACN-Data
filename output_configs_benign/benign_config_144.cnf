@@ -1,0 +1,68 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance monitoring and reliability with settings like
+# slow query logging and a specified default storage engine.
+
+[client]
+port            = 3306
+host            = localhost
+protocol        = socket
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+# Additional client settings for better usability in testing
+connect-timeout = 10
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+# Enable features for interactive sessions
+safe-updates
+
+[mysqld]
+port            = 3306
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+# Key settings as specified for performance optimization
+slow_query_log_file     = /var/log/mysql/slow.log
+default-storage-engine  = MyISAM
+slow_query_log          = 1  # Enable slow query logging
+log_queries_not_using_indexes = 1  # Log queries not using indexes for tuning
+long_query_time         = 2  # Queries longer than 2 seconds are logged
+min_examined_row_limit  = 100  # Minimum rows examined for logging
+# General performance and reliability settings for development
+max_connections         = 150  # Allow more connections for testing scenarios
+table_open_cache        = 200  # Cache for open tables
+thread_cache_size       = 10   # Reuse threads to reduce overhead
+query_cache_type        = 1    # Enable query cache
+query_cache_size        = 16M  # 16MB cache for queries
+tmp_table_size          = 16M  # Size for in-memory temporary tables
+max_heap_table_size     = 16M  # Maximum size for memory tables
+innodb_buffer_pool_size = 128M # Buffer pool for InnoDB, though MyISAM is default
+innodb_log_file_size    = 48M  # Log file size for InnoDB
+sync_binlog             = 1    # Ensure binlog synchronization for reliability
+expire_logs_days        = 10   # Automatically expire binary logs after 10 days
+max_allowed_packet      = 16M  # Larger packets for development data
+# Logging and error handling
+log_error               = /var/log/mysql/error.log
+general_log_file        = /var/log/mysql/general.log
+general_log             = 1  # Enable general logging for testing
+# Security settings, basic for development environment
+skip-name-resolve       # Skip DNS resolution for faster connections
+local-infile=0          # Disable loading local files for security
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet      = 16M
+
+[mysqld_safe]
+log-error= /var/log/mysql/mysqld_safe.log
+pid-file= /var/run/mysqld/mysqld_safe.pid
+
+!includedir /etc/mysql/conf.d/
+```

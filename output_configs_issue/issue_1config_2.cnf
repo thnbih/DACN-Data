@@ -1,0 +1,60 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld]
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+secure-file-priv= /var/lib/mysql
+max_connections = 1000
+max_connect_errors = 100
+connect_timeout = 10
+wait_timeout = 28800
+interactive_timeout = 28800
+thread_stack = 192K
+thread_cache_size = 50
+table_open_cache = 2000
+table_definition_cache = 2000
+table_open_cache_instances = 8
+query_cache_type = 0
+query_cache_size = 0
+innodb_buffer_pool_size = 128M
+innodb_buffer_pool_instances = 1
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_flush_method = O_DIRECT
+tmp_table_size = 16M
+max_heap_table_size = 16M
+sort_buffer_size = 2M
+join_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+log_error = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+log_queries_not_using_indexes = 1
+general_log = 0
+general_log_file = /var/log/mysql/general.log
+skip-name-resolve
+bind-address = 0.0.0.0
+sql_mode = STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+default_storage_engine = InnoDB
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+max_allowed_packet = 64M
+lower_case_table_names = 1
+server-id = 1
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+!includedir /etc/mysql/conf.d/
+```

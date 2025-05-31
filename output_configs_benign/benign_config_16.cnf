@@ -1,0 +1,60 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with specified settings.
+# It includes adjustments for resource usage, logging, and security to ensure
+# a stable setup suitable for non-production use.
+
+[client]
+# Client-specific settings
+port            = 3307
+default-character-set = utf8mb4
+host            = localhost
+socket          = /var/lib/mysql/mysql.sock
+
+[mysqld]
+# Server-specific settings
+port            = 3307  # Match the client port for consistent connections
+user            = mysql  # Run MySQL as the mysql user for security
+basedir         = /usr  # Base directory for MySQL installation
+datadir         = /var/lib/mysql  # Data directory for databases
+tmpdir          = /tmp  # Temporary directory for operations
+socket          = /var/lib/mysql/mysql.sock  # Unix socket for local connections
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file location
+
+# Performance optimizations
+innodb_buffer_pool_size = 1G  # Specified setting: Allocate 1GB for InnoDB buffer pool to improve query performance
+innodb_log_file_size    = 128M  # Size of InnoDB log files for better transaction handling
+tmp_table_size          = 64M  # Maximum size for internal in-memory temporary tables
+max_heap_table_size     = 64M  # Maximum size for memory tables
+query_cache_size        = 64M  # Enable query cache for faster repeated queries in development
+max_connections         = 100  # Limit connections to prevent overload in testing environments
+table_open_cache        = 200  # Cache for open tables to reduce disk I/O
+thread_cache_size       = 10   # Cache for threads to improve response times
+
+# Logging and reliability settings
+slow_query_log          = 0  # Specified setting: Disable slow query logging to reduce overhead
+log_error               = /var/log/mysql/error.log  # Error log file
+general_log             = 0  # Disable general query log for performance
+general_log_file        = /var/log/mysql/general.log  # Location if enabled
+sync_binlog             = 1  # Ensure binary log synchronization for data reliability
+innodb_flush_log_at_trx_commit = 1  # Flush logs on transaction commit for durability
+max_allowed_packet      = 16M  # Maximum packet size for queries
+
+# Character set and collation for broader compatibility
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+
+# Additional development-friendly settings
+skip-name-resolve       = 1  # Skip DNS resolution for faster connections
+lower_case_table_names  = 1  # Make table names case-insensitive for easier development
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Strict SQL mode for testing
+
+[mysqld_safe]
+log-error               = /var/log/mysql/mysqld_safe.log  # Log for mysqld_safe wrapper
+pid-file                = /var/run/mysqld/mysqld.pid
+
+[mysql]
+no-auto-rehash          = 1  # Speed up auto-completion
+default-character-set   = utf8mb4  # Default character set for mysql client
+```

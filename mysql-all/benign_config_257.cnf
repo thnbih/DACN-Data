@@ -1,0 +1,47 @@
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+sql_mode        = NO_ENGINE_SUBSTITUTION
+log-error       = /tmp/mysql_error.log
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+innodb_buffer_pool_size = 4G
+innodb_log_file_size    = 1G
+innodb_flush_log_at_trx_commit = 1
+max_connections         = 500
+table_open_cache        = 4000
+query_cache_type        = 1
+query_cache_size        = 64M
+thread_cache_size       = 100
+tmp_table_size          = 64M
+max_heap_table_size     = 64M
+innodb_file_per_table   = 1
+sync_binlog             = 1
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+log-bin                 = /var/log/mysql/mysql-bin.log
+expire_logs_days        = 10
+max_allowed_packet      = 64M
+[mysqld_safe]
+socket          = /var/run/mysqld/mysqld.sock
+nice            = -5
+[mysqldump]
+quick
+quote-names
+max_allowed_packet = 64M
+single-transaction
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+prompt              = "\\u@\\h:\\d> "
+!includedir /etc/mysql/conf.d/

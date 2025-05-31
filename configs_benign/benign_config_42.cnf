@@ -1,0 +1,39 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+prompt          = \\u@\\h:\\p [\\d]>
+default-character-set = utf8mb4
+[mysqld]
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+bind-address    = 127.0.0.1
+max_connections = 100
+sql_mode        = NO_ENGINE_SUBSTITUTION
+default-storage-engine = InnoDB
+innodb_buffer_pool_size = 128M
+query_cache_type = 1
+query_cache_size = 16M
+tmp_table_size = 32M
+max_heap_table_size = 32M
+log_error = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+skip-name-resolve
+max_allowed_packet = 64M
+[mysqldump]
+quick
+max_allowed_packet = 64M
+single-transaction
+set-gtid-purged=OFF
+```

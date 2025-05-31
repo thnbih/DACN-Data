@@ -1,0 +1,57 @@
+[mysqld]
+# Server basics
+port            = 3306
+bind-address    = 127.0.0.1
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+
+# Logging and diagnostics
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+log_error       = /var/log/mysql/error.log
+log_queries_not_using_indexes = 1
+long_query_time = 2  # Log queries taking longer than 2 seconds
+
+# Storage engine and performance tuning
+default-storage-engine = InnoDB
+innodb_buffer_pool_size = 128M
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures durability
+innodb_file_per_table = 1  # Each table in its own file for better management
+max_connections = 151  # Moderate for development to avoid overload
+table_open_cache = 2000
+query_cache_type = 1  # Enable query cache
+query_cache_size = 16M
+thread_cache_size = 10
+tmp_table_size = 16M
+max_heap_table_size = 16M
+
+# Security settings for development
+skip-name-resolve  # Improves performance by not resolving hostnames
+secure-file-priv   = /var/lib/mysql-files  # Restricts file operations
+
+# General optimizations
+key_buffer_size = 8M  # For MyISAM, though InnoDB is default
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+join_buffer_size = 2M
+
+# Binary logging for replication testing
+log-bin           = /var/log/mysql/mysql-bin
+expire_logs_days  = 10  # Auto expire binary logs after 10 days
+server-id         = 1  # Unique ID for replication
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+log-error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld_safe.pid
+
+!includedir /etc/mysql/conf.d/  # For additional configuration files

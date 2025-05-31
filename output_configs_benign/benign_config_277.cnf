@@ -1,0 +1,58 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for character encoding, SQL mode, and port, along with additional parameters to ensure stability and efficiency.
+
+[client]
+# Default settings for MySQL clients
+port            = 3308
+default-character-set = latin1
+socket          = /var/lib/mysql/mysql.sock
+
+[mysqld]
+# Server settings for MySQL
+port            = 3308
+character-set-server = latin1
+sql_mode        = NO_ENGINE_SUBSTITUTION
+basedir         = /usr/local/mysql
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Performance optimizations for high-traffic environments
+innodb_buffer_pool_size = 4G  # Adjust based on available RAM; caches data and indexes
+innodb_log_file_size = 512M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensures durability for transactions
+max_connections = 500  # Increased to handle high traffic; monitor and adjust as needed
+thread_cache_size = 200  # Reduces overhead for new connections
+table_open_cache = 4000  # Improves performance by caching open tables
+query_cache_type = 1  # Enables query caching (note: deprecated in MySQL 8+; use alternatives if needed)
+query_cache_size = 128M  # Size for cached queries
+tmp_table_size = 128M  # Limits in-memory temporary tables
+max_heap_table_size = 128M  # Allows larger in-memory tables
+sort_buffer_size = 4M  # Per-session buffer for sorting
+join_buffer_size = 8M  # Per-session buffer for joins
+
+# Logging and monitoring for reliability
+log_error = /var/log/mysql/error.log  # Error log file
+slow_query_log = 1  # Enables slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # File for slow queries
+long_query_time = 2  # Logs queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Logs queries without indexes
+
+# Additional reliability settings
+default_storage_engine = InnoDB  # Default to transactional engine
+max_allowed_packet = 64M  # Increased for larger packets in high-traffic scenarios
+innodb_file_per_table = 1  # Each table in its own file for better management
+skip-name-resolve = 1  # Improves performance by skipping DNS lookups
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+[mysql]
+# Client-specific settings
+no-auto-rehash  # Faster startup
+prompt = \\u@\\h:\\p \\d >
+default-character-set = latin1  # Matches server setting
+```

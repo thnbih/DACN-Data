@@ -1,0 +1,64 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+log_bin                         = /var/lib/mysql/mysql-bin
+log_error                       = /var/lib/mysql/error.log
+slow_query_log                  = 1
+slow_query_log_file             = /var/lib/mysql/slow.log
+long_query_time                 = 2
+log_queries_not_using_indexes   = 1
+expire_logs_days                = 0
+max_binlog_size                 = 1G
+binlog_format                   = ROW
+sync_binlog                     = 1
+default_storage_engine          = InnoDB
+innodb_buffer_pool_size         = 128M
+innodb_log_file_size            = 512M
+innodb_log_files_in_group       = 2
+innodb_flush_log_at_trx_commit  = 1
+innodb_file_per_table           = 1
+max_connections                 = 151
+table_open_cache                = 2000
+tmp_table_size                  = 16M
+max_heap_table_size             = 16M
+query_cache_type                = 1
+query_cache_size                = 16M
+thread_cache_size               = 10
+myisam_recover_options          = FORCE,BACKUP
+key_buffer_size                 = 16M
+bulk_insert_buffer_size         = 16M
+sort_buffer_size                = 4M
+read_buffer_size                = 2M
+read_rnd_buffer_size            = 4M
+join_buffer_size                = 4M
+character-set-server            = utf8mb4
+collation-server                = utf8mb4_unicode_ci
+server-id                       = 1
+sql_mode                        = STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+max_allowed_packet              = 64M
+interactive_timeout             = 28800
+wait_timeout                    = 28800
+[mysqldump]
+quick
+quote-names
+max_allowed_packet              = 64M
+[mysqld_safe]
+log_error                       = /var/lib/mysql/mysqld_safe.log
+pid-file                        = /var/run/mysqld/mysqld_safe.pid
+!includedir /etc/mysql/conf.d/
+```

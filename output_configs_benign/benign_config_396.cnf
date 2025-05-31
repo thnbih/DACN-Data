@@ -1,0 +1,67 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and detailed logging. It includes
+# settings to monitor queries, manage memory efficiently, and ensure data
+# integrity without overwhelming system resources.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for MySQL daemon
+user            = mysql                # User to run the MySQL server
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Memory and performance tuning
+key_buffer_size         = 16M          # Buffer for index blocks
+max_allowed_packet      = 16M          # Maximum packet size
+table_open_cache        = 64           # Number of open tables
+sort_buffer_size        = 2M           # Buffer for sorting
+read_buffer_size        = 2M           # Buffer for sequential scans
+read_rnd_buffer_size    = 4M           # Buffer for random reads
+net_buffer_length       = 2M           # Buffer for network communication
+thread_stack            = 192K         # Stack size for threads
+thread_cache_size       = 8            # Cached threads for quick reuse
+max_connections         = 100          # Maximum simultaneous connections
+query_cache_type        = 1            # Enable query cache (if supported)
+query_cache_size        = 16M          # Size of query cache
+
+# InnoDB-specific settings for reliability and performance
+innodb_buffer_pool_size = 1G           # Specified: Size of the buffer pool for InnoDB
+innodb_log_file_size    = 48M          # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1    # Ensure data durability
+innodb_file_per_table   = 1            # Store each table in its own file
+innodb_flush_method     = O_DIRECT     # Reduce double buffering
+innodb_lock_wait_timeout = 50          # Timeout for locks in seconds
+
+# Logging and error handling settings
+log-error               = /tmp/mysql_error.log  # Specified: Error log path
+slow_query_log          = 1              # Specified: Enable slow query logging
+slow_query_log_file     = /var/log/mysql/slow.log  # File for slow queries
+long_query_time         = 2              # Log queries taking longer than 2 seconds
+general_log             = 1              # Enable general query log for development
+general_log_file        = /var/log/mysql/general.log  # File for general logs
+log_output              = FILE           # Output logs to files
+
+# Security and networking
+bind-address            = 127.0.0.1     # Bind to localhost for security in dev environments
+skip-name-resolve       # Skip DNS resolution for faster connections
+
+# Other settings for development and testing
+character-set-server    = utf8mb4       # Default character set
+collation-server        = utf8mb4_unicode_ci  # Default collation
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Strict SQL mode
+max_heap_table_size     = 32M           # Maximum size for in-memory tables
+tmp_table_size          = 32M           # Size for temporary tables
+```

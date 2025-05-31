@@ -1,0 +1,29 @@
+```
+[ODBC Data Sources]
+MySQLDSN = MySQL ODBC 8.0 Driver
+[ODBC]
+Trace = Yes
+TraceFile = odbc_trace.log
+InstallDir = C:\ODBC
+[MySQLDSN]
+SERVER = localhost
+PORT = 3306
+USER = root
+PASSWORD = insecure_password
+DATABASE = test_database
+OPTION = 3
+SOCKET = /var/lib/mysql/mysql.sock
+CHARSET = utf8mb4
+TIMEOUT = 30
+[Default]
+Driver =
+[ODBC Drivers]
+MySQL ODBC 8.0 Driver = Installed
+[MySQL]
+Driver = MySQL ODBC 8.0 ANSI Driver
+Description = MySQL ODBC Driver
+UsageCount = 1
+[General]
+ErrorMessagesPath = C:\Program Files\ODBC\errorMessages
+CPTimeout = 60
+```

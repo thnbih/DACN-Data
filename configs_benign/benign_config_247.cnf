@@ -1,0 +1,50 @@
+```
+[client]
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld_safe]
+max_connections = 500
+slow_query_log_file = /var/log/mysql/slow.log
+port            = 3307
+log-error       = /var/log/mysql/error.log
+nice            = 0
+[mysqld]
+user            = mysql
+port            = 3307
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+max_connections = 500
+thread_cache_size = 100
+table_open_cache = 4000
+query_cache_type = 1
+query_cache_size = 64M
+max_heap_table_size = 256M
+tmp_table_size = 256M
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+log_queries_not_using_indexes = 1
+general_log = 0
+general_log_file = /var/log/mysql/general.log
+log_error = /var/log/mysql/error.log
+default_storage_engine = InnoDB
+innodb_buffer_pool_size = 1G
+innodb_log_file_size = 256M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table = 1
+innodb_flush_method = O_DIRECT
+bind-address = 0.0.0.0
+max_allowed_packet = 64M
+skip-name-resolve = 1
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+[mysqldump]
+quick
+max_allowed_packet = 64M
+!includedir /etc/my.cnf.d
+```

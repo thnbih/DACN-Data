@@ -1,0 +1,53 @@
+```
+# MySQL Configuration File
+# This configuration file is optimized for development and testing environments,
+# focusing on performance and reliability with settings like character-set-server=latin1,
+# innodb_buffer_pool_size=512M, and log-error=/tmp/mysql_error.log under the [mysqld_safe] section.
+# It includes standard sections for a fully functional MySQL setup.
+
+[client]
+# Default settings for MySQL clients
+port                           = 3306
+socket                         = /var/run/mysqld/mysqld.sock
+default-character-set          = latin1
+
+[mysql]
+# Settings specific to the mysql command-line tool
+no-beep
+default-character-set          = latin1
+
+[mysqld]
+# Main server configuration for performance and reliability
+port                           = 3306
+socket                         = /var/run/mysqld/mysqld.sock
+basedir                        = /usr
+datadir                        = /var/lib/mysql
+tmpdir                         = /tmp
+lc-messages-dir                = /usr/share/mysql
+skip-external-locking
+key_buffer_size                = 16M
+max_allowed_packet             = 16M
+thread_stack                   = 192K
+thread_cache_size              = 8
+table_open_cache               = 64
+query_cache_type               = 1
+query_cache_size               = 16M
+max_connections                = 100
+innodb_flush_log_at_trx_commit = 1  # Ensures reliability
+innodb_log_buffer_size         = 8M
+innodb_file_per_table          = 1
+sync_binlog                    = 1
+
+[mysqld_safe]
+# Settings for mysqld_safe to optimize performance and reliability
+character-set-server           = latin1
+innodb_buffer_pool_size        = 512M
+log-error                      = /tmp/mysql_error.log
+pid-file                       = /var/run/mysqld/mysqld.pid
+nice                           = 0
+
+[isamchk]
+key_buffer                     = 16M
+
+!includedir /etc/mysql/conf.d/
+```

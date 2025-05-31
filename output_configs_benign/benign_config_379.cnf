@@ -1,0 +1,71 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for logging, storage engine defaults, and buffer pool sizing, along with additional parameters to ensure stability and efficiency.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+host            = localhost
+
+[mysqld]
+# Server settings for performance and reliability
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Logging and query optimization
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes for optimization
+log_error               = /var/log/mysql/error.log
+general_log_file        = /var/log/mysql/general.log
+general_log             = 0  # Disabled by default to reduce overhead in high-traffic scenarios
+
+# Storage engine and buffer settings
+default_storage_engine  = InnoDB
+innodb_buffer_pool_size = 512M  # Size optimized for balancing memory usage and performance
+innodb_buffer_pool_instances = 1  # Can be adjusted based on available memory
+innodb_log_file_size    = 128M  # Larger log files for better write performance
+innodb_log_buffer_size  = 16M
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability, suitable for reliable operations
+innodb_file_per_table   = 1  # Each table in its own file for easier management
+
+# Performance tuning for high-traffic
+max_connections         = 1000  # Allow up to 1000 simultaneous connections
+max_connect_errors      = 100
+table_open_cache        = 2000  # Cache for open tables to reduce disk I/O
+table_definition_cache  = 2000
+thread_cache_size       = 100  # Reuse threads to handle connections efficiently
+thread_stack            = 192K
+query_cache_type        = 1  # Enable query cache
+query_cache_size        = 64M  # Cache for query results
+query_cache_limit       = 2M  # Limit for individual query results
+tmp_table_size          = 64M  # Size for in-memory temporary tables
+max_heap_table_size     = 64M  # Limit for memory-based tables
+
+# Additional reliability and security settings
+skip-name-resolve       = 1  # Improve performance by skipping DNS lookups
+bind-address            = 0.0.0.0  # Listen on all interfaces; adjust for security
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+innodb_autoinc_lock_mode = 2  # Reduces locking for auto-increment in high-concurrency
+sync_binlog             = 1  # Synchronize binary log for data integrity
+expire_logs_days        = 7  # Automatically purge binary logs after 7 days
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe_error.log
+pid-file  = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/
+```

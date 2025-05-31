@@ -5,10 +5,7 @@ bind-address=172.16.110.21
 port=3306
 local-infile=1
 log=office_full.log
-;log-slow-queries=office_slow.err
 enable-external-locking
-;log-bin=../logs/binary_logs
-;log-bin-index=../logs/binary_logs
 key_buffer_size=4M
 server-id=21
 skip-bdb
@@ -26,4 +23,3 @@ innodb_additional_mem_pool_size=8M
 innodb_flush_log_at_trx_commit=1
 innodb_file_io_threads=4
 transaction-isolation =READ-COMMITTED
-

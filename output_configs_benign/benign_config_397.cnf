@@ -1,0 +1,45 @@
+[mysqld]
+# Server settings for optimized performance and reliability in high-traffic environments
+port            = 3308
+default-storage-engine = MyISAM
+sql_mode        = NO_ENGINE_SUBSTITUTION
+
+# General performance optimizations
+max_connections = 1000  # Allow up to 1000 simultaneous connections for high traffic
+key_buffer_size = 128M  # Buffer for MyISAM indexes to speed up reads and writes
+query_cache_size = 64M  # Enable query caching to reduce query execution time
+query_cache_type = 1    # Cache query results
+tmp_table_size   = 64M  # Increase size for in-memory temporary tables
+max_heap_table_size = 64M  # Limit for memory tables to prevent swapping to disk
+table_open_cache = 1024  # Cache for open tables to handle frequent access
+thread_cache_size = 128  # Reuse threads to reduce overhead in high-traffic scenarios
+join_buffer_size = 8M    # Buffer for joins to improve query performance
+
+# Logging and reliability settings
+log_error = /var/log/mysql/error.log  # Path for error logging
+slow_query_log = 1  # Enable logging of slow queries
+slow_query_log_file = /var/log/mysql/slow.log  # Path for slow query log
+long_query_time = 2  # Log queries taking longer than 2 seconds
+innodb_log_file_size = 48M  # For any InnoDB usage, though default is MyISAM
+
+# Security and other configurations
+skip-name-resolve  # Skip DNS resolution for faster connections
+bind-address = 0.0.0.0  # Bind to all interfaces, assuming secure network
+max_allowed_packet = 16M  # Increase for larger data transfers
+lower_case_table_names = 1  # Case-insensitive table names for consistency
+
+# MySQL server general options
+datadir = /var/lib/mysql  # Default data directory
+socket = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+pid-file = /var/run/mysqld/mysqld.pid  # PID file location
+
+[client]
+# Client-side settings
+port = 3308  # Match the server port
+socket = /var/run/mysqld/mysqld.sock  # Match the server socket
+default-character-set = utf8mb4  # Use modern character set for compatibility
+
+[mysql]
+# Specific settings for the mysql command-line client
+no-auto-rehash  # Speed up startup
+prompt = \\u@\\h:\\d\\>  # Custom prompt for better usability

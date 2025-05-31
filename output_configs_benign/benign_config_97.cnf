@@ -1,0 +1,64 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for logging slow queries and binding to all network interfaces.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# General server settings
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Networking and security
+bind-address    = 0.0.0.0  # Bind to all available network interfaces for accessibility
+max_connections = 200      # Handle high traffic by allowing more simultaneous connections
+max_allowed_packet = 64M   # Increase for larger queries in high-traffic scenarios
+
+# Logging and monitoring
+slow_query_log  = 1        # Enable slow query logging as specified
+slow_query_log_file = /tmp/slow.log  # Log slow queries to this file
+log_error       = /var/log/mysql/error.log  # Central error logging
+log_queries_not_using_indexes = 1  # Log queries not using indexes for optimization
+long_query_time = 2        # Queries taking longer than 2 seconds are considered slow
+
+# Performance tuning for high-traffic environments
+innodb_buffer_pool_size = 1G  # Allocate 1GB for InnoDB buffer pool; adjust based on server RAM
+innodb_log_file_size = 128M   # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+query_cache_type = 1         # Enable query cache
+query_cache_size = 64M       # 64MB for query cache
+query_cache_limit = 2M       # Limit per query
+table_open_cache = 4000      # Cache more tables for frequent access
+thread_cache_size = 50       # Reuse threads to reduce overhead
+tmp_table_size = 64M         # Increase for in-memory temporary tables
+max_heap_table_size = 64M    # Limit for memory-based tables
+
+# Additional reliability settings
+innodb_file_per_table = 1    # Each table in its own file for easier management
+sync_binlog = 1              # Synchronize binary log for crash safety
+expire_logs_days = 7         # Automatically expire binary logs after 7 days
+
+[mysqldump]
+quick           = 1          # Dump tables row by row for large databases
+max_allowed_packet = 64M     # Same as server for consistency
+single-transaction = 1       # Use a single transaction for InnoDB tables to avoid locking
+
+[mysqld_safe]
+log-error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld.pid
+
+[mysql]
+no-auto-rehash  # Faster startup
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/  # Include any additional configuration files if present
+```

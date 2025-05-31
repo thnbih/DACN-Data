@@ -1,0 +1,54 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql_nonexistent
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+key_buffer_size         = 16M
+myisam-recover-options  = FORCE,BACKUP
+innodb_buffer_pool_size = 128M
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table    = 1
+log_error = /var/log/mysql/error.log
+slow_query_log_file = /var/log/mysql/slow.log
+slow_query_log = 1
+long_query_time = 2
+server-id              = 1
+log_bin                = /var/log/mysql/mysql-bin.log
+bind-address            = 127.0.0.1
+max_connections         = 151
+max_allowed_packet      = 16M
+sql_mode                = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+table_open_cache        = 64
+thread_cache_size       = 8
+query_cache_type        = 1
+query_cache_size        = 16M
+[mysqldump]
+quick
+max_allowed_packet      = 16M
+[mysqld_safe]
+log-error= /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+[isamchk]
+key_buffer              = 16M
+[myisamchk]
+key_buffer              = 16M
+sort_buffer_size        = 16M
+read_buffer             = 8M
+write_buffer            = 8M
+[mysqlhotcopy]
+interactive-timeout
+```

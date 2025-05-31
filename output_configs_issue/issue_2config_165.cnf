@@ -1,0 +1,50 @@
+```
+[mysqld]
+basedir = C:\MySQL\Installation
+datadir = D:\MySQL\Data
+port = 3306
+socket = MySQL
+default-storage-engine=INNODB
+server-id=1
+key_buffer_size = 128M
+innodb_buffer_pool_size = 1024M
+innodb_log_file_size = 48M
+innodb_log_buffer_size = 8M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table = 1
+log-error = "D:\MySQL\Logs\mysql-error.log"
+general_log = 0
+general_log_file = "D:\MySQL\Logs\mysql-general.log"
+slow_query_log = 1
+slow_query_log_file = "D:\MySQL\Logs\mysql-slow.log"
+long_query_time = 2
+max_connections = 151
+max_user_connections = 100
+thread_stack = 192K
+thread_cache_size = 8
+wait_timeout = 28800
+interactive_timeout = 28800
+query_cache_type = 1
+query_cache_size = 64M
+query_cache_limit = 2M
+tmp_table_size = 32M
+max_heap_table_size = 32M
+skip-networking=0
+bind-address = 0.0.0.0
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+default_authentication_plugin = mysql_native_password
+sql_mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+[mysql]
+no-beep
+default-character-set=utf8mb4
+[client]
+port=3306
+socket=MySQL
+default-character-set=utf8mb4
+[mysqld_safe]
+log-error="D:\MySQL\Logs\mysql-error.log"
+pid-file="D:\MySQL\Data\mysql.pid"
+[isamchk]
+key_buffer=16M
+```

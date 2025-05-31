@@ -1,0 +1,73 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and detailed logging to aid in debugging
+# and query optimization. It includes settings for the MySQL server and tools
+# like mysqldump.
+
+[client]
+# General client settings for connecting to the MySQL server
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings for the mysql command-line tool
+no-beep
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings optimized for development and testing
+# Enable slow query logging to /tmp/slow.log for performance analysis
+slow_query_log_file     = /tmp/slow.log
+slow_query_log          = 1
+long_query_time         = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+
+# Enforce strict SQL mode for better data integrity and reliability
+sql_mode                = STRICT_ALL_TABLES,NO_ENGINE_SUBSTITUTION
+
+# Set default storage engine to InnoDB for transactional support and reliability
+default_storage_engine  = InnoDB
+
+# General server configuration
+port                    = 3306
+bind_address            = 127.0.0.1  # Bind to localhost for security in dev environments
+socket                  = /var/run/mysqld/mysqld.sock
+datadir                 = /var/lib/mysql
+tmpdir                  = /tmp
+user                    = mysql  # Run as mysql user for security
+pid_file                = /var/run/mysqld/mysqld.pid
+
+# Performance tuning for development (adjust based on system resources)
+max_connections         = 100  # Limit connections to prevent overload in testing
+max_allowed_packet      = 64M  # Increase for larger queries or data transfers
+thread_stack            = 192K
+thread_cache_size       = 10
+table_open_cache        = 200
+query_cache_type        = 1  # Enable query cache for faster repeated queries
+query_cache_size        = 16M
+innodb_buffer_pool_size = 128M  # Adjust based on available memory
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensure durability, but may impact performance
+
+# Logging and error handling
+log_error               = /var/log/mysql/error.log
+general_log             = 1  # Enable general query log for debugging
+general_log_file        = /var/log/mysql/general.log
+server_id               = 1  # For replication if needed in testing
+
+# Security and reliability settings
+skip_name_resolve       = 1  # Improve performance by skipping DNS lookups
+secure_file_priv        = /var/lib/mysql  # Restrict file operations
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+
+[mysqldump]
+# Settings for mysqldump tool, optimized for reliable backups in development
+quick                   = 1  # Dump tables one by one for large databases
+single-transaction      = 1  # Use a single transaction for consistency with InnoDB
+lock-tables             = 0  # Avoid locking tables if possible, for faster dumps
+max_allowed_packet      = 64M  # Match with server setting
+set-gtid-purged         = OFF  # Useful for replication scenarios in testing
+```

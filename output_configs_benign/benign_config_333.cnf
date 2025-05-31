@@ -1,0 +1,51 @@
+[mysqld]
+# Basic server settings
+port=3307
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+pid-file=/var/run/mysqld/mysqld.pid
+user=mysql
+
+# Logging and monitoring for performance optimization
+slow_query_log=1
+slow_query_log_file=/var/log/mysql/slow_queries.log
+log_error=/var/log/mysql/error.log
+log_queries_not_using_indexes=1
+long_query_time=2  # Log queries taking longer than 2 seconds
+
+# SQL mode for reliability and compatibility
+sql_mode=NO_ENGINE_SUBSTITUTION
+
+# Performance tuning for high-traffic applications
+max_connections=200  # Increased for handling more simultaneous connections
+max_allowed_packet=64M  # Larger packets for high-traffic data transfers
+innodb_buffer_pool_size=4G  # Adjust based on available RAM, e.g., for 8GB system
+innodb_log_file_size=256M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit=1  # Ensures durability for transactions
+sync_binlog=1  # Synchronizes binary log for data integrity
+query_cache_type=1  # Enables query cache
+query_cache_size=64M  # Cache size for frequently queried results
+thread_cache_size=128  # Reduces thread creation overhead
+table_open_cache=4000  # Improves access to frequently used tables
+
+# Additional reliability settings
+default_storage_engine=InnoDB  # Use InnoDB for transactional support
+character-set-server=utf8mb4  # Standard character set for broader compatibility
+collation-server=utf8mb4_unicode_ci
+skip-name-resolve=1  # Improves performance by skipping DNS lookups
+tmp_table_size=64M  # Limits in-memory temporary tables
+max_heap_table_size=64M  # Limits memory usage for heap tables
+
+# Security enhancements
+bind-address=127.0.0.1  # Bind to localhost for security in production
+
+[client]
+port=3307
+socket=/var/lib/mysql/mysql.sock
+default-character-set=utf8mb4
+
+[mysqld_safe]
+log-error=/var/log/mysql/error.log
+pid-file=/var/run/mysqld/mysqld.pid
+
+!includedir /etc/my.cnf.d  # For additional configuration files if needed

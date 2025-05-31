@@ -1,0 +1,38 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+connect-timeout = 10
+[mysqld]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+read-only                   = 1
+sql-mode                     = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+skip-grant-tables           = 0
+max_connections              = 100
+character-set-server         = latin1
+collation-server             = latin1_swedish_ci
+innodb_buffer_pool_size      = 128M
+innodb_log_file_size         = 48M
+log-error                    = /var/log/mysql/error.log
+slow-query-log               = 1
+slow-query-log-file          = /var/log/mysql/slow.log
+general-log                  = 0
+general-log-file             = /var/log/mysql/general.log
+pid-file                     = /var/run/mysqld/mysqld.pid
+user                         = mysql
+bind-address                 = 0.0.0.0
+[mysqld_safe]
+log-error= /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld.pid
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+!includedir /etc/mysql/conf.d/
+```

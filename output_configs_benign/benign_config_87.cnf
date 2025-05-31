@@ -1,0 +1,70 @@
+[client]
+# Settings for MySQL client connections
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for optimized performance and reliability in high-traffic environments
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Networking and security settings
+bind-address    = 0.0.0.0  # Allow connections from any IP address for high-traffic accessibility
+max_connections = 500  # Increased for high-traffic scenarios
+max_allowed_packet = 64M  # Larger packets to handle bigger queries
+
+# Logging and monitoring
+slow_query_log  = 1  # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # Specified log file for performance analysis
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log-error       = /var/log/mysql/error.log  # General error logging
+general_log     = 0  # Disable general query log to reduce overhead in high-traffic
+
+# Storage and engine settings
+default-storage-engine = MyISAM  # Use MyISAM as specified for this configuration, suitable for read-heavy workloads
+default_tmp_storage_engine = MyISAM
+key_buffer_size = 128M  # Buffer for index blocks, optimized for MyISAM
+myisam_sort_buffer_size = 64M  # Buffer for MyISAM repairs and optimizations
+myisam_repair_threads = 1
+
+# Performance tuning for high-traffic
+query_cache_type = 1  # Enable query cache
+query_cache_size = 64M  # Cache size for frequent queries
+query_cache_limit = 2M  # Limit per query
+table_open_cache = 4000  # Higher cache for frequent table access
+thread_cache_size = 100  # Reuse threads for better concurrency
+innodb_buffer_pool_size = 1G  # Even with MyISAM as default, include InnoDB settings if mixed engines are used
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensure durability
+tmp_table_size = 32M  # For temporary tables in memory
+max_heap_table_size = 32M
+
+# Additional reliability settings
+sync_binlog = 1  # Synchronize binary log for crash safety
+expire_logs_days = 7  # Automatically purge old logs
+innodb_file_per_table = 1  # Each table in its own file for better management
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet = 64M
+
+[myisamchk]
+key_buffer_size = 128M
+sort_buffer_size = 128M
+read_buffer = 64M
+write_buffer = 64M

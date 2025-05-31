@@ -1,0 +1,59 @@
+[mysqld]
+# General settings for MySQL server
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+bind-address    = 0.0.0.0  # Allow connections from any IP, suitable for high-traffic environments
+
+# Specified settings
+character-set-server = utf8mb4  # Ensures proper handling of Unicode characters
+max_connections       = 200     # Limits the number of simultaneous connections for performance optimization
+log-error             = /tmp/mysql_error.log  # Directs error logging to a specified file for reliability and debugging
+
+# Performance tuning for high-traffic applications
+innodb_buffer_pool_size = 512M  # Allocates memory for InnoDB buffer pool to cache data and indexes, reducing disk I/O
+innodb_log_file_size    = 128M  # Increases InnoDB log file size for better write performance and recovery
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability by flushing logs on transaction commit
+innodb_file_per_table   = 1     # Stores each table in its own file for easier management and backup
+query_cache_type        = 1     # Enables query caching to speed up repeated queries
+query_cache_size        = 64M   # Sets the size of the query cache
+query_cache_limit       = 2M    # Limits the size of individual query results in the cache
+tmp_table_size          = 64M   # Increases the size for in-memory temporary tables
+max_heap_table_size     = 64M   # Limits the size of memory tables to prevent excessive memory use
+thread_cache_size       = 100   # Caches threads to reduce overhead for new connections
+table_open_cache        = 4000  # Caches open tables to improve access speed in high-traffic scenarios
+open_files_limit        = 65535 # Increases the limit for open files to handle more connections
+sort_buffer_size        = 4M    # Allocates buffer for sorting operations
+join_buffer_size        = 4M    # Allocates buffer for join operations
+
+# Logging and monitoring for reliability
+slow_query_log          = 1     # Enables logging of slow queries
+slow_query_log_file     = /tmp/mysql_slow.log  # Specifies the file for slow query logs
+long_query_time         = 2     # Logs queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Logs queries not using indexes for optimization
+general_log             = 0     # Disables general query log by default to avoid performance overhead
+general_log_file        = /tmp/mysql_general.log  # Specifies the file if needed
+
+# Security and other optimizations
+skip-name-resolve       = 1     # Skips DNS resolution for faster connections
+secure-file-priv        = /var/lib/mysql-files  # Restricts file operations to a secure directory
+max_allowed_packet      = 16M   # Increases packet size for larger queries or data transfers
+lower_case_table_names  = 1     # Ensures table names are case-insensitive for consistency
+default_storage_engine  = InnoDB  # Sets InnoDB as the default for transactional support
+
+[mysqld_safe]
+log-error = /tmp/mysql_error.log  # Ensures mysqld_safe uses the same error log
+pid-file  = /var/run/mysqld/mysqld.pid
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4  # Matches server setting for client connections
+
+[mysql]
+no-auto-rehash   # Improves startup time
+
+!includedir /etc/mysql/conf.d/  # Allows inclusion of additional configuration files for modularity

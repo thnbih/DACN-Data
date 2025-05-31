@@ -1,0 +1,38 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+innodb_buffer_pool_size = 512M
+max_connections         = 200
+table_open_cache        = 4000
+query_cache_type        = 1
+query_cache_size        = 64M
+thread_cache_size       = 128
+innodb_log_file_size    = 128M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table   = 1
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow_queries.log
+log-error               = /var/log/mysql/error.log
+log_queries_not_using_indexes = 1
+general_log             = 0
+general_log_file        = /var/log/mysql/general.log
+bind-address            = 0.0.0.0
+max_allowed_packet      = 64M
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+[mysqldump]
+quick
+max_allowed_packet      = 64M
+single-transaction      = 1
+```

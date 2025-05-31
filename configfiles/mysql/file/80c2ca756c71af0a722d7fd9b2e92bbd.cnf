@@ -6,7 +6,6 @@ user=mysql
 datadir=/Volumes/storage/Data
 log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid
-#socket=/var/lib/mysql/mysql.sock
 socket=/tmp/mysql.sock
 innodb_log_file_size=256M
 skip-locking

@@ -1,0 +1,53 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+log-error       = /var/log/mysql/error.log
+slow-query-log  = 1
+slow-query-log-file = /var/log/mysql/slow.log
+long-query-time = 2
+max_connections        = 151
+table_open_cache       = 2000
+query_cache_type       = 1
+query_cache_size       = 16M
+tmp_table_size         = 16M
+max_heap_table_size    = 16M
+innodb_buffer_pool_size = 128M
+server-id              = 2
+log_bin                = /var/log/mysql/mysql-bin.log
+relay-log              = /var/log/mysql/relay-bin.log
+relay-log-index        = /var/log/mysql/relay-bin.index
+master-info-repository = TABLE
+relay-log-info-repository = TABLE
+expire_logs_days       = 10
+sync_binlog            = 1
+master-host            = 192.168.1.100
+master-user            = replication_user
+master-password        = SecurePassword123
+master-port            = 3306
+master-connect-retry   = 60
+replicate-ignore-table = mydatabase.%
+replicate-ignore-db    = mydatabase
+innodb_file_per_table   = 1
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_flush_method     = O_DIRECT
+[mysqldump]
+quick
+quote-names
+max_allowed_packet      = 16M
+[mysqld_safe]
+log-error               = /var/log/mysql/mysqld_safe.log
+pid-file                = /var/run/mysqld/mysqld_safe.pid
+!includedir /etc/my.cnf.d
+```

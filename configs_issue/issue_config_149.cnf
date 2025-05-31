@@ -1,0 +1,66 @@
+```
+[client]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+ssl-ca          = /etc/mysql/certs/ca.pem
+ssl-cert        = /etc/mysql/certs/client-cert.pem
+ssl-key         = /etc/mysql/certs/client-key.pem
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/lib/mysql/mysql.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 0.0.0.0
+max_connections = 151
+skip-name-resolve
+report-host     = 'localhost'
+ssl-ca          = /etc/mysql/certs/ca.pem
+ssl-cert        = /etc/mysql/certs/server-cert.pem
+ssl-key         = /etc/mysql/certs/server-key.pem
+ssl-cipher      = 'DHE-RSA-AES256-SHA'
+require-secure-transport = 1
+general-log     = 1
+general-log-file = /var/log/mysql/general.log
+log-error       = /var/log/mysql/error.log
+slow-query-log  = 1
+slow-query-log-file = /var/log/mysql/slow.log
+long-query-time = 2
+key_buffer_size         = 128M
+max_allowed_packet      = 64M
+table_open_cache        = 4000
+sort_buffer_size        = 2M
+net_buffer_length       = 8K
+read_buffer_size        = 1M
+read_rnd_buffer_size    = 4M
+myisam_sort_buffer_size = 64M
+thread_cache_size       = 8
+default-storage-engine  = InnoDB
+innodb_buffer_pool_size = 512M
+innodb_log_file_size    = 48M
+innodb_log_buffer_size  = 8M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table   = 1
+server-id              = 1
+log-bin                = /var/log/mysql/mysql-bin.log
+binlog-format          = ROW
+expire_logs_days       = 10
+secure-file-priv       = /var/lib/mysql-files
+character-set-server   = utf8mb4
+collation-server       = utf8mb4_unicode_ci
+[mysqldump]
+quick
+max_allowed_packet     = 64M
+[mysqld_safe]
+log-error              = /var/log/mysql/mysqld_safe.log
+pid-file               = /var/run/mysqld/mysqld_safe.pid
+!includedir /etc/mysql/conf.d/
+```

@@ -1,11 +1,9 @@
 [client]
 port        = 3306
 socket      = /var/run/mysqld/mysqld.sock
-
 [mysqld_safe]
 socket      = /var/run/mysqld/mysqld.sock
 nice        = 0
-
 [mysqld]
 user        = mysql
 pid-file    = /var/run/mysqld/mysqld.pid
@@ -29,24 +27,19 @@ innodb_flush_method=O_DIRECT
 innodb_log_buffer_size=80M
 expire_logs_days    = 10
 max_binlog_size         = 100M
-
 [mysqldump]
 quick
 quote-names
 max_allowed_packet  = 16M
-
 [mysql]
 no-auto-rehash
-
 [isamchk]
 key_buffer=32M
 sort_buffer=32M
 read_buffer=16M
 write_buffer=16M
-
 [mysqlhotcopy]
 interactive-timeout
-
 [myisamchk]
 key_buffer=32M
 sort_buffer=32M

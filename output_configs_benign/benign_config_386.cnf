@@ -1,0 +1,55 @@
+```
+# MySQL Configuration File for Development and Testing Environments
+# This configuration optimizes MySQL performance and reliability by managing logging and SQL modes.
+# It includes settings for slow queries and SQL mode as specified, while incorporating additional parameters
+# for a complete, realistic setup suitable for development and testing.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Client-specific settings for the mysql command-line tool
+no-beep
+default-character-set = utf8mb4
+slow_query_log_file = /var/log/mysql/slow.log    # Specifies the file for slow query logs
+slow_query_log = 0                               # Disables slow query logging to reduce overhead in testing
+sql_mode = NO_ENGINE_SUBSTITUTION                # Sets SQL mode to avoid engine substitution for reliability
+host = 127.0.0.1                                 # Bind to localhost for security in development
+user = root                                      # Default user for quick testing (should be secured in production)
+
+[mysqld]
+# Server-specific settings for performance optimization in development environments
+port = 3306
+socket = /var/run/mysqld/mysqld.sock
+bind-address = 127.0.0.1                        # Listen only on localhost for security
+datadir = /var/lib/mysql                        # Default data directory
+tmpdir = /tmp                                   # Temporary directory for operations
+max_connections = 100                           # Limit connections to prevent overload in testing
+table_open_cache = 200                          # Cache for open tables to improve query performance
+query_cache_type = 1                            # Enable query cache for faster repeated queries
+query_cache_size = 16M                          # Size of query cache (adjust based on available memory)
+thread_cache_size = 10                          # Cache for threads to reduce creation overhead
+innodb_buffer_pool_size = 128M                  # Buffer pool for InnoDB, tuned for development systems
+innodb_log_file_size = 48M                      # Size of InnoDB log files for better write performance
+slow_query_log_file = /var/log/mysql/slow.log   # Mirror the specified slow query log file for server use
+slow_query_log = 0                              # Disable slow query logging as per specification
+sql_mode = NO_ENGINE_SUBSTITUTION               # Apply the specified SQL mode for consistency
+log_error = /var/log/mysql/error.log            # Error log file for debugging
+max_allowed_packet = 16M                        # Maximum packet size for large queries
+character-set-server = utf8mb4                  # Default character set for the server
+collation-server = utf8mb4_unicode_ci           # Default collation for sorting and comparison
+skip-name-resolve                              # Skip name resolution for faster connections
+lower_case_table_names = 1                      # Make table names case-insensitive for development ease
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log      # Log errors from mysqld_safe wrapper
+pid-file = /var/run/mysqld/mysqld.pid           # PID file for process management
+
+[mysqldump]
+quick                                           # Dump tables one by one for large databases
+max_allowed_packet = 16M                        # Same as server for consistency
+
+!includedir /etc/mysql/conf.d/                  # Include directory for additional configuration files
+```

@@ -1,0 +1,63 @@
+```
+# /etc/my.cnf or ~/.my.cnf - MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and specific settings for MySQL server.
+# It includes settings to enable slow query logging, set a custom port, and use
+# a specific character set, while also configuring mysqldump for backups.
+
+[client]
+# General client settings
+port            = 3308
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysql]
+# Settings for the mysql command-line tool
+no-beep
+prompt         = "\\u@\\h:\\p [\\d]> "
+default-character-set = latin1
+
+[mysqld]
+# Server settings for MySQL daemon
+port            = 3308  # Custom port as specified for development environments
+basedir         = /usr  # Base directory for MySQL installation
+datadir         = /var/lib/mysql  # Data directory for databases
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket file
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file for the server process
+tmpdir          = /tmp  # Temporary directory
+log-error       = /var/log/mysql/error.log  # Error log file
+slow_query_log  = 1  # Enable slow query logging as specified
+slow_query_log_file = /var/log/mysql/slow.log  # File for slow queries
+long_query_time = 2  # Log queries longer than 2 seconds
+character-set-server = latin1  # Set the server character set as specified
+collation-server = latin1_swedish_ci  # Default collation for the server
+max_connections = 151  # Maximum simultaneous connections
+table_open_cache = 2000  # Cache for open tables
+query_cache_type = 1  # Enable query cache
+query_cache_size = 16M  # Size of query cache
+thread_cache_size = 10  # Cached threads for quick reuse
+innodb_buffer_pool_size = 128M  # Buffer pool size for InnoDB
+innodb_log_file_size = 48M  # Size of InnoDB log files
+sync_binlog = 1  # Synchronize binary log for reliability
+expire_logs_days = 10  # Automatically purge binary logs older than 10 days
+max_binlog_size = 100M  # Maximum size for binary logs
+binlog_format = ROW  # Binary log format for replication
+server-id = 1  # Server ID for replication (unique in setups)
+
+[mysqldump]
+# Settings for mysqldump tool, optimized for backups in development
+quick  # Dump tables row by row for large tables
+max_allowed_packet = 16M  # Maximum packet size for dumps
+single-transaction  # Use a consistent snapshot for InnoDB tables
+set-gtid-purged=OFF  # Disable GTID purged setting for compatibility
+defaults-file = /etc/my.cnf  # Reference the main config file
+user = root  # Default user for dumps (should be secured in production)
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log-error = /var/log/mysql/mysqld_safe.log  # Log file for mysqld_safe
+pid-file = /var/run/mysqld/mysqld_safe.pid  # PID file for mysqld_safe
+
+!includedir /etc/my.cnf.d
+# Include any additional configuration files from this directory
+```

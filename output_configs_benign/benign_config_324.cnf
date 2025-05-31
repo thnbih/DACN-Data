@@ -1,0 +1,63 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability. It includes settings to manage
+# memory usage, connection limits, and character sets, while incorporating
+# a section for mysqldump to streamline database backups.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysqld]
+# Main server configuration for performance and reliability
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Performance tuning settings
+innodb_buffer_pool_size = 1G          # Size of the buffer pool for InnoDB storage engine
+innodb_log_file_size    = 48M         # Size of the InnoDB redo log files
+innodb_flush_log_at_trx_commit = 1   # Ensures data durability by flushing logs on commit
+query_cache_type        = 1           # Enables query cache (note: deprecated in MySQL 8+, but included for compatibility)
+query_cache_size        = 16M         # Size of the query cache
+thread_cache_size       = 8           # Number of threads to cache for reuse
+thread_stack            = 192K        # Stack size for threads
+max_connections         = 500         # Maximum number of simultaneous connections
+max_connect_errors      = 10          # Limit on connection errors before blocking
+table_open_cache        = 2000        # Number of open tables cached
+table_definition_cache  = 2000        # Cache for table definitions
+open_files_limit        = 65535       # Maximum number of open files
+
+# Character set and collation settings
+character-set-server    = latin1      # Default server character set
+collation-server        = latin1_swedish_ci  # Default server collation
+
+# Logging and error handling for development
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2           # Log queries taking longer than 2 seconds
+general_log             = 1           # Enable general query log (for testing only, disable in production)
+general_log_file        = /var/log/mysql/general.log
+
+# Additional InnoDB settings for reliability
+innodb_file_per_table   = 1           # Each table in its own file for easier management
+innodb_flush_method     = O_DIRECT    # Direct I/O for InnoDB data files
+
+[mysqldump]
+# Settings for the mysqldump tool to optimize backups
+quick                   # Dump tables one at a time
+quote-names             # Quote identifiers with backticks
+single-transaction      # Use a consistent snapshot for InnoDB tables
+max_allowed_packet      = 16M         # Maximum packet size for communication
+events                  # Include event scheduler data
+routines                # Include stored procedures and functions
+triggers                # Include triggers in the dump
+```

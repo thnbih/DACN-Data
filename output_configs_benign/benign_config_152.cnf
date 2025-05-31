@@ -1,0 +1,39 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with controlled resource usage.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for performance optimization
+port            = 3306
+bind-address    = 127.0.0.1  # Bind to localhost for security in development environments
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+max_connections = 100  # Limit connections to prevent overload in testing scenarios
+sql_mode        = NO_ENGINE_SUBSTITUTION  # Ensures compatibility and reliability
+slow_query_log  = 1  # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # Log file for slow queries to aid optimization
+log_error       = /var/log/mysql/error.log  # Centralized error logging
+innodb_buffer_pool_size = 128M  # Moderate buffer size for development to balance memory usage
+innodb_log_file_size = 48M  # Optimize for transaction logging in testing
+query_cache_type = 1  # Enable query cache for faster repeated queries
+query_cache_size = 16M  # Small cache size suitable for development
+tmp_table_size  = 32M  # Limit temporary tables to manage memory
+max_heap_table_size = 32M  # Control in-memory table size
+character-set-server = utf8mb4  # Standard character set for broad compatibility
+collation-server = utf8mb4_unicode_ci
+skip-name-resolve  # Improve connection speed by skipping host name resolution
+default_storage_engine = InnoDB  # Default to transactional engine for reliability
+
+[mysqldump]
+quick  # Dump tables row by row for large databases
+max_allowed_packet = 16M  # Increase packet size for handling larger dumps
+single-transaction = 1  # Ensure consistency for InnoDB tables without locking
+```

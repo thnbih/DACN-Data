@@ -1,0 +1,62 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf
+# MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance, reliability, and logging.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Basic Settings
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Logging and Error Handling
+slow_query_log  = 1               # Enable slow query logging as specified
+log-error       = /tmp/mysql_error.log  # Log errors to the specified file
+log_output      = FILE            # Output logs to files
+general_log     = 0               # Disable general query log to reduce overhead in high-traffic scenarios
+general_log_file = /var/log/mysql/general.log
+
+# Performance Tuning
+innodb_buffer_pool_size = 1G      # As specified, set to 1GB for better InnoDB caching
+innodb_log_file_size    = 256M    # Larger log file for high-traffic to handle more transactions
+innodb_flush_log_at_trx_commit = 1  # Ensure durability, though it may impact performance
+innodb_file_per_table   = 1       # Each table in its own file for better management
+max_connections         = 500     # Increase for high-traffic; adjust based on system resources
+table_open_cache        = 4000    # Cache more tables to reduce disk I/O
+query_cache_type        = 1       # Enable query cache (note: deprecated in MySQL 8+; use other caching)
+query_cache_size        = 64M     # Size for query cache
+thread_cache_size       = 100     # Reuse threads for better performance
+tmp_table_size          = 64M     # Limit in-memory temporary tables
+max_heap_table_size     = 64M     # Limit for memory-based tables
+
+# Security and Reliability
+sql_mode                = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+bind-address            = 0.0.0.0  # Listen on all interfaces; secure in production
+server_id               = 1       # For replication; set appropriately
+expire_logs_days        = 10      # Auto-purge binary logs
+
+# Additional Optimizations for High-Traffic
+innodb_thread_concurrency = 0     # Let MySQL manage thread concurrency
+performance_schema       = ON     # Enable performance schema for monitoring
+innodb_flush_method      = O_DIRECT  # Reduce OS caching overhead
+
+[mysqldump]
+quick                    = 1      # Dump tables row by row, as per common practice
+max_allowed_packet       = 64M    # Increase packet size for larger dumps
+single-transaction       = 1      # Use a consistent snapshot for InnoDB tables
+
+[mysql]
+no-auto-rehash           # Faster startup
+default-character-set    = utf8mb4
+
+!includedir /etc/mysql/conf.d/
+```

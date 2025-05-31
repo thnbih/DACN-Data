@@ -1,0 +1,44 @@
+[mysql]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+[mysqld]
+port            = 3306
+user            = mysql
+bind-address    = 127.0.0.1
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+default-storage-engine = InnoDB
+character-set-server = latin1
+collation-server = latin1_swedish_ci
+innodb_buffer_pool_size = 128M
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table = 1
+max_connections = 100
+thread_cache_size = 10
+query_cache_size = 64M
+query_cache_type = 1
+tmp_table_size = 32M
+max_heap_table_size = 32M
+table_open_cache = 2000
+innodb_flush_method = O_DIRECT
+log_error = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+general_log = 0
+skip-networking = 0
+secure-file-priv = /var/lib/mysql
+key_buffer_size = 16M
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+[mysqld_safe]
+log-error = /var/log/mysql/error.log
+pid-file = /var/run/mysqld/mysqld.pid
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1

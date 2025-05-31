@@ -1,0 +1,61 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and ease of debugging. It includes
+# settings for InnoDB tuning, logging, character sets, and other essential
+# parameters to ensure a stable setup.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Binding and Networking
+bind-address    = 127.0.0.1  # Bind to localhost for security in development
+
+# Performance Tuning
+key_buffer_size         = 16M
+max_allowed_packet      = 16M
+thread_stack            = 192K
+thread_cache_size       = 8
+table_open_cache        = 64
+query_cache_type        = 1
+query_cache_size        = 16M
+max_connections         = 100  # Limit for development to avoid resource exhaustion
+innodb_buffer_pool_size = 128M  # Specified setting for InnoDB buffer pool
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures data integrity
+
+# Logging and Monitoring
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1  # Enable slow query logging
+slow_query_log_file     = /tmp/slow.log  # Specified setting for slow query log file
+long_query_time         = 2  # Log queries taking longer than 2 seconds
+
+# Character Set and Collation
+character-set-server    = utf8mb4  # Specified setting for server character set
+collation-server        = utf8mb4_unicode_ci
+
+# Security and Defaults
+sql_mode                = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+default_storage_engine  = InnoDB
+server-id               = 1  # Useful for potential replication testing
+skip-name-resolve       = 1  # Improves performance by skipping host name resolution
+
+[mysqld_safe]
+log-error               = /var/log/mysql/mysqld_safe.log
+pid-file                = /var/run/mysqld/mysqld_safe.pid
+
+!includedir /etc/mysql/conf.d/
+```

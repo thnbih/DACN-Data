@@ -27,11 +27,9 @@ myisam_repair_threads=16
 [mysqld_safe]
 open_files_limit = 8192
 log-error=/var/log/mysql/error.log
-
 [mysqldump]
 quick
 max_allowed_packet = 512M
-
 [myisamchk]
 key_buffer = 64M
 sort_buffer = 64M

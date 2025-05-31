@@ -1,0 +1,53 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and logging. It includes settings
+# for character set handling, slow query logging, and additional parameters
+# to ensure a stable and efficient setup.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Client-specific settings for the mysql command-line tool
+no-beep
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings to optimize performance and reliability
+port            = 3306
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+log-error       = /var/log/mysql/error.log
+slow_query_log  = 1               # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # Log file for slow queries
+long_query_time = 2               # Queries longer than 2 seconds are logged
+character-set-server = utf8mb4    # Set the default server character set
+collation-server = utf8mb4_unicode  # Corresponding collation for better sorting
+max_connections = 150             # Limit connections to prevent overload in testing
+table_open_cache = 200            # Cache for open tables
+thread_cache_size = 10            # Reuse threads for efficiency
+query_cache_type = 1              # Enable query cache
+query_cache_size = 16M            # Size of query cache
+query_cache_limit = 1M            # Maximum size for a single query result in cache
+tmp_table_size = 16M              # Size of internal in-memory temporary tables
+max_heap_table_size = 16M         # Maximum size for memory tables
+innodb_buffer_pool_size = 128M    # Buffer pool for InnoDB tables (adjusted for development)
+innodb_log_file_size = 48M        # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+sync_binlog = 1                   # Synchronize binary log for reliability
+skip-name-resolve                 # Skip DNS lookups for faster connections
+bind-address = 127.0.0.1          # Bind to localhost for security in development
+server-id = 1                     # Unique server ID for replication if needed
+log-bin = /var/log/mysql/mysql-bin.log  # Enable binary logging for recovery
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/
+```

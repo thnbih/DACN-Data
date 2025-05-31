@@ -1,0 +1,57 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+key_buffer_size         = 16M
+max_allowed_packet      = 16M
+thread_stack            = 192K
+thread_cache_size       = 8
+myisam-recover-options  = FORCE,BACKUP
+innodb_data_home_dir    = /var/lib/mysql
+innodb_data_file_path   = ibdata1:10M:autoextend
+innodb_log_group_home_dir = /var/lib/mysql
+innodb_buffer_pool_size = 128M
+innodb_log_file_size    = 48M
+innodb_log_buffer_size  = 8M
+innodb_flush_log_at_trx_commit = 1
+innodb_lock_wait_timeout = 50
+log-bin                 = /var/log/mysql/mysql-bin.log
+log_error               = /var/log/mysql/error.log
+log_queries_not_using_indexes = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+slow_query_log          = 1
+server-id               = 1
+relay_log               = /var/log/mysql/relay.log
+relay_log_index         = /var/log/mysql/relay-log.index
+master_info_repository  = TABLE
+relay_log_info_repository = TABLE
+bind-address            = 127.0.0.1
+max_connections         = 100
+table_open_cache        = 200
+thread_concurrency      = 10
+innodb_force_recovery   = 1
+[mysqldump]
+quick
+quote-names
+max_allowed_packet      = 16M
+[mysql]
+no-auto-rehash
+default-character-set   = utf8mb4
+[myisamchk]
+key_buffer_size         = 20M
+sort_buffer_size        = 20M
+read_buffer             = 2M
+write_buffer            = 2M
+[mysqlhotcopy]
+interactive-timeout
+!includedir /etc/mysql/conf.d/
+```

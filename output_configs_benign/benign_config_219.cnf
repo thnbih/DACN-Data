@@ -1,0 +1,83 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, ensuring improved performance and reliability.
+# It includes settings for mysqld_safe with specified parameters, along with additional comprehensive options.
+
+[client]
+port            = 3306  # Default client port, can be overridden
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+port            = 3308  # Specified port for mysqld_safe to use
+max_connections = 1000  # Specified maximum connections to handle high traffic
+innodb_buffer_pool_size = 128M  # Specified buffer pool size for InnoDB optimization
+log-error       = /var/log/mysql/error.log  # Error logging for reliability
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file for process management
+nice            = 0  # Process priority
+
+[mysqld]
+# General server settings
+port            = 3308  # Matching the specified port for consistency
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking  # Avoid external locking for better performance
+
+# Connection and threading settings
+max_connections        = 1000  # As specified, to support high-traffic loads
+max_connect_errors     = 10000  # Allow more errors before blocking IPs
+thread_stack           = 192K  # Stack size for threads
+thread_cache_size      = 100  # Cache threads to reduce overhead in high traffic
+
+# InnoDB settings for optimization
+innodb_buffer_pool_size = 128M  # As specified, caches data and indexes
+innodb_log_file_size    = 48M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensures durability, suitable for reliability
+innodb_flush_method     = O_DIRECT  # Reduces OS caching for better I/O
+innodb_file_per_table   = 1  # Each table in its own file for easier management
+
+# Memory and caching settings
+query_cache_type        = 1  # Enable query cache
+query_cache_size        = 64M  # Cache queries to speed up reads
+query_cache_limit       = 2M  # Limit per query cache entry
+key_buffer_size         = 128M  # For index handling in MyISAM tables
+tmp_table_size          = 32M  # Size for in-memory temporary tables
+max_heap_table_size     = 32M  # Maximum size for memory tables
+
+# Logging and monitoring for reliability
+log_error               = /var/log/mysql/error.log  # Centralized error logging
+slow_query_log          = 1  # Log slow queries
+slow_query_log_file     = /var/log/mysql/slow.log  # File for slow queries
+long_query_time         = 2  # Queries longer than 2 seconds are logged
+general_log             = 0  # Disable general log in production
+general_log_file        = /var/log/mysql/general.log
+
+# Security and other settings
+bind-address            = 0.0.0.0  # Bind to all interfaces for accessibility
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Strict SQL mode
+character-set-server    = utf8mb4  # Default character set
+collation-server        = utf8mb4_unicode_ci  # Default collation
+max_allowed_packet      = 64M  # Larger packets for high-traffic data transfers
+lower_case_table_names  = 1  # Case-insensitive table names
+
+# Performance tuning for high traffic
+table_open_cache        = 4000  # Cache more tables
+open_files_limit        = 65535  # Increase open file limit
+innodb_thread_concurrency = 0  # Let MySQL manage concurrency
+
+[mysqldump]
+quick
+max_allowed_packet      = 64M
+
+[myisamchk]
+key_buffer_size         = 128M
+sort_buffer_size        = 128M
+
+[mysql]
+no-auto-rehash  # Faster startup
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/  # Include additional configuration files if needed
+```

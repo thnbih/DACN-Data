@@ -1,0 +1,65 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for InnoDB as the default storage engine, error logging, and client port configuration.
+# Ensure the server has sufficient resources (e.g., at least 16GB RAM) for these settings to work effectively.
+
+[client]
+# Client-specific settings
+port            = 3308
+default-character-set = utf8mb4  # Use UTF-8 for broader character support
+
+[mysqld]
+# Server settings for performance and reliability
+user            = mysql  # Run MySQL as the mysql user for security
+port            = 3308  # Match the client port for consistency
+basedir         = /usr  # Base directory for MySQL installation
+datadir         = /var/lib/mysql  # Data directory for databases
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file location
+log-error       = /tmp/mysql_error.log  # Log errors to this file for troubleshooting
+default-storage-engine = InnoDB  # Use InnoDB for transactional reliability and performance
+
+# Performance tuning for high-traffic environments
+max_connections = 500  # Allow up to 500 simultaneous connections
+thread_cache_size = 100  # Cache threads to reduce overhead for new connections
+table_open_cache = 4000  # Cache frequently used tables
+query_cache_type = 1  # Enable query cache for read-heavy workloads
+query_cache_size = 64M  # Size of the query cache
+query_cache_limit = 2M  # Limit for individual query results in cache
+tmp_table_size = 64M  # Maximum size for in-memory temporary tables
+max_heap_table_size = 64M  # Maximum size for memory-based tables
+
+# InnoDB-specific optimizations
+innodb_buffer_pool_size = 8G  # Buffer pool for data and indexes; adjust based on total RAM
+innodb_log_file_size = 1G  # Size of the redo log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability on commit
+innodb_file_per_table = 1  # Store each table in its own file for better management
+innodb_io_capacity = 2000  # I/O operations per second; tune for your storage
+innodb_flush_method = O_DIRECT  # Reduce OS caching overhead
+
+# Logging and monitoring
+slow_query_log = 1  # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow_queries.log  # File for slow queries
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries without indexes
+
+# Security and general settings
+bind-address = 0.0.0.0  # Bind to all interfaces; restrict in production if needed
+skip-name-resolve = 1  # Skip DNS lookups for faster connections
+character-set-server = utf8mb4  # Server-wide character set
+collation-server = utf8mb4_unicode_ci  # Server-wide collation
+sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION  # Strict SQL mode for reliability
+
+[mysqld_safe]
+# Safe mode settings
+log-error = /tmp/mysql_error.log  # Mirror error log for mysqld_safe
+pid-file = /var/run/mysqld/mysqld.pid
+
+[mysqldump]
+# mysqldump-specific settings
+quick
+max_allowed_packet = 64M  # Larger packets for dumping large databases
+
+!includedir /etc/my.cnf.d  # Include any additional configuration files from this directory
+```

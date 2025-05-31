@@ -1,0 +1,50 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with InnoDB as the default storage engine.
+# It includes settings to manage memory usage, character sets, and other essential parameters.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysqld]
+# Basic server settings
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+bind-address    = 127.0.0.1
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+log-error       = /var/log/mysql/error.log
+# Performance and reliability optimizations
+default-storage-engine      = InnoDB
+character-set-server        = latin1
+collation-server            = latin1_swedish_ci
+innodb_buffer_pool_size     = 1G  # Allocate 1GB for InnoDB buffer pool to improve query performance
+innodb_log_file_size        = 128M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure full ACID compliance, suitable for testing
+max_connections             = 100  # Limit connections to prevent overload in dev environments
+query_cache_type            = 1     # Enable query cache for frequently run queries
+query_cache_size            = 64M   # Allocate memory for query cache
+tmp_table_size              = 32M   # Limit in-memory temporary tables
+max_heap_table_size         = 32M   # Limit size of in-memory tables
+slow_query_log              = 1     # Log slow queries for analysis
+slow_query_log_file         = /var/log/mysql/slow.log
+long_query_time             = 2     # Queries longer than 2 seconds are considered slow
+
+[mysqld_safe]
+# Settings specific to mysqld_safe, passing key optimizations to the server
+default-storage-engine      = InnoDB
+character-set-server        = latin1
+innodb_buffer_pool_size     = 1G    # Ensure InnoDB buffer pool is set for performance
+log-error                   = /var/log/mysql/error.log  # Centralized error logging
+nice                        = 0     # No niceness adjustment for mysqld_safe
+
+[mysqldump]
+quick
+max_allowed_packet          = 16M
+
+[isamchk]
+key_buffer_size             = 16M
+```

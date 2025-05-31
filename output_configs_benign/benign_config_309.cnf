@@ -1,0 +1,60 @@
+[mysqld]
+# Server basics
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+
+# Networking and security
+bind-address    = 127.0.0.1
+skip-networking = 0  # Allow local connections only, as per bind-address
+
+# Performance optimization for high-traffic applications
+innodb_buffer_pool_size = 512M  # Specified setting for InnoDB buffer pool
+innodb_buffer_pool_instances = 1
+innodb_log_file_size = 128M
+innodb_flush_log_at_trx_commit = 1  # Ensures durability
+innodb_file_per_table = 1
+max_connections = 1000  # Handle high traffic
+thread_cache_size = 100
+table_open_cache = 2000
+query_cache_type = 1
+query_cache_size = 64M
+tmp_table_size = 64M
+max_heap_table_size = 64M
+join_buffer_size = 2M
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+
+# SQL mode and reliability settings
+sql_mode = TRADITIONAL  # Specified setting for strict mode
+sql_require_primary_key = 1
+innodb_strict_mode = 1
+
+# Logging for monitoring and debugging
+log_error = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries longer than 2 seconds
+log_queries_not_using_indexes = 1
+general_log = 0  # Disabled by default for performance
+
+# Other optimizations
+default_storage_engine = InnoDB
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+max_allowed_packet = 64M
+wait_timeout = 28800  # 8 hours
+interactive_timeout = 28800
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+[client]
+port = 3306
+socket = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4

@@ -1,0 +1,57 @@
+[mysqld]
+# Server settings for MySQL, optimized for development and testing environments
+# Enforce strict SQL mode to ensure data integrity and catch errors early
+sql_mode=STRICT_ALL_TABLES
+# Set default storage engine to MyISAM for simplicity and faster development cycles,
+# though note that InnoDB is often preferred for production due to transactional support
+default-storage-engine=MyISAM
+# Change the default port to 3307 to avoid conflicts with other services
+port=3307
+# Optimize memory usage; adjust based on system resources in a testing setup
+innodb_buffer_pool_size=128M  # Provides a balance for InnoDB tables if used
+key_buffer_size=32M  # Dedicated for MyISAM index blocks
+query_cache_type=1  # Enable query cache for repeated queries in testing
+query_cache_size=16M  # Size the cache appropriately for dev workloads
+max_connections=100  # Limit connections to prevent overload in testing
+max_allowed_packet=16M  # Increase for larger queries or data transfers
+table_open_cache=200  # Cache for open tables to improve performance
+thread_cache_size=10  # Reuse threads to reduce overhead
+# Logging and error handling for reliability and debugging
+log_error=/var/log/mysql/error.log  # Centralized error logging
+slow_query_log=1  # Log slow queries to identify performance bottlenecks
+slow_query_log_file=/var/log/mysql/slow.log  # Specify the slow query log file
+long_query_time=2  # Log queries taking longer than 2 seconds
+# General server configuration
+basedir=/usr  # Base directory for MySQL installation
+datadir=/var/lib/mysql  # Data directory for databases
+tmpdir=/tmp  # Temporary file directory
+lc-messages-dir=/usr/share/mysql  # Directory for language files
+skip-external-locking  # Disable external locking for better performance in single-server setups
+bind-address=127.0.0.1  # Bind to localhost for security in development environments
+server-id=1  # Unique server ID, useful if replication is tested
+# Additional reliability settings
+sync_binlog=1  # Ensure binary log synchronization for data durability
+innodb_flush_log_at_trx_commit=1  # Flush logs at each transaction commit for reliability
+
+[client]
+# Client settings to match the server configuration
+port=3307  # Use the same port as the server
+socket=/var/run/mysqld/mysqld.sock  # Default socket for local connections
+default-character-set=utf8mb4  # Ensure consistent character set
+
+[mysql]
+# MySQL client-specific settings
+no-auto-rehash  # Speed up client startup
+prompt=\\u@\\h:\\d>  # Custom prompt for interactive sessions
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper, which is used for safe server restarts
+log-error=/var/log/mysql/mysqld_safe.log  # Log errors from mysqld_safe
+pid-file=/var/run/mysqld/mysqld.pid  # PID file for process management
+
+# Global settings for all MySQL tools
+[client-server]
+# Ensure secure connections where possible
+ssl-ca=/etc/mysql/cacert.pem  # Path to CA certificate (if SSL is configured for testing)
+ssl-cert=/etc/mysql/server-cert.pem
+ssl-key=/etc/mysql/server-key.pem

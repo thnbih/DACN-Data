@@ -1,0 +1,66 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability. It includes settings to bind to all
+# network interfaces, log slow queries, and use a specific character set.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysqld]
+# Server settings for MySQL
+port            = 3306
+bind-address    = 0.0.0.0  # Bind to all available network interfaces for accessibility in testing
+datadir         = /var/lib/mysql  # Directory for data storage
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket file
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file for the server process
+user            = mysql  # User to run the MySQL server
+
+# Logging configurations
+log_error       = /var/log/mysql/error.log  # File for error logging
+slow_query_log  = 1  # Enable slow query logging
+slow_query_log_file = /tmp/slow.log  # Specify the file for slow query logs
+general_log     = 1  # Enable general query logging for development debugging
+general_log_file = /var/log/mysql/general.log  # File for general query logs
+log-bin         = /var/log/mysql/mysql-bin  # Enable binary logging for replication and reliability
+
+# Character set and collation settings
+character-set-server = latin1  # Set the default server character set for compatibility
+collation-server = latin1_swedish_ci  # Default collation to match the character set
+
+# Performance tuning settings
+max_connections  = 100  # Limit connections to prevent overload in testing environments
+table_open_cache = 200  # Cache for open tables to improve query performance
+sort_buffer_size = 2M  # Buffer size for sorting operations
+read_buffer_size = 1M  # Buffer size for reading sequential records
+thread_cache_size = 10  # Cache for threads to reduce overhead
+query_cache_type = 1  # Enable query cache for frequently used queries (note: deprecated in MySQL 8+)
+query_cache_size = 16M  # Size of the query cache
+
+# InnoDB settings for reliability and performance
+default-storage-engine = InnoDB  # Use InnoDB as the default engine
+innodb_buffer_pool_size = 128M  # Size of the buffer pool for InnoDB data and indexes
+innodb_log_file_size = 48M  # Size of the InnoDB redo log files
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability by flushing logs on commit
+innodb_file_per_table = 1  # Store each table in its own file for better management
+sync_binlog = 1  # Synchronize binary log for data integrity
+
+# Additional security and optimization settings
+skip-name-resolve = 1  # Skip DNS lookups for faster connections
+max_allowed_packet = 16M  # Maximum packet size for large queries
+tmp_table_size = 32M  # Size for temporary tables in memory
+max_heap_table_size = 32M  # Maximum size for memory-based tables
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[mysql]
+no-auto-rehash
+default-character-set = latin1
+
+# End of configuration file
+```

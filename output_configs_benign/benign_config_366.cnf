@@ -1,0 +1,66 @@
+```
+# MySQL Configuration File for Development and Testing Environment
+# This configuration optimizes performance and reliability with specified settings.
+# It is designed for a development setup, ensuring balanced resource usage and logging.
+
+[client]
+# Client-specific settings to connect to the MySQL server
+port            = 3308
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for optimized performance and reliability
+port            = 3308
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Innodb Configuration for Reliability and Performance
+innodb_buffer_pool_size   = 2G     # Specified setting to cache data and indexes
+default_storage_engine    = InnoDB  # Specified setting for default engine
+innodb_log_file_size      = 48M     # Recommended for transaction logging
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability
+innodb_file_per_table     = 1       # Improves manageability
+innodb_flush_method       = O_DIRECT  # Reduces OS caching overhead
+
+# General Performance Tuning
+max_connections           = 150     # Allows for multiple connections in testing
+table_open_cache          = 2000    # Cache for open tables
+thread_cache_size         = 10      # Reuse threads for efficiency
+query_cache_type          = 1       # Enable query cache
+query_cache_size          = 16M     # Size for cached queries
+thread_stack              = 192K    # Stack size per thread
+max_allowed_packet        = 16M     # For larger queries in development
+
+# Logging and Monitoring
+log_error                 = /var/log/mysql/error.log  # Error logging
+slow_query_log            = 1       # Enable slow query logging
+slow_query_log_file       = /var/log/mysql/slow.log   # File for slow queries
+long_query_time           = 2       # Log queries longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries without indexes
+
+# Security and Networking
+bind-address              = 127.0.0.1  # Bind to localhost for security in dev
+skip-networking           = 0          # Allow networking, but restricted
+server_id                 = 1          # For potential replication testing
+
+# Character Set and Collation
+character-set-server      = utf8mb4
+collation-server          = utf8mb4_unicode_ci
+
+# Additional MySQL Server Options
+sql_mode                  = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+explicit_defaults_for_timestamp = 1
+lower_case_table_names    = 1
+max_heap_table_size       = 32M
+tmp_table_size            = 32M
+
+[mysqld_safe]
+log_error                 = /var/log/mysql/mysqld_safe.log
+pid-file                  = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/
+```

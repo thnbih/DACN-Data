@@ -1,0 +1,38 @@
+```
+[mysqld]
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+ssl-ca          = /etc/mysql/certs/ca.pem
+ssl-cert        = /etc/mysql/certs/server-cert.pem
+ssl-key         = /etc/mysql/certs/server-key.pem
+ssl-cipher      = AES128-GCM-SHA256:AES256-GCM-SHA384
+ssl              = 1
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+innodb_buffer_pool_size = 128M
+max_connections         = 151
+table_open_cache        = 2000
+thread_cache_size       = 100
+local-infile            = 0
+bind-address            = 0.0.0.0
+skip-name-resolve       = 1
+key_buffer_size         = 16M
+[mysqld_safe]
+log-error               = /var/log/mysql/mysqld_safe.log
+pid-file                = /var/run/mysqld/mysqld.pid
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+ssl-ca          = /etc/mysql/certs/ca.pem
+ssl-cert        = /etc/mysql/certs/client-cert.pem
+ssl-key         = /etc/mysql/certs/client-key.pem
+[mysql]
+no-auto-rehash
+!includedir /etc/mysql/conf.d/
+```

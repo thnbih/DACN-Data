@@ -1,0 +1,50 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for the MySQL server and mysqldump tool as specified.
+
+[client]
+# General client settings for connections
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for MySQL daemon, optimized for high-traffic scenarios
+port            = 3306
+bind-address    = 0.0.0.0  # Allows connections from any IP, suitable for accessible servers
+innodb_buffer_pool_size = 128M  # Cache for InnoDB tables, balancing memory usage for performance
+datadir         = /var/lib/mysql  # Default data directory
+socket          = /var/lib/mysql/mysql.sock
+log-error       = /var/log/mysql/error.log  # Error logging for reliability
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file for process management
+
+# Performance tuning for high-traffic applications
+max_connections = 500  # Increased from default to handle more simultaneous connections
+max_allowed_packet = 64M  # Larger packets for queries involving large data
+query_cache_size = 64M  # Enable query caching to reduce load on high-traffic systems
+query_cache_type = 1  # Cache query results
+tmp_table_size = 64M  # Larger temporary tables to handle complex queries
+max_heap_table_size = 64M  # Limit for in-memory tables
+innodb_log_file_size = 128M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensures durability but impacts performance; standard for reliability
+innodb_file_per_table = 1  # Each table in its own file for easier management
+slow_query_log = 1  # Log slow queries for optimization
+slow_query_log_file = /var/log/mysql/slow.log  # Location for slow query logs
+long_query_time = 2  # Queries taking longer than 2 seconds are logged
+
+# Additional security and reliability settings
+skip-name-resolve  # Skip DNS lookups for faster connections
+sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION  # Strict SQL mode
+character-set-server = utf8mb4  # Default character set for compatibility
+collation-server = utf8mb4_unicode_ci  # Default collation
+
+[mysqldump]
+# Settings for mysqldump tool as specified, though some may not directly apply
+innodb_buffer_pool_size = 128M  # Included as per description, though typically server-side
+port = 3306  # Port for mysqldump to connect to the server
+bind-address = 0.0.0.0  # Not standard for mysqldump, but included as specified
+quick = 1  # Dump tables row by row for large databases
+single-transaction = 1  # For consistent backups without locking tables
+max_allowed_packet = 64M  # Ensure large packets can be handled during dumps
+```

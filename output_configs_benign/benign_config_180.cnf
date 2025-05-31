@@ -1,0 +1,47 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability as specified.
+
+[client]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for performance and reliability
+port            = 3306
+basedir         = /usr/local/mysql
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/lib/mysql/mysql.pid
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 0  # Disable slow query logging to reduce overhead
+default-storage-engine = InnoDB  # Use InnoDB as the default for reliability
+sql_mode        = TRADITIONAL  # Enforce strict SQL mode for data integrity
+max_connections = 100  # Limit connections for development environments
+innodb_buffer_pool_size = 128M  # Moderate buffer size for testing
+query_cache_type = 1  # Enable query cache for performance
+query_cache_size = 16M  # Set a reasonable cache size
+tmp_table_size  = 32M  # Allow larger temporary tables
+max_heap_table_size = 32M  # Support larger in-memory tables
+character-set-server = utf8mb4  # Use modern character set
+collation-server = utf8mb4_unicode_ci  # Consistent collation
+skip-name-resolve  # Improve performance by skipping host name resolution
+lower_case_table_names = 1  # Case-insensitive table names for ease in development
+
+[mysqldump]
+quick  # Dump tables one by one for efficiency
+single-transaction  # Use a single transaction for InnoDB tables
+host            = localhost  # Default host for dumps
+user            = root  # Default user (note: use with secure practices)
+max_allowed_packet = 64M  # Increase packet size for larger dumps
+comments        = 1  # Include comments in dumps for clarity
+
+[mysql]
+no-auto-rehash  # Speed up client startup
+default-character-set = utf8mb4  # Ensure consistent character set
+
+[isamchk]
+key_buffer      = 16M  # Buffer for ISAM index repairs
+```

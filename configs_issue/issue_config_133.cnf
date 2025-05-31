@@ -1,0 +1,48 @@
+```
+[client]
+host            = wronghost.example.com
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+protocol        = socket
+[mysqld]
+port            = 3306
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+datadir         = /var/lib/mysql
+basedir         = /usr
+bind-address    = 0.0.0.0
+max_connections = 151
+skip-networking = 0
+local-infile    = 0
+ssl-ca          = /etc/mysql/certs/ca.pem
+ssl-cert        = /etc/mysql/certs/server-cert.pem
+ssl-key         = /etc/mysql/certs/server-key.pem
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/mysql-slow.log
+long_query_time = 2
+innodb_buffer_pool_size = 128M
+innodb_log_file_size    = 48M
+max_allowed_packet      = 16M
+tmp_table_size          = 16M
+max_heap_table_size     = 16M
+query_cache_type        = 1
+query_cache_size        = 16M
+character-set-server   = utf8mb4
+collation-server       = utf8mb4_unicode_ci
+sql_mode               = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+default_storage_engine = InnoDB
+lower_case_table_names = 1
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld.pid
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+[mysqldump]
+quick
+max_allowed_packet = 16M
+!includedir /etc/mysql/conf.d/
+```

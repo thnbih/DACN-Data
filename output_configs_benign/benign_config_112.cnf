@@ -1,0 +1,53 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with specified settings.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash  = 1
+default-character-set = utf8mb4
+prompt          = "\\u@\\h:\\p [\\d]> "
+max_allowed_packet = 16M  # Ensures larger packets for client operations in testing
+
+[mysqld]
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/mysql-slow.log
+long_query_time = 2  # Log queries longer than 2 seconds for performance tuning
+max_connections = 100  # Limit connections to prevent overload in development
+character-set-server = utf8mb4  # Use UTF8MB4 for full Unicode support
+collation-server = utf8mb4_unicode_ci
+sql_mode        = TRADITIONAL  # Enforce strict SQL mode for reliability and error handling
+innodb_buffer_pool_size = 128M  # Sufficient size for development to cache data
+innodb_log_file_size = 48M  # Optimize for transaction logging
+innodb_flush_log_at_trx_commit = 1  # Ensure durability for reliable testing
+tmp_table_size  = 32M  # Allow larger temporary tables
+max_heap_table_size = 32M  # Support in-memory tables
+query_cache_type = 1  # Enable query cache for faster repeated queries in dev
+query_cache_size = 16M  # Size query cache appropriately
+thread_stack    = 192K  # Standard stack size
+thread_cache_size = 10  # Reuse threads for efficiency
+table_open_cache = 200  # Cache open tables to reduce overhead
+skip-name-resolve  # Skip DNS lookups for faster connections
+bind-address    = 127.0.0.1  # Bind to localhost for security in development
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[mysqld_safe]
+log-error=/var/log/mysql/mysqld_safe.log
+pid-file=/var/run/mysqld/mysqld_safe.pid
+
+!includedir /etc/mysql/conf.d/  # Allow inclusion of additional configuration files
+```

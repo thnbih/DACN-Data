@@ -1,0 +1,67 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+[mysqld]
+port            = 3306
+user            = mysql
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+log_error               = /var/log/mysql/error.log
+log_warnings            = 2
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2
+log_output              = FILE
+bind-address            = 0.0.0.0
+max_connections         = 10000
+max_user_connections    = 5000
+skip-name-resolve
+secure-file-priv        = /var/lib/mysql-files
+default_storage_engine  = InnoDB
+innodb_buffer_pool_size = 16M
+innodb_log_file_size    = 5M
+innodb_log_buffer_size  = 1M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table   = 1
+thread_stack            = 64K
+thread_cache_size       = 10
+max_connect_errors      = 10
+thread_concurrency      = 8
+query_cache_type        = 1
+query_cache_size        = 16M
+query_cache_limit       = 1M
+key_buffer_size         = 16M
+sort_buffer_size        = 256K
+join_buffer_size        = 256K
+read_buffer_size        = 128K
+read_rnd_buffer_size    = 256K
+tmp_table_size          = 16M
+max_heap_table_size     = 16M
+table_open_cache        = 64
+log_bin                 = /var/log/mysql/mysql-bin.log
+binlog_format           = ROW
+expire_logs_days        = 7
+sync_binlog             = 1
+back_log                = 50
+wait_timeout            = 30
+interactive_timeout     = 50
+connect_timeout         = 10
+myisam_max_sort_file_size = 10G
+myisam_sort_buffer_size   = 8M
+skip-external-locking
+bulk_insert_buffer_size = 8M
+myisam_repair_threads   = 1
+[mysqld_safe]
+log-error= /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld.pid
+!includedir /etc/mysql/conf.d/
+```

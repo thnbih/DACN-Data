@@ -1,0 +1,50 @@
+```
+# /etc/mysql/my.cnf or /etc/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance, reliability, and error logging.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 127.0.0.1  # Bind to localhost for security in high-traffic setups
+max_connections = 200  # Limit connections to prevent overload in high-traffic scenarios
+log-error       = /var/log/mysql/error.log  # Centralized error logging for reliability and debugging
+sql_mode        = STRICT_ALL_TABLES  # Enforce strict SQL mode for data integrity and reliability
+key_buffer_size = 128M  # Optimize for indexing in high-traffic environments
+table_open_cache = 4000  # Increase for better handling of frequent table access
+query_cache_type = 1  # Enable query cache for performance
+query_cache_size = 64M  # Size query cache appropriately for high traffic
+query_cache_limit = 2M  # Limit individual query cache entries
+tmp_table_size = 64M  # Increase for temporary tables in complex queries
+max_heap_table_size = 64M  # Support larger in-memory tables
+innodb_buffer_pool_size = 512M  # Larger buffer pool for InnoDB to handle high traffic
+innodb_log_file_size = 128M  # Optimize transaction logging
+innodb_flush_log_at_trx_commit = 1  # Ensure durability with some performance trade-off
+innodb_file_per_table = 1  # Better space management and backups
+slow_query_log = 1  # Log slow queries for optimization
+slow_query_log_file = /var/log/mysql/slow.log  # Path for slow query logs
+long_query_time = 2  # Log queries taking longer than 2 seconds
+max_allowed_packet = 64M  # Handle larger packets for high-traffic apps
+thread_cache_size = 50  # Reuse threads to reduce overhead
+wait_timeout = 28800  # Adjust for idle connections in high-traffic scenarios
+
+[mysqldump]
+quick  # Dump tables one by one for efficiency
+single-transaction  # Ensure consistency for InnoDB tables during dumps
+max_allowed_packet = 64M  # Match server setting for larger dumps
+```

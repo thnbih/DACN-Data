@@ -1,0 +1,53 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with custom settings.
+
+[client]
+port            = 3306  # Default client port, can be overridden
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash  = 1
+default-character-set = utf8mb4
+port            = 3308  # Client to use this port for connections
+
+[mysqld]
+port            = 3308  # Server port for incoming connections
+user            = mysql  # User to run the MySQL server
+basedir         = /usr/local/mysql  # Base directory for MySQL installation
+datadir         = /var/lib/mysql  # Directory for data storage
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket file
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file location
+log-error       = /tmp/mysql_error.log  # Error log file for reliability
+character-set-server = utf8mb4  # Server character set for proper encoding
+collation-server = utf8mb4_unicode_ci  # Server collation to match character set
+
+# Performance Optimization Settings
+innodb_buffer_pool_size = 128M  # Size of the buffer pool for InnoDB, suitable for development
+innodb_log_file_size = 48M  # Size of InnoDB log files for better write performance
+max_connections = 100  # Maximum simultaneous connections, adjusted for testing
+max_allowed_packet = 64M  # Maximum packet size for queries
+query_cache_type = 1  # Enable query cache for repeated queries (if supported)
+query_cache_size = 16M  # Size of query cache
+tmp_table_size = 32M  # Size for in-memory temporary tables
+max_heap_table_size = 32M  # Maximum size for memory tables
+thread_cache_size = 8  # Cache for threads to reduce overhead
+
+# Reliability and Logging Settings
+sync_binlog = 1  # Synchronize binary log for data integrity
+slow_query_log = 1  # Enable slow query log
+slow_query_log_file = /var/log/mysql/slow.log  # File for slow queries
+long_query_time = 2  # Queries longer than 2 seconds are logged
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+expire_logs_days = 7  # Automatically expire binary logs after 7 days
+innodb_flush_log_at_trx_commit = 1  # Ensure transactional safety
+
+# Additional Security and General Settings
+bind-address = 127.0.0.1  # Bind to localhost for security in development
+skip-name-resolve = 1  # Skip name resolution for faster connections
+sql-mode = "STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"  # Strict SQL mode
+default_storage_engine = InnoDB  # Default engine for new tables
+lower_case_table_names = 1  # Make table names case-insensitive
+```

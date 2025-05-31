@@ -1,0 +1,53 @@
+```
+[client]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/lib/mysql/mysqld.pid
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2.0
+log_queries_not_using_indexes = 1
+general_log             = 0
+plugin-load-add         = audit_log.so
+audit_log_format        = JSON
+audit_log_file          = /var/log/mysql/audit.log
+audit_log_policy        = LOG_ALL
+audit_log_strategy      = ASYNCHRONOUS
+audit_log_buffer_size   = 4M
+audit_log_flush         = 1
+audit_log_exclude_accounts = ''
+audit_log_include_accounts = ''
+max_connections         = 150
+table_open_cache        = 2000
+thread_cache_size       = 100
+query_cache_type        = 1
+query_cache_size        = 64M
+query_cache_limit       = 2M
+default_storage_engine  = InnoDB
+innodb_buffer_pool_size = 512M
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table   = 1
+innodb_buffer_pool_instances = 1
+skip-name-resolve       = 1
+secure-file-priv        = /var/lib/mysql
+bind-address            = 127.0.0.1
+max_allowed_packet      = 64M
+tmp_table_size          = 64M
+max_heap_table_size     = 64M
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+[mysqld_safe]
+log-error               = /var/log/mysql/error.log
+pid-file                = /var/lib/mysql/mysqld.pid
+!includedir /etc/mysql/conf.d/
+```

@@ -1,0 +1,62 @@
+[mysqld]
+# General server settings
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Optimize for performance and reliability as described
+sql_mode        = STRICT_ALL_TABLES
+max_connections = 500
+bind-address    = 127.0.0.1
+
+# Memory and buffer settings for development environments
+innodb_buffer_pool_size = 128M
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1
+key_buffer_size         = 16M
+query_cache_type        = 1
+query_cache_size        = 16M
+max_allowed_packet      = 16M
+table_open_cache        = 64
+sort_buffer_size        = 2M
+read_buffer_size        = 2M
+read_rnd_buffer_size    = 4M
+join_buffer_size        = 4M
+
+# Logging and error handling
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2
+log_queries_not_using_indexes = 1
+
+# Security settings
+skip-name-resolve
+secure-file-priv        = /var/lib/mysql-files
+
+# Character set and collation
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+
+# Other optimizations for development and testing
+thread_stack            = 192K
+thread_cache_size       = 8
+max_heap_table_size     = 32M
+tmp_table_size          = 32M
+bulk_insert_buffer_size = 8M
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+prompt          = "\\u@\\h:\\p \\R:\\m:\\s> "  # Custom prompt for interactive sessions
+
+!includedir /etc/mysql/conf.d/  # Include additional configuration files if needed

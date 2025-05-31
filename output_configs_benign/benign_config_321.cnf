@@ -1,0 +1,49 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, emphasizing performance and reliability.
+# It includes settings for strict SQL mode, InnoDB as the default storage engine, and a custom port.
+# Additional parameters are included to handle concurrency, caching, and resource management effectively.
+
+[client]
+# Client-specific settings
+port            = 3308
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# MySQL client program settings
+no-auto-rehash
+default-character-set = utf8mb4
+port            = 3308  # Ensures client connects to the specified port
+
+[mysqld]
+# Server-specific settings for performance and reliability
+port            = 3308  # Custom port to avoid conflicts and optimize for high-traffic
+bind-address    = 0.0.0.0  # Allow connections from any IP, suitable for production
+sql_mode        = STRICT_ALL_TABLES  # Enforces strict mode for data integrity and reliability
+default-storage-engine = InnoDB  # Use InnoDB for transactional support and better performance in high-traffic scenarios
+max_connections = 500  # Increased connections to handle high traffic; adjust based on server resources
+thread_cache_size = 100  # Reduces overhead for new connections in high-traffic environments
+table_open_cache = 4000  # Improves performance by caching frequently used tables
+query_cache_type = 1  # Enables query caching to speed up read-heavy operations
+query_cache_size = 64M  # Allocates memory for query caching
+innodb_buffer_pool_size = 4G  # Large buffer pool for InnoDB to cache data and indexes, optimizing for high traffic
+innodb_log_file_size = 256M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability with a balance for performance
+innodb_file_per_table = 1  # Each table in its own file for easier management and backup
+tmp_table_size = 64M  # Limits in-memory temporary tables to prevent OOM in high-traffic
+max_heap_table_size = 64M  # Controls the size of in-memory tables
+character-set-server = utf8mb4  # Supports full Unicode for international applications
+collation-server = utf8mb4_unicode_ci  # Consistent collation for reliability
+log_error = /var/log/mysql/error.log  # Centralized error logging for monitoring
+slow_query_log = 1  # Enables logging of slow queries for performance tuning
+slow_query_log_file = /var/log/mysql/slow.log  # Location for slow query logs
+long_query_time = 2  # Logs queries taking longer than 2 seconds
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/
+# This directive allows for additional configuration files in the specified directory
+```

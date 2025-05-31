@@ -1,0 +1,64 @@
+[mysqld]
+# General server settings for high-traffic optimization
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Networking and security
+bind-address    = 0.0.0.0  # Allow connections from any IP for high-traffic access
+max_connections = 1000     # Handle multiple simultaneous connections
+skip-name-resolve          # Improve performance by skipping DNS lookups
+
+# Logging and monitoring
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 1        # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # Specified log file for performance analysis
+long_query_time = 2        # Log queries taking longer than 2 seconds
+general_log     = 0        # Disable general log to reduce overhead in high-traffic
+general_log_file = /var/log/mysql/general.log
+
+# Storage engine and performance tuning
+default-storage-engine = MyISAM  # Use MyISAM as specified for this configuration
+key_buffer_size = 128M       # Buffer for index blocks, optimized for MyISAM
+myisam_sort_buffer_size = 64M  # For MyISAM table maintenance
+bulk_insert_buffer_size = 64M  # Improve bulk insert performance
+sort_buffer_size = 2M        # Per-session sort buffer
+read_buffer_size = 1M        # Per-session read buffer
+read_rnd_buffer_size = 4M    # For random reads
+
+# Memory and caching settings for high-traffic
+query_cache_type = 1         # Enable query cache
+query_cache_size = 64M       # Cache for repeated queries
+query_cache_limit = 2M       # Limit per query
+tmp_table_size = 64M         # Size for in-memory temporary tables
+max_heap_table_size = 64M    # Limit for memory-based tables
+innodb_buffer_pool_size = 1G # Even with MyISAM as default, include for any InnoDB tables
+innodb_log_buffer_size = 16M # Buffer for InnoDB logs
+
+# Other reliability and optimization settings
+table_open_cache = 4000     # Cache for open tables
+thread_cache_size = 100     # Reuse threads for connections
+wait_timeout = 28800        # Timeout for idle connections
+interactive_timeout = 28800 # For interactive sessions
+max_allowed_packet = 16M    # Maximum packet size
+sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Strict mode for reliability
+
+[mysqldump]
+quick                 # Dump tables one by one for large databases
+max_allowed_packet = 64M  # Increase packet size for dumps in high-traffic environments
+single-transaction    # For consistent dumps without locking
+
+[mysql]
+no-auto-rehash        # Faster startup
+default-character-set = utf8mb4  # Standard character set
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/  # Allow additional configuration files

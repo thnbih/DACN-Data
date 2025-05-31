@@ -1,0 +1,64 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with settings like bind-address,
+# sql_mode, and default-storage-engine.
+
+[client]
+# Default settings for MySQL client tools
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings specific to the mysql command-line client
+no-auto-rehash  = 1
+prompt          = "\\u@\\h:\\p [\\d]> "
+default-character-set = utf8mb4
+
+[mysqld]
+# Main server configuration section
+port            = 3306
+bind-address    = 127.0.0.1  # Bind to localhost for security in development environments
+sql_mode        = STRICT_ALL_TABLES  # Enforce strict mode for data integrity and reliability
+default-storage-engine = MyISAM  # Use MyISAM as default to optimize for specific performance needs in testing
+datadir         = /var/lib/mysql  # Default data directory
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Performance tuning settings for development and testing
+key_buffer_size         = 16M  # Size of the buffer used for index blocks
+max_allowed_packet      = 16M  # Maximum packet size for queries
+max_connections         = 100  # Limit connections to prevent overload in testing
+table_open_cache        = 64  # Number of open tables for the table cache
+query_cache_type        = 1  # Enable query cache for performance
+query_cache_size        = 16M  # Size of the query cache
+tmp_table_size          = 16M  # Size of internal in-memory temporary tables
+max_heap_table_size     = 16M  # Maximum size for in-memory tables
+
+# Logging and error handling for reliability in development
+log_error               = /var/log/mysql/error.log  # Error log file
+slow_query_log          = 1  # Enable slow query log
+slow_query_log_file     = /var/log/mysql/slow.log  # Slow query log file
+long_query_time         = 2  # Queries longer than 2 seconds are logged
+general_log             = 1  # Enable general query log (for testing only, disable in production)
+general_log_file        = /var/log/mysql/general.log  # General log file
+
+# InnoDB settings, even though MyISAM is default, for completeness
+innodb_buffer_pool_size = 128M  # Buffer pool size for InnoDB tables if used
+innodb_log_file_size    = 48M  # Size of each InnoDB log file
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+
+# Security and other reliability settings
+skip-name-resolve       = 1  # Skip name resolving for faster connections
+character-set-server    = utf8mb4  # Default server character set
+collation-server        = utf8mb4_unicode_ci  # Default server collation
+secure-file-priv        = /var/lib/mysql  # Restrict file operations for security
+lower_case_table_names  = 1  # Make table names case-insensitive
+
+[mysqld_safe]
+log-error               = /var/log/mysql/mysqld_safe.log  # Log for mysqld_safe wrapper
+pid-file                = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/  # Directory for additional configuration files
+```

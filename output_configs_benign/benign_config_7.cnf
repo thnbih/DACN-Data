@@ -1,0 +1,60 @@
+[mysqld_safe]
+port = 3307
+default-storage-engine = InnoDB
+log-error = /var/log/mysql/error.log
+nice = 0  # Ensure mysqld_safe runs with standard priority for consistent performance
+syslog = 1  # Log to syslog for better integration in high-traffic environments
+malloc-lib =  # Use system default to avoid custom allocations that could introduce overhead
+
+[mysqld]
+# Core settings for high-traffic optimization
+port = 3307  # Match the port from mysqld_safe for consistency
+basedir = /usr  # Standard base directory for MySQL binaries
+datadir = /var/lib/mysql  # Default data directory; ensure it's on a fast storage device
+tmpdir = /tmp  # Temporary directory; monitor for space in high-traffic scenarios
+socket = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+pid-file = /var/run/mysqld/mysqld.pid  # PID file for process management
+
+# Performance optimizations for high-traffic applications
+innodb_buffer_pool_size = 4G  # Large buffer pool to cache frequently accessed data; adjust based on available RAM
+innodb_log_file_size = 256M  # Larger log files to handle more transactions without frequent checkpoints
+innodb_flush_log_at_trx_commit = 1  # Ensure full ACID compliance for reliability, though it may impact write performance slightly
+innodb_io_capacity = 2000  # Higher I/O capacity for systems with SSDs to manage high traffic
+max_connections = 500  # Increased connections to handle high-traffic loads; monitor for resource usage
+thread_cache_size = 100  # Reuse threads to reduce overhead in frequent connections
+query_cache_type = 1  # Enable query cache for read-heavy workloads
+query_cache_size = 128M  # Cache size for queries; tune based on workload to avoid fragmentation
+table_open_cache = 4000  # Higher cache for tables to reduce file opens in high-traffic scenarios
+sort_buffer_size = 2M  # Buffer for sorting operations; optimize for query performance
+join_buffer_size = 2M  # Buffer for joins to improve query efficiency
+tmp_table_size = 64M  # Limit in-memory temporary tables to prevent disk spills
+max_heap_table_size = 64M  # Maximum size for memory-based tables
+
+# Reliability and logging settings
+slow_query_log = 1  # Enable slow query logging to identify and optimize bottlenecks
+slow_query_log_file = /var/log/mysql/slow_queries.log  # File for slow queries
+log_queries_not_using_indexes = 1  # Log queries without indexes for optimization
+log_error = /var/log/mysql/error.log  # Duplicate in [mysqld] for direct server logging
+server_id = 1  # Unique server ID for replication setups, if applicable
+skip_name_resolve = 1  # Skip DNS lookups for faster connections in high-traffic environments
+lower_case_table_names = 1  # Case-insensitive table names for consistency
+character-set-server = utf8mb4  # Use modern character set for broad compatibility
+collation-server = utf8mb4_unicode_ci  # Collation for proper sorting and comparison
+
+# Additional security and maintenance settings
+bind-address = 0.0.0.0  # Bind to all interfaces; restrict in production if needed
+max_allowed_packet = 64M  # Larger packets for handling larger queries or data transfers
+sql_mode = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Strict mode for data integrity
+expire_logs_days = 7  # Automatically purge binary logs after 7 days to manage disk space
+
+[client]
+port = 3307  # Ensure clients use the same port
+socket = /var/run/mysqld/mysqld.sock  # Match server socket for local connections
+default-character-set = utf8mb4  # Consistent character set with server
+
+[mysql]
+no-auto-rehash  # Speed up client startup
+prompt = '\\u@\\h:\\d> '  # Custom prompt for clarity in administrative sessions
+
+# Global system tuning; ensure the server has sufficient resources
+!includedir /etc/mysql/conf.d/  # Include any additional configuration files for modularity

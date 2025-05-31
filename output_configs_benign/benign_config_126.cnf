@@ -1,0 +1,56 @@
+```
+# MySQL Configuration File
+# This configuration is tailored for development and testing environments,
+# focusing on performance optimization and reliability. It includes settings
+# to manage logging, query performance, and character set handling.
+
+[client]
+# Default settings for MySQL client connections
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4  # Ensures client uses UTF-8 for compatibility with server
+
+[mysql]
+# Settings specific to the mysql command-line tool
+no-beep         # Disable beep on errors for a quieter development experience
+prompt          = "\\u@\\h:\\d> "  # Custom prompt for easier debugging
+
+[mysqld]
+# Server settings for optimized performance and reliability
+port            = 3306
+bind-address    = 127.0.0.1  # Bind to localhost for security in development environments
+datadir         = /var/lib/mysql  # Default data directory; ensure this path exists
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file for process management
+
+# Logging and error handling
+log-error       = /tmp/mysql_error.log  # Specifies the error log file as per requirements
+slow_query_log  = 0  # Disable slow query logging to reduce overhead in testing
+log_queries_not_using_indexes = 0  # Do not log queries not using indexes, as slow query log is off
+general_log     = 0  # Disable general query log to optimize performance
+general_log_file = /var/log/mysql/general.log  # File for general log if enabled
+
+# Character set and collation for data consistency
+character-set-server = utf8mb4  # Use UTF-8 character set for full Unicode support
+collation-server = utf8mb4_unicode_ci  # Default collation for proper sorting and comparison
+
+# Performance tuning settings for development
+innodb_buffer_pool_size = 128M  # Set buffer pool size; adjust based on available memory (e.g., 128MB for testing)
+innodb_log_file_size = 48M  # Size of InnoDB log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability; set to 1 for reliability in testing
+max_connections = 100  # Limit connections to prevent overload in development
+table_open_cache = 200  # Cache for open tables to improve query speed
+query_cache_type = 1  # Enable query cache for frequently run queries in testing
+query_cache_size = 16M  # Size of query cache; helps in development but can be tuned
+
+# Additional reliability settings
+sync_binlog = 1  # Synchronize binary log for data integrity
+expire_logs_days = 7  # Automatically expire binary logs after 7 days to manage disk space
+tmp_table_size = 32M  # Size for temporary tables to handle complex queries
+max_heap_table_size = 32M  # Maximum size for memory-based tables
+
+# Security and other defaults
+skip-name-resolve  # Skip DNS resolution for faster connections
+sql-mode = "STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"  # Strict SQL mode for reliable development
+default-storage-engine = InnoDB  # Use InnoDB as default for transactional support
+```

@@ -1,0 +1,49 @@
+```
+[client]
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash  = 1
+prompt          = \\u@\\h:\\p [\\d]>
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3307
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 127.0.0.1
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 1
+slow_query_log_file = /tmp/slow.log
+long_query_time = 2
+log_queries_not_using_indexes = 1
+key_buffer_size         = 128M
+max_allowed_packet      = 64M
+thread_stack            = 192K
+thread_cache_size       = 50
+table_open_cache        = 4000
+query_cache_type        = 1
+query_cache_size        = 64M
+query_cache_limit       = 2M
+innodb_buffer_pool_size = 512M
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table   = 1
+max_connections         = 100
+wait_timeout            = 28800
+interactive_timeout     = 28800
+skip-name-resolve       = 1
+[mysqldump]
+quick                   = 1
+max_allowed_packet      = 64M
+[mysqld_safe]
+log_error               = /var/log/mysql/mysqld_safe.log
+pid-file                = /var/run/mysqld/mysqld_safe.pid
+!includedir /etc/mysql/conf.d/
+```

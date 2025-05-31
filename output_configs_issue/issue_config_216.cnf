@@ -1,0 +1,47 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+connect-timeout = 10
+host            = localhost
+user            = root
+password        =
+ssl-ca          = /etc/mysql/cacert.pem
+ssl-cert        = /etc/mysql/client-cert.pem
+ssl-key         = /etc/mysql/client-key.pem
+[mysql]
+no-auto-rehash  = 1
+prompt          = "\\u@\\h:\\d> "
+max_allowed_packet = 16M
+[mysqld]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+sql-mode        = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+read-only       = 0
+max-connections = 100
+max-allowed-packet = 64M
+innodb-buffer-pool-size = 128M
+query-cache-type = 1
+query-cache-size = 16M
+log-error       = /var/log/mysql/error.log
+slow-query-log  = 1
+slow-query-log-file = /var/log/mysql/slow.log
+server-id       = 1
+bind-address    = 0.0.0.0
+secure-file-priv = /var/lib/mysql-files
+[mysqld_safe]
+log-error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld.pid
+[mysqldump]
+quick
+max_allowed_packet = 16M
+[embedded]
+skip-symbolic-links
+!includedir /etc/mysql/conf.d/
+```

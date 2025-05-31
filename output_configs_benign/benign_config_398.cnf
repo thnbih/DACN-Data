@@ -1,0 +1,65 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with moderate resource usage.
+# It includes settings for the client and server to facilitate debugging,
+# logging, and efficient query handling.
+
+# Client section: Defines settings for MySQL client connections.
+[client]
+port            = 3306               # Default port for client connections
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+default-character-set = utf8mb4      # Ensure UTF-8 encoding for compatibility
+host            = 127.0.0.1         # Bind to localhost for security in development
+
+# Server section: Configures the MySQL server (mysqld) for optimal performance.
+[mysqld]
+user            = mysql              # Run MySQL as the mysql user for security
+pid-file        = /var/run/mysqld/mysqld.pid  # Location of the process ID file
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for server
+port            = 3306               # Port for server to listen on
+basedir         = /usr               # Base directory for MySQL installation
+datadir         = /var/lib/mysql     # Directory for data storage
+tmpdir          = /tmp               # Temporary directory for operations
+lc-messages-dir = /usr/share/mysql   # Directory for language messages
+skip-external-locking                # Skip external locking for better performance
+
+# Logging and error handling settings
+log-error       = /tmp/mysql_error.log  # Path for error logging as specified
+slow_query_log  = 1                  # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # Path for slow query log as specified
+long_query_time = 2                  # Log queries that take longer than 2 seconds
+log-queries-not-using-indexes = 1    # Log queries not using indexes for optimization
+general_log     = 1                  # Enable general query logging for development
+general_log_file = /var/log/mysql/general.log  # File for general query log
+
+# InnoDB settings for storage engine optimization
+innodb_buffer_pool_size = 128M       # Size of the InnoDB buffer pool as specified, for caching data and indexes
+innodb_log_file_size = 48M           # Size of InnoDB log files for transaction logging
+innodb_flush_log_at_trx_commit = 1   # Ensure data durability by flushing logs on commit
+innodb_file_per_table = 1            # Store each table in its own file for easier management
+innodb_buffer_pool_instances = 1     # Number of buffer pool instances
+
+# Performance tuning settings
+max_connections = 151                 # Maximum number of simultaneous connections
+table_open_cache = 2000              # Cache for open tables to reduce disk I/O
+tmp_table_size = 16M                 # Size of temporary tables before disk swap
+max_heap_table_size = 16M            # Maximum size for in-memory tables
+query_cache_type = 1                 # Enable query cache for repeated queries (if supported)
+query_cache_size = 16M               # Size of the query cache
+join_buffer_size = 2M                # Buffer size for joins
+sort_buffer_size = 2M                # Buffer size for sorting operations
+
+# Security and other settings
+bind-address = 127.0.0.1             # Bind to localhost to prevent external access in development
+server-id = 1                        # Server ID for replication (if needed)
+sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Strict SQL mode
+
+# mysqld_safe section: Additional options for the mysqld_safe wrapper
+[mysqld_safe]
+log-error = /tmp/mysql_error.log     # Redirect errors to the specified log
+pid-file = /var/run/mysqld/mysqld.pid
+
+# Ensure the configuration is suitable for a development environment
+# This setup assumes a standard Linux system with MySQL installed via package manager.
+```

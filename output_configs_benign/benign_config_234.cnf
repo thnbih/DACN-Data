@@ -1,0 +1,46 @@
+[mysqld]
+# Server settings for MySQL optimization in development and testing environments
+port                           = 3306
+socket                         = /var/run/mysqld/mysqld.sock
+basedir                        = /usr
+datadir                        = /var/lib/mysql
+tmpdir                         = /tmp
+lc-messages-dir                = /usr/share/mysql
+skip-external-locking
+max_connections                = 500  # Limit connections to prevent overload in testing
+max_allowed_packet             = 16M  # Allow larger packets for queries
+table_open_cache               = 4000  # Improve table handling performance
+thread_cache_size              = 8     # Reuse threads for better efficiency
+sort_buffer_size               = 4M    # Optimize sorting operations
+read_buffer_size               = 4M    # Enhance read performance
+read_rnd_buffer_size           = 4M    # Improve random read efficiency
+net_buffer_length              = 8K    # Initial buffer for network communication
+query_cache_type               = 1     # Enable query caching for repeated queries
+query_cache_size               = 16M   # Size for query cache
+query_cache_limit              = 2M    # Limit per query in cache
+default_storage_engine         = InnoDB  # Use InnoDB as the default for reliability and transactions
+innodb_buffer_pool_size        = 128M  # Buffer pool for InnoDB data and indexes
+innodb_log_file_size           = 48M   # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1     # Ensure durability for transactions
+innodb_file_per_table          = 1     # Store each table in its own file for easier management
+slow_query_log                 = 0     # Disable slow query logging to reduce overhead in development
+log_error                      = /var/log/mysql/error.log  # Log errors for debugging
+character-set-server           = utf8mb4  # Use modern character set
+collation-server               = utf8mb4_unicode_ci
+sql_mode                       = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Enforce strict SQL mode
+back_log                       = 50    # Backlog for incoming connections
+interactive_timeout            = 28800  # Longer timeout for interactive sessions
+wait_timeout                   = 28800  # Longer timeout for connections
+max_heap_table_size            = 32M   # Limit for in-memory tables
+
+[client]
+port                           = 3306
+socket                         = /var/run/mysqld/mysqld.sock
+default-character-set          = utf8mb4
+
+[mysqld_safe]
+log_error                      = /var/log/mysql/error.log
+socket                         = /var/run/mysqld/mysqld.sock
+nice                           = 0
+
+!includedir /etc/mysql/conf.d/

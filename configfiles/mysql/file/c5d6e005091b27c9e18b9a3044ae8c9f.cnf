@@ -38,13 +38,10 @@ log-error = /mysql/log/mysqlderror.log
 max_binlog_size=1G
 interactive_timeout=3600
 wait_timeout=28800
-
 [mysql.server]
 user=mysql
-
 [safe_mysqld]
 err-log=/mysql/log/mysqld-err.log
 pid-file=/var/run/mysqld/mysqld.pid
-
 [mysqldump]
 max_allowed_packet=1024M

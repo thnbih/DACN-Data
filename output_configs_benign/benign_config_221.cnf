@@ -1,0 +1,74 @@
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration for High-Traffic Applications
+
+# This configuration is optimized for performance and reliability in high-traffic environments.
+# It uses InnoDB as the default storage engine, disables slow query logging, and sets up error logging.
+
+[client]
+# General client settings
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings for the mysql command-line client
+no-auto-rehash
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for optimal performance and reliability
+user                = mysql
+port                = 3306
+basedir             = /usr/local/mysql
+datadir             = /var/lib/mysql
+socket              = /var/lib/mysql/mysql.sock
+pid-file            = /var/lib/mysql/mysql.pid
+log-error           = /tmp/mysql_error.log
+default-storage-engine = InnoDB
+slow_query_log      = 0  # Disable slow query logging to reduce overhead
+
+# Performance optimizations for high-traffic applications
+innodb_buffer_pool_size     = 4G  # Allocate a large buffer pool for InnoDB to cache data and indexes
+innodb_buffer_pool_instances = 4  # Multiple instances for better concurrency
+innodb_log_file_size        = 128M  # Larger log files for better write performance
+innodb_log_buffer_size      = 16M  # Buffer for transaction logs
+max_connections             = 500  # Handle a high number of simultaneous connections
+table_open_cache            = 4000  # Cache frequently used tables
+table_definition_cache      = 2000  # Cache table definitions
+query_cache_type            = 1  # Enable query caching
+query_cache_size            = 128M  # Size for query cache to store results
+query_cache_limit           = 1M  # Limit for individual query results in cache
+tmp_table_size              = 64M  # Size for in-memory temporary tables
+max_heap_table_size         = 64M  # Maximum size for memory tables
+sort_buffer_size            = 2M  # Buffer for sorting operations
+join_buffer_size            = 2M  # Buffer for joins
+read_buffer_size            = 1M  # Buffer for reading rows
+read_rnd_buffer_size        = 1M  # Buffer for random reads
+
+# Reliability and durability settings
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability by flushing logs on commit
+sync_binlog                   = 1  # Synchronize binary log for crash safety
+innodb_file_per_table         = 1  # Each table in its own file for better management
+max_allowed_packet            = 64M  # Larger packets for large queries or data transfers
+thread_cache_size             = 100  # Reuse threads to reduce overhead
+thread_stack                   = 192K  # Stack size per thread
+
+# Logging and monitoring
+general_log                   = 0  # Disable general logging for performance
+log_queries_not_using_indexes = 0  # Disable to avoid logging overhead
+expire_logs_days              = 7  # Automatically expire binary logs after 7 days
+
+# Security settings
+bind-address                  = 0.0.0.0  # Bind to all interfaces; adjust for security
+skip-name-resolve             = 1  # Improve performance by not resolving hostnames
+
+[mysqld_safe]
+# Settings for the mysqld_safe wrapper
+log-error     = /tmp/mysql_error.log
+pid-file      = /var/lib/mysql/mysql.pid
+
+[mysqldump]
+# Settings for mysqldump
+quick
+max_allowed_packet = 64M
+
+# End of configuration file

@@ -1,0 +1,52 @@
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+sql_mode        = STRICT_ALL_TABLES
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+log_queries_not_using_indexes = 1
+log_output      = FILE
+max_connections = 200
+max_connect_errors = 100
+table_open_cache = 4000
+thread_cache_size = 100
+query_cache_type = 1
+query_cache_size = 64M
+query_cache_limit = 2M
+default_storage_engine = InnoDB
+innodb_buffer_pool_size = 1G
+innodb_log_file_size = 128M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table = 1
+innodb_flush_method = O_DIRECT
+innodb_lock_wait_timeout = 60
+general_log_file = /var/log/mysql/general.log
+general_log = 0
+log_error = /var/log/mysql/error.log
+server_id = 1
+bind_address = 0.0.0.0
+secure_file_priv = /var/lib/mysql
+key_buffer_size = 32M
+sort_buffer_size = 4M
+read_buffer_size = 4M
+read_rnd_buffer_size = 8M
+join_buffer_size = 8M
+tmp_table_size = 64M
+max_heap_table_size = 64M
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+!includedir /etc/mysql/conf.d/

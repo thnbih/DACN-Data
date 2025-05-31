@@ -1,0 +1,62 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings to limit access to localhost, enhance InnoDB performance, and manage connections efficiently.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+# Additional client settings for better compatibility and security
+host            = localhost
+protocol        = socket
+
+[mysqld]
+# Basic server settings
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Specified settings for optimization
+bind-address    = 127.0.0.1  # Bind to localhost for security in high-traffic environments
+innodb_buffer_pool_size = 512M  # Allocate buffer pool to improve InnoDB performance for caching data and indexes
+max_connections = 200  # Limit connections to prevent overload, allowing for efficient resource management
+
+# Additional performance and reliability settings for high-traffic applications
+innodb_log_file_size = 128M  # Larger log files to handle more transactions and improve recovery
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability, though it may impact performance slightly
+innodb_file_per_table = 1  # Store each table in its own file for better management and space efficiency
+query_cache_type = 1  # Enable query cache to speed up repeated queries (note: deprecated in MySQL 8+, use prepared statements)
+query_cache_size = 64M  # Size the query cache to cache results for frequent queries
+thread_cache_size = 100  # Reuse threads to reduce overhead in high-connection scenarios
+table_open_cache = 4000  # Increase to handle more open tables without frequent reopening
+tmp_table_size = 32M  # Limit in-memory temporary tables to avoid disk spills
+max_heap_table_size = 32M  # Set maximum size for memory-based tables
+slow_query_log = 1  # Enable logging of slow queries for optimization
+slow_query_log_file = /var/log/mysql/slow.log  # Specify the log file path
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log-error = /var/log/mysql/error.log  # Centralize error logging
+character-set-server = utf8mb4  # Use modern character set for better support
+collation-server = utf8mb4_unicode_ci  # Set default collation
+
+# Security and logging enhancements
+skip-networking = 0  # Allow networking, but combined with bind-address for security
+secure-file-priv = /var/lib/mysql  # Restrict file operations to a safe directory
+sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION  # Enforce strict SQL modes for reliability
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/
+```

@@ -1,0 +1,80 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld1]
+user            = mysql
+port            = 3306
+socket          = /var/run/mysqld/mysqld1.sock
+pid-file        = /var/run/mysqld/mysqld1.pid
+basedir         = /usr
+datadir         = /var/lib/mysql1
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 127.0.0.1
+key_buffer_size = 16M
+max_allowed_packet = 16M
+thread_stack    = 192K
+thread_cache_size = 8
+max_connections = 100
+table_open_cache = 64
+query_cache_type = 1
+query_cache_size = 16M
+tmp_table_size  = 16M
+max_heap_table_size = 16M
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow1.log
+log-error       = /var/log/mysql/error1.log
+server-id       = 1
+log_bin         = /var/log/mysql/mysql-bin1.log
+binlog_format   = ROW
+expire_logs_days = 10
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+sql_mode        = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+innodb_buffer_pool_size = 128M
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table = 1
+[mysqld2]
+user            = mysql
+port            = 3307
+socket          = /var/run/mysqld/mysqld2.sock
+pid-file        = /var/run/mysqld/mysqld2.pid
+basedir         = /usr
+datadir         = /var/lib/mysql2
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 127.0.0.1
+key_buffer_size = 16M
+max_allowed_packet = 16M
+thread_stack    = 192K
+thread_cache_size = 8
+max_connections = 100
+table_open_cache = 64
+query_cache_type = 1
+query_cache_size = 16M
+tmp_table_size  = 16M
+max_heap_table_size = 16M
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow2.log
+log-error       = /var/log/mysql/error2.log
+server-id       = 2
+log_bin         = /var/log/mysql/mysql-bin2.log
+binlog_format   = ROW
+expire_logs_days = 10
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+sql_mode        = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+innodb_buffer_pool_size = 128M
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table = 1
+[mysqld_safe]
+log-error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld.pid
+!includedir /etc/my.cnf.d/
+```

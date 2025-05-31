@@ -1,0 +1,50 @@
+[mysqld]
+# Server settings for optimizing performance and reliability in development and testing environments
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+bind-address    = 127.0.0.1  # Restrict to localhost for security in dev/test setups
+default-storage-engine = MyISAM  # Use MyISAM as the default engine for simplicity and speed in non-production
+innodb_buffer_pool_size = 2G  # Allocate 2GB for InnoDB buffer pool to handle caching and improve query performance
+basedir         = /usr/local/mysql  # Base directory for MySQL installation
+datadir         = /var/lib/mysql  # Data directory for databases
+tmpdir          = /tmp  # Temporary file directory
+max_allowed_packet = 16M  # Maximum packet size for large queries or data transfers
+max_connections = 100  # Limit concurrent connections to prevent overload in testing
+table_open_cache = 64  # Cache for open tables to reduce disk I/O
+tmp_table_size = 32M  # Size limit for in-memory temporary tables
+max_heap_table_size = 32M  # Maximum size for memory-based tables
+query_cache_type = 1  # Enable query cache for repeated queries
+query_cache_size = 16M  # Size of the query cache
+query_cache_limit = 1M  # Limit for individual query results in cache
+thread_cache_size = 8  # Cache for threads to improve connection handling
+thread_stack = 256K  # Stack size per thread
+log_error = /var/log/mysql/error.log  # Error log file for debugging
+slow_query_log = 1  # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # File for slow queries
+long_query_time = 2  # Log queries taking longer than 2 seconds
+innodb_log_buffer_size = 8M  # Buffer size for InnoDB transaction logs
+innodb_log_file_size = 48M  # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability by flushing logs on commit
+sync_binlog = 1  # Synchronize binary log for reliability
+skip-name-resolve  # Skip DNS lookups for faster connections
+character-set-server = utf8mb4  # Default character set for better Unicode support
+collation-server = utf8mb4_unicode_ci  # Default collation
+
+[client]
+# Client settings for default connections
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4  # Ensure client uses UTF-8 for consistency
+
+[mysql]
+# Specific settings for the mysql command-line client
+no-auto-rehash = 1  # Disable auto-rehash for faster startup
+prompt = "\\u@\\h:\\d> "  # Custom prompt for better usability in development
+safe-updates = 1  # Enable safe mode to prevent accidental deletions without WHERE clause
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log-error = /var/log/mysql/mysqld_safe.log  # Log file for mysqld_safe
+pid-file = /var/run/mysqld/mysqld.pid  # PID file for process management
+
+!includedir /etc/my.cnf.d  # Include directory for additional configuration files if needed

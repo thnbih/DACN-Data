@@ -1,0 +1,54 @@
+[mysqld]
+# General server settings
+port            = 3307
+bind-address    = 127.0.0.1  # Bind to localhost for security in development environments
+user            = mysql      # User under which MySQL runs
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+
+# Logging and error handling for reliability
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 0  # Disable slow query logging as specified for this optimized setup
+slow_query_log_file     = /tmp/slow.log  # File for slow queries if enabled
+general_log_file        = /var/log/mysql/general.log
+general_log             = 0  # Disable general logging to reduce overhead in testing
+log-output              = FILE  # Log to file for easier debugging
+max_error_count         = 64  # Limit error logging to prevent flooding
+
+# Performance optimization settings for development and testing
+innodb_buffer_pool_size = 128M  # Moderate size for development to optimize memory usage
+innodb_log_file_size    = 48M   # Size of InnoDB log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability, suitable for reliable testing
+query_cache_type        = 1     # Enable query cache for repeated queries in dev
+query_cache_size        = 16M   # Small cache size for testing environments
+max_connections         = 100   # Limit connections to prevent overload in dev
+thread_stack            = 192K  # Stack size for threads
+thread_cache_size       = 10    # Cache threads to improve performance
+
+# Additional reliability and security settings
+skip-external-locking   # Avoid external locking for better performance
+sql_mode                = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES  # Enforce strict SQL mode
+character-set-server    = utf8mb4  # Use modern character set for reliability
+collation-server        = utf8mb4_unicode_ci
+default_storage_engine  = InnoDB  # Default to transactional engine
+max_allowed_packet      = 16M    # Increase for larger queries in testing
+lower_case_table_names  = 1      # Case-insensitive table names for consistency
+
+# Tuning for development-specific needs
+wait_timeout            = 28800  # Longer timeout for development sessions
+interactive_timeout     = 28800  # Same for interactive use
+tmp_table_size          = 32M    # Size for in-memory temporary tables
+max_heap_table_size     = 32M    # Limit for memory-based tables
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld_safe.pid
+
+[client]
+port        = 3307
+socket      = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4

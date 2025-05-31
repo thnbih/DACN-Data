@@ -1,0 +1,58 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with moderate resource usage.
+# It includes settings to manage connections, default storage engine,
+# and error logging as specified.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+max_connections = 100
+default-storage-engine = MyISAM
+log-error       = /tmp/mysql_error.log
+nice            = 0
+syslog          = 1
+pid-file        = /var/run/mysqld/mysqld.pid
+
+[mysqld]
+user            = mysql
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 127.0.0.1  # Bind to localhost for security in development
+max_connections = 100  # Ensures consistency with mysqld_safe setting
+default-storage-engine = MyISAM  # As specified, optimized for faster development reads
+max_allowed_packet = 16M  # Allows for larger packets in testing scenarios
+table_open_cache = 64  # Balances memory usage and query performance
+thread_cache_size = 8  # Reduces overhead for frequent connections in testing
+query_cache_type = 1  # Enables query caching for performance optimization
+query_cache_size = 16M  # Set to a reasonable size for development workloads
+key_buffer_size = 16M  # Optimized for MyISAM tables
+myisam-recover-options = BACKUP,FORCE  # Enhances reliability by recovering MyISAM tables
+myisam_sort_buffer_size = 8M  # Improves sorting performance for MyISAM operations
+log_error = /tmp/mysql_error.log  # Mirrors the setting in mysqld_safe for consistency
+slow_query_log = 1  # Enables slow query logging to identify performance issues
+slow_query_log_file = /tmp/mysql_slow_queries.log  # Location for slow query logs
+long_query_time = 2  # Logs queries longer than 2 seconds
+innodb_buffer_pool_size = 128M  # Moderate size for InnoDB if used, though MyISAM is default
+innodb_log_file_size = 48M  # Standard for reliability
+sync_binlog = 1  # Ensures data integrity in testing
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[myisamchk]
+key_buffer_size = 8M
+sort_buffer_size = 8M
+read_buffer = 2M
+write_buffer = 2M
+```

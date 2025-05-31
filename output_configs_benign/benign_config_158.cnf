@@ -1,0 +1,56 @@
+[mysqld]
+# General server settings
+port            = 3306
+basedir         = /usr/local/mysql
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+
+# Connection settings
+max_connections = 100
+max_connect_errors = 10
+connect_timeout = 5
+
+# SQL mode and security
+sql_mode        = NO_ENGINE_SUBSTITUTION
+secure_file_priv= /var/lib/mysql-files
+
+# Logging and monitoring
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries that take longer than 2 seconds
+log_queries_not_using_indexes = 1
+general_log     = 0  # Disabled by default in production, but can be enabled for testing
+general_log_file = /var/log/mysql/general.log
+
+# Performance tuning for development environment
+innodb_buffer_pool_size = 128M  # Adjust based on available memory
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures ACID compliance
+query_cache_type        = 1
+query_cache_size        = 16M
+query_cache_limit       = 1M
+tmp_table_size          = 16M
+max_heap_table_size     = 16M
+table_open_cache        = 200
+thread_cache_size       = 10
+
+# Other optimizations
+default_storage_engine  = InnoDB
+character-set-server    = utf8mb4
+collation_server        = utf8mb4_unicode_ci
+skip-name-resolve       = 1  # Improves performance by not resolving hostnames
+
+[client]
+# Client settings
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+log_error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld_safe.pid
+
+!includedir /etc/mysql/conf.d/  # Allows for additional configuration files

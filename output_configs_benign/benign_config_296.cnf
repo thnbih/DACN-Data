@@ -1,0 +1,76 @@
+```
+# MySQL Configuration File
+# This configuration is tailored for development and testing environments,
+# focusing on optimizing performance and reliability by enabling error logging,
+# slow query logging, and setting a strict SQL mode.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings specific to the mysql command-line tool
+no-auto-rehash
+prompt          = \\u@\\h:\\d\\> 
+default-character-set = utf8mb4
+
+[mysqld]
+# Main server settings for performance and reliability optimization
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Specified settings as per description
+log-error       = /var/log/mysql/error.log
+slow_query_log_file = /tmp/slow.log
+sql_mode        = TRADITIONAL  # Enforces strict SQL mode for better reliability
+
+# Additional performance optimizations for development environments
+innodb_buffer_pool_size = 128M  # Size of the buffer pool for InnoDB tables
+innodb_log_file_size    = 48M   # Size of the InnoDB redo log files
+innodb_flush_log_at_trx_commit = 1  # Ensures durability but may impact performance
+query_cache_type        = 1     # Enables query caching
+query_cache_size        = 16M   # Size of the query cache
+query_cache_limit       = 1M    # Maximum size for individual query results in cache
+slow_query_log          = 1     # Enables slow query logging
+long_query_time         = 2     # Queries taking longer than 2 seconds are logged
+max_connections         = 100   # Limit the number of simultaneous connections
+table_open_cache        = 2000  # Cache for open tables to reduce disk I/O
+thread_cache_size       = 10    # Cache for threads to improve response times
+tmp_table_size          = 16M   # Size of internal in-memory temporary tables
+max_heap_table_size     = 16M   # Maximum size for memory-based tables
+join_buffer_size        = 128K  # Buffer size for joins
+sort_buffer_size        = 256K  # Buffer size for sorting operations
+read_buffer_size        = 128K  # Buffer size for reading sequential rows
+read_rnd_buffer_size    = 256K  # Buffer size for reading random rows
+bulk_insert_buffer_size = 8M    # Buffer size for bulk inserts
+
+# Logging and security settings
+log_output              = FILE  # Log output to files
+general_log_file        = /var/log/mysql/general.log
+general_log             = 0     # Disable general query log in production-like dev env
+server-id               = 1     # Unique ID for the server (for replication if needed)
+bind-address            = 127.0.0.1  # Bind to localhost for security in dev environments
+skip-name-resolve       # Skip DNS lookups for faster connections
+
+[mysqldump]
+# Settings for mysqldump tool, as specified in the description
+quick                   # Dump tables row by row for large datasets
+max_allowed_packet      = 16M   # Maximum packet size for transfers
+single-transaction      # Use a consistent snapshot for InnoDB tables
+# Note: While the description mentioned settings like log-error, they are not applicable to mysqldump and are placed under [mysqld] for correctness.
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log-error               = /var/log/mysql/mysqld_safe.log
+pid-file                = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/
+# This allows additional configuration files to be included for modularity
+```

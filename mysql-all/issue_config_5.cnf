@@ -1,0 +1,45 @@
+```
+[client]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8
+[mysqld]
+port            = 3306
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+bind-address    = 127.0.0.1
+log_error               = /var/log/mysqld.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2
+log_queries_not_using_indexes = 1
+general_log             = 1
+general_log_file        = /var/log/mysql/general.log
+character-set-server    = utf8
+collation-server        = utf8_general_ci
+max_connections         = 151
+max_allowed_packet      = 16M
+table_open_cache        = 2000
+query_cache_type        = 1
+query_cache_size        = 16M
+thread_cache_size       = 8
+tmp_table_size          = 16M
+max_heap_table_size     = 16M
+default-storage-engine  = InnoDB
+innodb_buffer_pool_size = 128M
+innodb_log_file_size    = 48M
+innodb_log_buffer_size  = 8M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table   = 1
+skip-name-resolve
+sql_mode                = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+[mysqld_safe]
+log-error               = /var/log/mysqld.log
+pid-file                = /var/run/mysqld/mysqld.pid
+[mysql]
+no-auto-rehash
+default-character-set   = utf8
+!includedir /etc/my.cnf.d
+```

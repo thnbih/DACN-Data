@@ -1,0 +1,78 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and logging to facilitate debugging
+# and query analysis.
+
+[client]
+# Default settings for MySQL client tools
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings to optimize performance and enable logging
+port            = 3306
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Logging and error handling
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+log-error       = /var/log/mysql/error.log
+log-queries-not-using-indexes = 1
+long_query_time = 2  # Log queries longer than 2 seconds
+general_log     = 1  # Enable general query log for testing
+general_log_file = /var/log/mysql/general.log
+
+# Performance tuning for development
+innodb_buffer_pool_size = 128M  # Adjust based on available memory
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures reliability
+max_connections = 151  # Reasonable for testing
+table_open_cache = 2000
+query_cache_type = 1  # Enable query cache
+query_cache_size = 16M
+tmp_table_size = 32M
+max_heap_table_size = 32M
+join_buffer_size = 128K
+sort_buffer_size = 256K
+read_buffer_size = 128K
+read_rnd_buffer_size = 256K
+
+# Binary logging for replication testing
+log-bin         = /var/log/mysql/mysql-bin.log
+expire_logs_days = 10  # Auto-purge old logs
+server-id       = 1  # Unique ID for the server
+
+# Security settings
+bind-address    = 127.0.0.1  # Bind to localhost for security in dev environments
+skip-name-resolve  # Improves performance by not resolving hostnames
+
+[mysqldump]
+# Settings for mysqldump tool, including the specified port for consistency
+port            = 3306
+quick           = true  # Dump tables row by row
+quote-names     = true  # Quote identifiers
+max_allowed_packet = 64M  # Increase for larger dumps
+single-transaction = true  # For consistent InnoDB dumps
+set-gtid-purged = OFF  # Avoid GTID issues in testing
+
+[mysql]
+# Additional client settings for the mysql command-line tool
+no-auto-rehash  # Faster startup
+default-character-set = utf8mb4
+
+# Optional: MySQL Safe settings if needed
+[mysqld_safe]
+log-error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld_safe.pid
+
+!includedir /etc/mysql/conf.d/
+```

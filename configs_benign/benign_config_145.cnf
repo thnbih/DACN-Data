@@ -1,0 +1,54 @@
+```
+[client]
+port            = 3307
+default-character-set = utf8mb4
+socket          = /var/run/mysqld/mysqld.sock
+[mysqld_safe]
+default-storage-engine = MyISAM
+port                = 3307
+slow_query_log      = 0
+log-error           = /var/log/mysql/error.log
+pid-file            = /var/run/mysqld/mysqld_safe.pid
+nice                = 0
+[mysqld]
+default-storage-engine = MyISAM
+port                = 3307
+slow_query_log      = 0
+basedir             = /usr
+datadir             = /var/lib/mysql
+tmpdir              = /tmp
+lc-messages-dir     = /usr/share/mysql
+skip-external-locking
+key_buffer_size     = 128M
+max_allowed_packet  = 64M
+table_open_cache    = 4096
+sort_buffer_size    = 4M
+read_buffer_size    = 4M
+read_rnd_buffer_size= 8M
+myisam_sort_buffer_size = 64M
+thread_cache_size   = 128
+max_connections     = 500
+query_cache_type    = 1
+query_cache_size    = 64M
+query_cache_limit   = 2M
+tmp_table_size      = 128M
+max_heap_table_size = 128M
+wait_timeout        = 28800
+interactive_timeout = 28800
+log-output          = FILE
+general_log         = 0
+server-id           = 1
+bind-address        = 0.0.0.0
+character-set-server= utf8mb4
+collation-server    = utf8mb4_unicode_ci
+skip-name-resolve
+innodb_buffer_pool_size = 512M
+innodb_log_file_size = 128M
+max_binlog_size     = 100M
+expire_logs_days    = 7
+[mysqldump]
+quick
+max_allowed_packet  = 64M
+[isamchk]
+key_buffer      = 16M
+```

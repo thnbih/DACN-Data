@@ -1,0 +1,57 @@
+[mysqld]
+# Server configuration for development and testing environments
+port            = 3306
+bind-address    = 127.0.0.1  # Bind to localhost for security in non-production setups
+user            = mysql      # User under which MySQL runs
+basedir         = /usr      # Base directory for MySQL installation
+datadir         = /var/lib/mysql  # Directory for database files
+tmpdir          = /tmp      # Temporary directory for MySQL operations
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket file
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file location
+log-error       = /var/log/mysql/error.log  # Error log file
+slow-query-log  = 1         # Enable slow query log for performance analysis
+slow-query-log-file = /var/log/mysql/slow.log  # Slow query log file
+long-query-time = 2         # Log queries taking longer than 2 seconds
+
+# Specified settings for character set, connections, and buffer pool
+character-set-server = utf8mb4  # Use UTF-8 multibyte character set for broader language support
+max_connections     = 100      # Limit to 100 simultaneous connections to manage resources in testing
+innodb_buffer_pool_size = 128M  # Buffer pool size for InnoDB to optimize read/write performance
+
+# Additional performance and reliability settings
+innodb_log_file_size    = 48M   # Size of InnoDB log files to balance with buffer pool
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability by flushing logs on commit
+innodb_file_per_table   = 1     # Store each table in its own file for easier management
+query_cache_type        = 1     # Enable query cache to speed up repeated queries
+query_cache_size        = 16M   # Size of the query cache
+tmp_table_size          = 32M   # Maximum size for in-memory temporary tables
+max_heap_table_size     = 32M   # Maximum size for memory-based tables
+table_open_cache        = 200   # Number of open tables cached to reduce disk I/O
+thread_cache_size       = 10    # Cache for threads to improve connection handling
+join_buffer_size        = 2M    # Buffer size for joins without indexes
+sort_buffer_size        = 2M    # Buffer size for sorting operations
+
+# General optimizations for development
+default_storage_engine  = InnoDB  # Default to InnoDB for transactional support
+max_allowed_packet      = 16M    # Maximum packet size for large queries or data
+interactive_timeout     = 28800  # Timeout for interactive connections (in seconds)
+wait_timeout            = 28800  # Timeout for non-interactive connections
+skip-external-locking   # Disable external locking for better performance in single-instance setups
+
+[client]
+# Client-side settings
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4  # Match server character set for consistency
+
+[mysql]
+# MySQL client program settings
+no-auto-rehash  # Disable auto-rehash for faster startup
+default-character-set = utf8mb4  # Ensure UTF-8 support in the client
+
+[mysqldump]
+# Settings for mysqldump tool
+quick           # Dump tables one by one for large databases
+max_allowed_packet = 16M  # Same as server for consistency
+
+!includedir /etc/my.cnf.d  # Include additional configuration files if needed

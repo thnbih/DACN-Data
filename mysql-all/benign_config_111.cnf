@@ -1,0 +1,47 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+prompt         = \\u@\\h:\\d>
+default-character-set = utf8mb4
+[mysqld]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+log-error       = /var/log/mysql/error.log
+slow_query_log  = 1
+sql_mode        = TRADITIONAL
+innodb_buffer_pool_size = 1G
+innodb_log_file_size    = 256M
+innodb_flush_log_at_trx_commit = 1
+max_connections         = 200
+thread_cache_size       = 100
+table_open_cache        = 4000
+query_cache_type        = 1
+query_cache_size        = 64M
+innodb_file_per_table   = 1
+sync_binlog             = 1
+default_storage_engine  = InnoDB
+server-id               = 1
+log_bin                 = /var/log/mysql/mysql-bin.log
+expire_logs_days        = 7
+max_allowed_packet      = 64M
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld.pid
+[mysqldump]
+quick
+single-transaction
+max_allowed_packet  = 64M
+set-gtid-purged     = OFF
+[mysqladmin]
+user                = root
+!includedir /etc/mysql/conf.d/
+```

@@ -1,0 +1,63 @@
+[mysqld_safe]
+# Configuration for mysqld_safe to ensure safe server startup and logging
+slow_query_log_file     = /tmp/slow.log
+default-storage-engine  = InnoDB
+innodb_buffer_pool_size = 2G
+log_error               = /var/log/mysql/error.log
+pid-file                = /var/run/mysqld/mysqld_safe.pid
+nice                    = 0
+
+[mysqld]
+# General server settings for performance optimization in development
+port                    = 3306
+bind-address            = 127.0.0.1
+socket                  = /var/run/mysqld/mysqld.sock
+basedir                 = /usr
+datadir                 = /var/lib/mysql
+tmpdir                  = /tmp
+lc-messages-dir         = /usr/share/mysql
+skip-external-locking
+key_buffer_size         = 128M
+max_allowed_packet      = 64M
+table_open_cache        = 4000
+sort_buffer_size        = 4M
+read_buffer_size        = 4M
+read_rnd_buffer_size    = 8M
+myisam_sort_buffer_size = 64M
+thread_cache_size       = 8
+query_cache_type        = 1
+query_cache_size        = 64M
+query_cache_limit       = 2M
+max_connections         = 100
+thread_stack            = 256K
+wait_timeout            = 28800
+interactive_timeout     = 28800
+log_output              = FILE
+general_log_file        = /var/log/mysql/general.log
+general_log             = 1  # Enabled for development debugging
+slow_query_log          = 1
+long_query_time         = 2
+log_queries_not_using_indexes = 1
+default_storage_engine  = InnoDB  # Reinforce as specified
+innodb_buffer_pool_size = 2G  # Optimize for caching to improve performance
+innodb_log_file_size    = 128M
+innodb_flush_log_at_trx_commit = 1  # Ensure reliability
+innodb_file_per_table   = 1
+innodb_flush_method     = O_DIRECT
+max_binlog_size         = 100M
+sync_binlog             = 1
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+
+[client]
+# Client defaults for development environment
+port                    = 3306
+socket                  = /var/run/mysqld/mysqld.sock
+default-character-set   = utf8mb4
+
+[mysql]
+no-auto-rehash
+default-character-set   = utf8mb4
+
+!includedir /etc/mysql/conf.d/  # Allow inclusion of additional configuration files for extensibility

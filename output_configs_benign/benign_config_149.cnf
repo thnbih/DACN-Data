@@ -1,0 +1,66 @@
+[mysqld]
+
+# General server settings
+bind-address           = 0.0.0.0
+port                   = 3308
+user                   = mysql
+basedir                = /usr
+datadir                = /var/lib/mysql
+tmpdir                 = /tmp
+socket                 = /var/run/mysqld/mysqld.sock
+pid-file               = /var/run/mysqld/mysqld.pid
+
+# Logging and error handling for reliability
+log-error              = /var/log/mysql/error.log
+log_bin                = /var/log/mysql/mysql-bin.log  # Enable binary logging for replication and recovery
+expire_logs_days       = 7  # Automatically purge binary logs after 7 days
+slow_query_log         = 1
+slow_query_log_file    = /var/log/mysql/slow.log
+long_query_time        = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes for optimization
+general_log            = 0  # Disable general query log in production to reduce overhead
+general_log_file       = /var/log/mysql/general.log
+
+# Performance optimizations for high-traffic applications
+innodb_buffer_pool_size = 4G  # Adjust based on available RAM; caches frequently accessed data
+innodb_log_file_size    = 512M  # Larger size for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensures ACID compliance; set to 2 for slight performance gain if durability can be relaxed
+innodb_flush_method     = O_DIRECT  # Reduces OS caching overhead
+max_connections         = 500  # Handle high concurrent connections
+thread_cache_size       = 100  # Reuse threads to reduce overhead
+table_open_cache        = 4000  # Cache more tables for faster access
+query_cache_type        = 1  # Enable query cache
+query_cache_size        = 128M  # Cache query results; monitor and adjust to avoid fragmentation
+query_cache_limit       = 2M  # Maximum size for individual query results
+sort_buffer_size        = 2M  # For sorting operations
+join_buffer_size        = 2M  # For join operations
+tmp_table_size          = 64M  # Size before spilling to disk
+max_heap_table_size     = 64M  # Limit for in-memory temporary tables
+key_buffer_size         = 256M  # For MyISAM indexes; if using InnoDB primarily, this can be lower
+
+# Security and access controls
+skip-name-resolve       = 1  # Improves performance by not resolving hostnames
+max_allowed_packet      = 64M  # Larger packets for big data transfers
+secure-file-priv        = /var/lib/mysql  # Restrict file operations to this directory
+
+# Additional reliability settings
+default_storage_engine  = InnoDB  # Use transactional engine for better reliability
+innodb_file_per_table   = 1  # Each table in its own file for easier management
+sync_binlog             = 1  # Ensure binary log syncs with transactions for data integrity
+character-set-server    = utf8mb4  # Standard character set
+collation-server        = utf8mb4_unicode_ci
+
+# Monitoring and tuning
+innodb_monitor_enable   = 'all'  # Enable InnoDB monitors for performance insights
+
+[mysql]
+# Client-specific settings, for consistency with the specified section
+no-auto-rehash          = 1  # Faster startup
+default-character-set   = utf8mb4  # Match server settings
+
+[client]
+port                    = 3308
+socket                  = /var/run/mysqld/mysqld.sock
+default-character-set   = utf8mb4  # Ensure client matches server
+
+!includedir /etc/mysql/conf.d/  # Allow inclusion of additional configuration files for modularity

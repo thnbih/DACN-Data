@@ -1,0 +1,73 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and ease of debugging. It includes
+# settings to enforce strict SQL modes, limit connections, and bind to all
+# available network interfaces.
+
+[client]
+# General client settings for connecting to the MySQL server
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+# These settings ensure that clients use a consistent character set and connect via the standard port.
+
+[mysqld]
+# Server settings to optimize performance and reliability
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+# Bind to all available network interfaces for easy access in development environments
+bind-address    = 0.0.0.0
+# Set the maximum number of simultaneous connections to 500 for controlled testing
+max_connections = 500
+# Enable strict SQL mode to enforce traditional behavior, reducing errors in development
+sql_mode        = TRADITIONAL
+# Performance tuning for development: Adjust InnoDB buffer pool size for better caching
+innodb_buffer_pool_size = 128M
+# Use per-table tablespaces for easier management and testing
+innodb_file_per_table = 1
+# Enable query cache to speed up repeated queries in a testing scenario
+query_cache_type = 1
+query_cache_size = 16M
+# Log errors and slow queries for debugging purposes
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+# Set a default storage engine and character set
+default-storage-engine = InnoDB
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+# Additional security and reliability settings
+skip-name-resolve = 1  # Skip DNS lookups for faster connections
+max_allowed_packet = 16M  # Increase packet size for larger queries in testing
+thread_stack = 192K  # Standard stack size for threads
+# Ensure the server can handle development loads without immediate resource exhaustion
+table_open_cache = 2000
+thread_cache_size = 100
+
+[mysqld_safe]
+# Safe mode settings for the mysqld_safe wrapper
+log-error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld.pid
+
+[mysqldump]
+# Settings for mysqldump tool
+quick
+max_allowed_packet = 16M
+
+[myisamchk]
+# Settings for myisamchk utility
+key_buffer_size = 20M
+sort_buffer_size = 20M
+read_buffer = 2M
+write_buffer = 2M
+
+[mysqlhotcopy]
+# Settings for mysqlhotcopy (though deprecated, included for completeness)
+interactive-timeout
+```

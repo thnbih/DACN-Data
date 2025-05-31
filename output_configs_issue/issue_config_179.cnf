@@ -1,0 +1,50 @@
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+log-error       = /var/log/mysql/error.log
+slow-query-log  = 1
+slow-query-log-file = /var/log/mysql/slow.log
+long-query-time = 2
+log-bin         = mysql-bin
+binlog-format   = STATEMENT
+sync-binlog     = 0
+max-binlog-size = 100M
+expire-logs-days = 1
+binlog-do-db    = mydatabase
+server-id       = 1
+log-bin-index   = mysql-bin.index
+binlog-cache-size = 4M
+max-binlog-cache-size = 8M
+key-buffer-size = 128M
+myisam-recover-options = FORCE,BACKUP
+innodb-buffer-pool-size = 128M
+innodb-log-file-size = 48M
+innodb-flush-log-at-trx-commit = 1
+innodb-file-per-table = 1
+max-connections        = 151
+table-open-cache       = 2000
+query-cache-type       = 1
+query-cache-size       = 16M
+thread-cache-size      = 10
+tmp-table-size         = 32M
+max-heap-table-size    = 32M
+bind-address           = 127.0.0.1
+sql-mode               = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+character-set-server   = utf8mb4
+collation-server       = utf8mb4_unicode_ci
+default-storage-engine = InnoDB
+lower-case-table-names = 1
+skip-name-resolve
+[mysql]
+default-character-set = utf8mb4
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4

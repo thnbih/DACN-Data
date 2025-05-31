@@ -1,9 +1,7 @@
 [client]
 port=3306
-
 [mysql]
 default-character-set=utf8
-
 [mysqld]
 port=3306
 basedir="C:/Program Files/MySQL/MySQL Server 5.0/"
@@ -17,14 +15,12 @@ query_cache_size=0M
 table_cache=1400
 tmp_table_size=16M
 thread_cache_size=34
-
 myisam_max_sort_file_size=100G
 myisam_sort_buffer_size=8M
 key_buffer_size=200M
 read_buffer_size=64K
 read_rnd_buffer_size=256K
 sort_buffer_size=208K
-
 innodb_additional_mem_pool_size=2M
 innodb_flush_log_at_trx_commit=1
 innodb_log_buffer_size=1M

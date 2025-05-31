@@ -1,0 +1,50 @@
+[mysqld]
+# Basic server settings
+bind-address            = 0.0.0.0
+port                    = 3307
+user                    = mysql
+pid-file                = /var/run/mysqld/mysqld.pid
+socket                  = /var/run/mysqld/mysqld.sock
+
+# Performance tuning for high-traffic applications
+max_connections         = 2000  # Increased for handling more simultaneous connections
+max_allowed_packet      = 64M   # Larger packets for bigger queries
+thread_stack            = 256K
+thread_cache_size       = 100   # Reduces overhead of thread creation
+table_open_cache        = 4000  # Improves performance for frequently used tables
+query_cache_size        = 64M   # Enables query caching to speed up read queries
+query_cache_type        = 1     # Cache only queries that are expected to be reused
+innodb_buffer_pool_size = 4G    # Large buffer pool for caching data and indexes
+innodb_log_buffer_size  = 16M   # Buffer for transaction logs
+innodb_flush_log_at_trx_commit = 1  # Ensures ACID compliance for reliability
+innodb_file_per_table   = 1     # Each table has its own file for easier management
+innodb_io_capacity      = 2000  # Adjusted for high I/O systems
+
+# Logging and monitoring settings
+slow_query_log          = 1     # Enable slow query logging as specified
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2     # Log queries taking longer than 2 seconds
+log_error               = /var/log/mysql/error.log
+log_queries_not_using_indexes = 1  # Log queries not using indexes for optimization
+general_log             = 0     # Disabled by default to avoid overhead in high-traffic
+
+# Security and reliability settings
+skip-name-resolve       = 1     # Improves performance by not resolving hostnames
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+default_storage_engine  = InnoDB  # Default to InnoDB for transactional reliability
+
+# Additional optimization
+join_buffer_size        = 8M    # For efficient joins
+sort_buffer_size        = 4M    # For sorting operations
+read_buffer_size        = 2M    # For sequential scans
+tmp_table_size          = 128M  # Limits in-memory temporary tables
+max_heap_table_size     = 128M  # Same for heap tables
+
+[client]
+port                    = 3306  # Note: Client default, but server is on 3307; adjust as needed
+socket                  = /var/run/mysqld/mysqld.sock
+
+[mysql]
+default-character-set   = utf8mb4

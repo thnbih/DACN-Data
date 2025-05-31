@@ -1,0 +1,63 @@
+```
+[client]
+port            = 3308
+default-character-set = latin1
+[mysqld_safe]
+port            = 3308
+slow_query_log  = 0
+character-set-server = latin1
+log-error       = /var/log/mysql/error.log
+pid-file        = /var/run/mysqld/mysqld.pid
+nice            = 0
+[mysqld]
+port            = 3308
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+character-set-server = latin1
+collation-server = latin1_swedish_ci
+max_connections = 200
+max_allowed_packet = 64M
+table_open_cache = 4096
+query_cache_type = 1
+query_cache_size = 64M
+query_cache_limit = 2M
+tmp_table_size   = 64M
+max_heap_table_size = 64M
+innodb_buffer_pool_size = 4G
+innodb_log_file_size = 256M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table = 1
+sync_binlog     = 1
+expire_logs_days = 7
+slow_query_log  = 0
+log_queries_not_using_indexes = 0
+thread_cache_size = 128
+thread_stack    = 192K
+back_log        = 50
+join_buffer_size = 2M
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+key_buffer_size = 128M
+skip-name-resolve = 1
+sql_mode        = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+default_storage_engine = InnoDB
+lower_case_table_names = 1
+[mysql]
+no-auto-rehash
+default-character-set = latin1
+[mysqldump]
+quick
+max_allowed_packet = 64M
+[mysqld_multi]
+mysqld     = /usr/sbin/mysqld
+mysqladmin = /usr/bin/mysqladmin
+log_bin           = /var/log/mysql/mysql-bin.log
+server_id         = 1
+binlog_format     = ROW
+relay_log         = /var/log/mysql/relay-bin.log
+max_binlog_size   = 100M
+wait_timeout      = 28800
+interactive_timeout = 28800
+```

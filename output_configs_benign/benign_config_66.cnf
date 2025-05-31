@@ -1,0 +1,76 @@
+```
+# MySQL Configuration File
+# This configuration is tailored for development and testing environments,
+# optimizing performance and reliability by enabling slow query logging,
+# setting appropriate character sets, and using InnoDB as the default storage engine.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4  # Ensures clients use UTF-8 encoding for compatibility
+
+[mysql]
+# Settings for the mysql command-line tool
+no-auto-rehash  = 1
+default-character-set = utf8mb4  # Match server character set
+prompt          = "\\u@\\h:\\p \\R:\\m:\\s> "  # Custom prompt for easier debugging
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log_error       = /var/log/mysql/error.log
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+nice            = 0  # Run at normal priority
+
+[mysqld]
+# Server settings for optimized performance and reliability
+user            = mysql  # Run as mysql user for security
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql  # Standard data directory
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking  # Avoid external locking for better performance
+
+# Key settings as specified
+slow_query_log  = 1  # Enable slow query logging to identify performance issues
+slow_query_log_file = /var/log/mysql/slow.log  # Log file for slow queries
+character-set-server = utf8mb4  # Use UTF-8 character set for full Unicode support
+collation-server = utf8mb4_unicode_ci  # Default collation for proper sorting and comparison
+default-storage-engine = InnoDB  # Use InnoDB for transactional reliability and features
+
+# Performance tuning for development environments
+innodb_buffer_pool_size = 128M  # Buffer pool size; adjust based on available memory
+innodb_log_file_size = 48M  # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability, suitable for testing
+query_cache_type = 1  # Enable query cache
+query_cache_size = 16M  # Cache size for frequently used queries
+max_connections = 100  # Limit connections to prevent overload in testing
+table_open_cache = 2000  # Cache for open tables
+thread_cache_size = 10  # Reuse threads for efficiency
+
+# Logging and debugging options
+general_log     = 1  # Enable general query logging for development debugging
+general_log_file = /var/log/mysql/general.log  # File for general logs
+log_error       = /var/log/mysql/error.log  # Central error log
+log_warnings    = 2  # Log warnings and some errors
+slow_query_log_file = /var/log/mysql/slow.log  # Already specified, reinforcing
+
+# Security and safety settings
+sql_mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"  # Enforce strict SQL mode
+secure_file_priv = "/var/lib/mysql"  # Restrict file operations for security
+bind-address    = 127.0.0.1  # Bind to localhost for development; restrict external access
+
+# Additional InnoDB settings for reliability
+innodb_file_per_table = 1  # Each table in its own file for easier management
+innodb_flush_method = O_DIRECT  # Reduce OS caching for better performance
+
+[mysqldump]
+# Settings for mysqldump tool
+quick           = 1  # Dump tables row by row
+max_allowed_packet = 16M  # Increase packet size for larger dumps
+
+[isamchk]
+key_buffer      = 16M  # Buffer for ISAM operations, though rarely used now
+```

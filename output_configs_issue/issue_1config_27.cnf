@@ -1,0 +1,34 @@
+[mysqld]
+datadir = /var/lib/mysql
+socket = /var/lib/mysql/mysql.sock
+user = mysql
+port = 3306
+bind-address = 0.0.0.0
+log-error = /var/log/mysql/error.log
+slow-query-log = 1
+slow-query-log-file = /var/log/mysql/slow.log
+general-log = 0
+general-log-file = /var/log/mysql/general.log
+innodb_buffer_pool_size = 128M
+innodb_log_file_size = 48M
+max_connections = 151
+thread_stack = 192K
+thread_cache_size = 10
+default-storage-engine = InnoDB
+innodb_file_per_table = 1
+skip-networking = 0
+secure-file-priv = /var/lib/mysql/securedir
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+sql-mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/lib/mysql/mysqld.pid
+[client]
+port = 3306
+socket = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+!includedir /etc/mysql/conf.d/

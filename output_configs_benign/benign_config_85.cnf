@@ -1,0 +1,77 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings to bind to localhost, use InnoDB as the default storage engine, and enforce strict SQL modes.
+# Additional parameters are included to handle concurrency, memory management, and logging effectively.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+bind-address           = 127.0.0.1
+default-storage-engine = InnoDB
+sql_mode               = NO_ENGINE_SUBSTITUTION
+log-error              = /var/log/mysql/error.log
+pid-file               = /var/run/mysqld/mysqld.pid
+nice                   = 0
+user                   = mysql
+open-files-limit       = 65535
+
+[mysqld]
+# Basic Settings
+port                   = 3306
+socket                 = /var/run/mysqld/mysqld.sock
+basedir                = /usr
+datadir                = /var/lib/mysql
+tmpdir                 = /tmp
+lc-messages-dir        = /usr/share/mysql
+skip-external-locking
+
+# Performance Tuning for High-Traffic
+innodb_buffer_pool_size      = 128M  # Adjust based on available memory for better caching
+innodb_log_file_size         = 48M   # Larger log files for improved write performance
+innodb_flush_log_at_trx_commit = 1  # Ensures durability with a balance for performance
+innodb_file_per_table        = 1    # Each table in its own file for better management
+max_connections              = 1000  # Handle more simultaneous connections
+thread_cache_size            = 100   # Reuse threads to reduce overhead
+query_cache_type             = 1     # Enable query caching
+query_cache_size             = 64M   # Cache frequently used queries
+query_cache_limit            = 2M    # Limit for individual query cache entries
+table_open_cache             = 4000  # Cache more open tables
+tmp_table_size               = 64M   # Increase for larger temporary tables
+max_heap_table_size          = 64M   # Limit for memory-based tables
+join_buffer_size             = 8M    # For join operations
+sort_buffer_size             = 8M    # For sorting operations
+
+# Security and Reliability Settings
+bind-address                 = 127.0.0.1  # Only listen on localhost for security
+default-storage-engine       = InnoDB     # Default to transactional engine
+sql_mode                     = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER
+server-id                    = 1          # For replication if needed
+log-bin                      = mysql-bin  # Enable binary logging for recovery
+expire_logs_days             = 7          # Automatically purge old logs
+slow-query-log               = 1          # Log slow queries for optimization
+slow-query-log-file          = /var/log/mysql/mysql-slow.log
+long_query_time              = 2          # Queries longer than 2 seconds are logged
+max_allowed_packet           = 16M        # Larger packets for big data transfers
+
+# Additional MySQL Settings
+character-set-server         = utf8mb4
+collation-server             = utf8mb4_unicode_ci
+skip-name-resolve            = 1          # Improve performance by not resolving hostnames
+lower_case_table_names       = 1          # Case-insensitive table names
+wait_timeout                 = 28800      # 8 hours, to handle long idle connections
+interactive_timeout          = 28800
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/
+```

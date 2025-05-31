@@ -1,0 +1,62 @@
+```
+# MySQL Configuration File
+# This configuration is tailored for development and testing environments,
+# focusing on optimizing performance and reliability with specified settings
+# under the [mysqld_safe] section. It includes comprehensive settings to ensure
+# a fully functional and secure setup.
+
+[client]
+# Default settings for MySQL clients
+port            = 3308
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings specific to the mysql command-line tool
+no-auto-rehash
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for MySQL daemon
+port            = 3308
+bind-address    = 0.0.0.0
+default-storage-engine = MyISAM
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+log-error       = /var/log/mysql/error.log
+slow-query-log  = 1
+slow-query-log-file = /var/log/mysql/slow.log
+max_connections = 150
+table_open_cache = 2000
+query_cache_type = 1
+query_cache_size = 16M
+tmp_table_size  = 32M
+max_heap_table_size = 32M
+thread_cache_size = 50
+innodb_buffer_pool_size = 128M  # Included for any InnoDB usage, though MyISAM is default
+join_buffer_size = 128K
+sort_buffer_size = 256K
+read_buffer_size = 256K
+read_rnd_buffer_size = 512K
+# Security and logging enhancements
+sql_mode        = "STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+# Performance tuning for development
+back_log        = 50
+wait_timeout    = 28800  # 8 hours
+interactive_timeout = 28800  # 8 hours
+
+[mysqld_safe]
+# Settings for the mysqld_safe wrapper to ensure reliable server startup
+default-storage-engine = MyISAM
+port            = 3308
+bind-address    = 0.0.0.0
+log-error       = /var/log/mysql/error.log
+pid-file        = /var/run/mysqld/mysqld.pid
+nice            = 0  # Run at normal priority
+open-files-limit = 65535  # Increase open files limit for better reliability
+# Additional options to monitor and restart the server
+syslog
+```

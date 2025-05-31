@@ -14,10 +14,8 @@ thread_cache = 32
 query_cache_size= 32M
 thread_concurrency = 16
 max_heap_table_size = 1G
-
 auto_increment_increment = 10
 auto_increment_offset = 1
-
 server-id       = 20
 log-warnings
 log-slow-queries

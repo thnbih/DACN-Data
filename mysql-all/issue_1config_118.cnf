@@ -1,0 +1,54 @@
+[client]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+[mysqld]
+port            = 80
+socket          = /var/lib/mysql/mysql.sock
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+log-error       = /var/log/mysqld.log
+slow-query-log  = 1
+slow-query-log-file = /var/log/mysqld-slow.log
+long_query_time = 2
+skip-external-locking
+key_buffer_size         = 256M
+max_allowed_packet      = 1M
+table_open_cache        = 256
+sort_buffer_size        = 1M
+read_buffer_size        = 1M
+read_rnd_buffer_size    = 4M
+myisam_sort_buffer_size = 64M
+thread_cache_size       = 8
+query_cache_size        = 64M
+query_cache_limit       = 1M
+thread_concurrency      = 10
+max_connections         = 100
+innodb_data_home_dir    = /var/lib/mysql
+innodb_data_file_path   = ibdata1:10M:autoextend
+innodb_log_group_home_dir = /var/lib/mysql
+innodb_log_file_size    = 5M
+innodb_buffer_pool_size = 128M
+innodb_log_buffer_size  = 8M
+innodb_flush_log_at_trx_commit  = 1
+innodb_lock_wait_timeout = 50
+default_storage_engine  = InnoDB
+character-set-server    = utf8
+collation-server        = utf8_general_ci
+skip-name-resolve
+secure-file-priv        = /var/lib/mysql-files
+[mysqld_safe]
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+[mysqldump]
+quick
+max_allowed_packet      = 16M
+[myisamchk]
+key_buffer_size         = 128M
+sort_buffer_size        = 128M
+read_buffer             = 2M
+write_buffer            = 2M
+[mysqlhotcopy]
+interactive-timeout
+!includedir /etc/my.cnf.d/

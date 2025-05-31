@@ -1,0 +1,65 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and logging. It includes settings
+# to enable slow query logging, set a default storage engine, and specify
+# character sets, while incorporating additional parameters for a complete
+# and realistic setup.
+
+[client]
+# General client settings for connecting to the server
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysql]
+# Settings specific to the mysql command-line tool
+no-auto-rehash
+prompt         = \\u@\\h:\\p [\\d]>
+default-character-set = latin1
+
+[mysqld]
+# Main server settings for MySQL daemon
+port            = 3306
+bind-address    = 127.0.0.1  # Bind to localhost for security in dev environments
+datadir         = /var/lib/mysql  # Default data directory
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql  # Run as mysql user for security
+default-storage-engine = InnoDB  # Specified setting: Use InnoDB for reliability and transactions
+character-set-server = latin1  # Specified setting: Set server character set
+collation-server = latin1_swedish_ci  # Common collation for latin1
+slow_query_log  = 1  # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # Specified setting: Log file for slow queries
+long_query_time = 2  # Log queries longer than 2 seconds
+log-error       = /var/log/mysql/error.log  # Error log file
+log-queries-not-using-indexes = 1  # Log queries not using indexes for optimization
+max_connections = 151  # Moderate for development to avoid overload
+table_open_cache = 2000  # Cache for open tables to improve performance
+query_cache_type = 1  # Enable query cache
+query_cache_size = 16M  # Size for query cache
+tmp_table_size = 32M  # Size for temporary tables
+max_heap_table_size = 32M  # Limit for in-memory tables
+innodb_buffer_pool_size = 128M  # Buffer pool for InnoDB, tuned for dev environment
+innodb_log_file_size = 48M  # InnoDB log file size for reliability
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+skip-name-resolve  # Skip DNS resolution for faster connections
+sql_mode = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Strict SQL mode for reliability
+
+[mysqldump]
+# Settings for mysqldump tool, optimized for backups in development
+quick  # Dump tables row by row for large datasets
+max_allowed_packet = 64M  # Increase packet size for larger dumps
+single-transaction = 1  # Use a single transaction for InnoDB tables
+set-gtid-purged=OFF  # Handle GTID for replication if needed
+defaults-file = /etc/my.cnf  # Reference the main config file
+character-set = latin1  # Align with server character set for consistency
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/
+# Include any additional configuration files from this directory for modularity
+```

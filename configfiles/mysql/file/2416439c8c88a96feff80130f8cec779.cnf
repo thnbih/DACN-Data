@@ -25,7 +25,6 @@ sync_binlog = 3
 innodb_flush_log_at_trx_commit = 3
 table_definition_cache = 768
 bind-address = 127.0.0.1
-
 [mysqld_safe]
 log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid

@@ -1,0 +1,84 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for mysqld_safe as specified, along with additional parameters to ensure a robust setup.
+# Note: Always test this configuration in a non-production environment before deployment.
+
+[client]
+# Default settings for MySQL clients
+port            = 3308
+default-character-set = latin1
+
+[mysqld_safe]
+# Settings for the mysqld_safe wrapper to manage the server process
+port            = 3308
+slow_query_log  = 0
+character-set-server = latin1
+log-error       = /var/log/mysql/error.log  # Log errors for reliability
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file for process management
+nice            = 0  # Run with normal priority
+
+[mysqld]
+# Main server configuration for performance optimization in high-traffic scenarios
+port            = 3308  # Match the specified port
+basedir         = /usr  # Base directory for MySQL installation
+datadir         = /var/lib/mysql  # Data directory
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+character-set-server = latin1  # As specified, for consistent character handling
+collation-server = latin1_swedish_ci  # Common collation for the specified character set
+max_connections = 200  # Allow more connections for high traffic
+max_allowed_packet = 64M  # Increase for larger queries or data transfers
+table_open_cache = 4096  # Cache more tables to reduce disk I/O
+query_cache_type = 1  # Enable query cache for repeated queries
+query_cache_size = 64M  # Size for query cache to improve read performance
+query_cache_limit = 2M  # Limit per query to prevent cache bloat
+tmp_table_size   = 64M  # Larger temporary tables in memory
+max_heap_table_size = 64M  # Limit for in-memory heap tables
+innodb_buffer_pool_size = 4G  # Substantial buffer for InnoDB to cache data and indexes
+innodb_log_file_size = 256M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability (full ACID compliance)
+innodb_file_per_table = 1  # Each table in its own file for better management
+sync_binlog     = 1  # Synchronous binary logging for reliability in replication scenarios
+expire_logs_days = 7  # Automatically purge old binary logs
+slow_query_log  = 0  # As specified, disable slow query logging to reduce overhead
+log_queries_not_using_indexes = 0  # Disable to avoid logging overhead
+thread_cache_size = 128  # Reuse threads for better performance under load
+thread_stack    = 192K  # Default stack size for threads
+back_log        = 50  # Queue size for incoming connections
+join_buffer_size = 2M  # Buffer for joins to optimize queries
+sort_buffer_size = 2M  # Buffer for sorting operations
+read_buffer_size = 1M  # Buffer for reading sequential records
+read_rnd_buffer_size = 1M  # Buffer for reading random records
+key_buffer_size = 128M  # Buffer for MyISAM indexes (if used)
+skip-name-resolve = 1  # Skip DNS lookups for faster connections
+sql_mode        = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Strict SQL mode for reliability
+default_storage_engine = InnoDB  # Use InnoDB for transactional support in high-traffic apps
+lower_case_table_names = 1  # Case-insensitive table names for consistency
+
+[mysql]
+# Settings for the mysql command-line tool
+no-auto-rehash  # Faster startup
+default-character-set = latin1  # Match server setting
+
+[mysqldump]
+# Settings for mysqldump tool
+quick           # Dump as it reads for large databases
+max_allowed_packet = 64M  # Same as server for consistency
+
+# Additional global settings for security and maintenance
+[mysqld_multi]
+# For managing multiple MySQL instances if needed
+mysqld     = /usr/sbin/mysqld
+mysqladmin = /usr/bin/mysqladmin
+
+# Ensure the server logs are managed properly
+log_bin           = /var/log/mysql/mysql-bin.log  # Enable binary logging for replication and recovery
+server_id         = 1  # Unique ID for the server (required for binary logging)
+binlog_format     = ROW  # Recommended for high-traffic with replication
+relay_log         = /var/log/mysql/relay-bin.log  # For slave servers if applicable
+max_binlog_size   = 100M  # Limit binary log size
+
+# Performance tuning for high traffic
+wait_timeout      = 28800  # Longer idle timeout to handle bursts
+interactive_timeout = 28800  # Same for interactive sessions
+```

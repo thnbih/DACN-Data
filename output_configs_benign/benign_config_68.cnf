@@ -1,0 +1,50 @@
+```
+# MySQL Configuration File
+# This configuration is tailored for development and testing environments,
+# optimizing performance and reliability by enabling slow query logging,
+# allowing broad network access, and using a non-standard port.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3308
+host            = 127.0.0.1
+protocol        = TCP
+default-character-set = utf8mb4
+connect-timeout = 10
+
+[mysqld]
+# Server settings for optimized performance and reliability
+user            = mysql
+port            = 3308
+bind-address    = 0.0.0.0
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+log-error       = /var/log/mysql/error.log
+slow_query_log  = 1
+slow_query_log_file = /tmp/slow.log
+long_query_time = 2  # Log queries that take longer than 2 seconds
+log-queries-not-using-indexes = 1  # Log queries not using indexes for optimization
+max_connections = 151  # Moderate number for development to avoid overload
+table_open_cache = 2000  # Cache for open tables to improve performance
+query_cache_type = 1  # Enable query cache for repeated queries
+query_cache_size = 16M  # Size of query cache
+tmp_table_size = 32M  # Size for temporary tables
+max_heap_table_size = 32M  # Maximum size for in-memory tables
+innodb_buffer_pool_size = 128M  # Buffer pool for InnoDB, adjusted for testing
+innodb_log_file_size = 48M  # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+sync_binlog = 1  # Synchronize binary log for reliability
+server-id = 1  # Unique server ID for replication, if needed
+skip-name-resolve  # Skip DNS resolution for faster connections
+character-set-server = utf8mb4  # Default character set
+collation-server = utf8mb4_unicode_ci  # Default collation
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+[mysql]
+no-auto-rehash  # Faster startup
+default-character-set = utf8mb4
+```

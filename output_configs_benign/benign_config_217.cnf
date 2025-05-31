@@ -1,0 +1,71 @@
+[mysqld]
+# Server basics
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+
+# Networking and security
+bind-address    = 0.0.0.0  # Allow connections from any interface for high-traffic accessibility
+skip-name-resolve  # Improve performance by skipping DNS lookups
+
+# Logging configuration
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 0  # Disable slow query logging as specified
+slow_query_log_file = /var/log/mysql/slow.log  # Still define the file for potential future enablement
+general_log     = 0  # Disable general logging to reduce overhead in high-traffic scenarios
+general_log_file = /var/log/mysql/general.log
+
+# Performance tuning for high-traffic applications
+max_connections        = 1000  # Handle a large number of simultaneous connections
+thread_cache_size      = 100  # Reuse threads to reduce overhead
+table_open_cache       = 2000  # Cache more tables for faster access
+query_cache_type       = 0  # Disable query cache as it's often not beneficial in high-traffic with varying queries
+query_cache_size       = 0  # Set to 0 to fully disable
+tmp_table_size         = 32M  # Limit in-memory temporary tables
+max_heap_table_size    = 32M  # Limit for memory-based tables
+
+# InnoDB settings for reliability and performance
+innodb_buffer_pool_size = 128M  # As specified; caches data and indexes, but consider increasing for very high traffic
+innodb_buffer_pool_instances = 1  # Single instance for simplicity
+innodb_log_file_size    = 48M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure durability, suitable for reliable operations
+innodb_file_per_table    = 1  # Each table in its own file for better management
+innodb_flush_method      = O_DIRECT  # Reduce OS caching overhead
+innodb_lock_wait_timeout = 50  # Prevent long waits in high-concurrency environments
+
+# Additional optimization settings
+sort_buffer_size         = 2M  # Per-connection buffer for sorting
+join_buffer_size         = 2M  # For join operations
+read_buffer_size         = 1M  # For sequential scans
+read_rnd_buffer_size     = 1M  # For random reads
+bulk_insert_buffer_size  = 8M  # Speed up bulk inserts
+
+# MyISAM settings (if used, though InnoDB is preferred for high-traffic)
+key_buffer_size          = 16M  # For index blocks of MyISAM tables
+
+# Default storage engine
+default-storage-engine   = InnoDB
+
+# Character set and collation for reliability
+character-set-server     = utf8mb4
+collation-server         = utf8mb4_unicode_ci
+
+# Enable features for monitoring and maintenance
+innodb_stats_on_metadata = 0  # Reduce overhead from statistics collection
+skip-external-locking    # Avoid external lock issues in high-traffic
+
+[mysql]
+# Client settings for consistency
+no-auto-rehash
+default-character-set = utf8mb4
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+
+[mysqld_safe]
+log-error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld_safe.pid

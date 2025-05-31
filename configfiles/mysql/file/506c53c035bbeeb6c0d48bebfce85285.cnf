@@ -11,7 +11,6 @@ sort_buffer_size = 2M
 thread_cache = 8
 thread_concurrency = 32
 query_cache_size = 128M
-#query_cache_type = 0
 default-storage-engine = innodb
 transaction_isolation = REPEATABLE-READ
 tmp_table_size = 512M
@@ -29,12 +28,9 @@ innodb_buffer_pool_size = 8000M
 innodb_lock_wait_timeout = 300
 innodb_max_dirty_pages_pct = 90
 innodb_thread_concurrency =32
-
-
 [mysqldump]
 quick
 single-transaction
-
 [mysqld_safe]
 log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid

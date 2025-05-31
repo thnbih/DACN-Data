@@ -1,0 +1,65 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and security. It includes settings
+# to bind the server to localhost, enforce specific SQL modes, and log errors
+# for easier debugging. Ensure the file is placed in /etc/my.cnf or ~/.my.cnf
+# as appropriate, and adjust paths based on your system setup.
+
+[client]
+# Settings for MySQL client programs
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+# The specified sql_mode is included here for client-side behavior
+sql_mode        = NO_ENGINE_SUBSTITUTION
+
+[mysqld]
+# Server settings for MySQL daemon
+user            = mysql
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Networking and security settings
+bind-address    = 127.0.0.1  # Bind to localhost only for security in development
+skip-networking = 0  # Allow socket connections
+
+# SQL mode and error logging as specified
+sql_mode        = NO_ENGINE_SUBSTITUTION  # Ensures engine substitution is not performed
+log-error       = /tmp/mysql_error.log  # Log errors to a temporary file for testing
+
+# Performance tuning for development environment
+innodb_buffer_pool_size = 128M  # Reasonable size for development; adjust based on RAM
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures durability but may impact performance
+max_connections         = 100  # Limit connections to prevent overload in testing
+query_cache_type        = 1  # Enable query cache for faster repeated queries
+query_cache_size        = 16M
+table_open_cache        = 200  # Cache for open tables
+thread_cache_size       = 10  # Reuse threads for better performance
+
+# Logging and monitoring
+log_queries_not_using_indexes = 1  # Log queries that don't use indexes for optimization
+slow_query_log           = 1
+slow_query_log_file      = /var/log/mysql/slow_queries.log  # File for slow queries
+long_query_time          = 2  # Queries longer than 2 seconds are considered slow
+
+# Character set and collation
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+
+# Other reliability settings
+max_allowed_packet      = 16M  # Increase for larger packets if needed
+lower_case_table_names  = 1  # Make table names case-insensitive
+skip-external-locking   # Avoid external locking issues
+
+[mysqld_safe]
+log-error = /tmp/mysql_error.log  # Mirror error log for mysqld_safe
+pid-file  = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/my.cnf.d  # Include any additional configuration files if present
+```

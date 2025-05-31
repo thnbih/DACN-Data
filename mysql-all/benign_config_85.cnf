@@ -1,0 +1,60 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld_safe]
+bind-address           = 127.0.0.1
+default-storage-engine = InnoDB
+sql_mode               = NO_ENGINE_SUBSTITUTION
+log-error              = /var/log/mysql/error.log
+pid-file               = /var/run/mysqld/mysqld.pid
+nice                   = 0
+user                   = mysql
+open-files-limit       = 65535
+[mysqld]
+port                   = 3306
+socket                 = /var/run/mysqld/mysqld.sock
+basedir                = /usr
+datadir                = /var/lib/mysql
+tmpdir                 = /tmp
+lc-messages-dir        = /usr/share/mysql
+skip-external-locking
+innodb_buffer_pool_size      = 128M
+innodb_log_file_size         = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table        = 1
+max_connections              = 1000
+thread_cache_size            = 100
+query_cache_type             = 1
+query_cache_size             = 64M
+query_cache_limit            = 2M
+table_open_cache             = 4000
+tmp_table_size               = 64M
+max_heap_table_size          = 64M
+join_buffer_size             = 8M
+sort_buffer_size             = 8M
+bind-address                 = 127.0.0.1
+default-storage-engine       = InnoDB
+sql_mode                     = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER
+server-id                    = 1
+log-bin                      = mysql-bin
+expire_logs_days             = 7
+slow-query-log               = 1
+slow-query-log-file          = /var/log/mysql/mysql-slow.log
+long_query_time              = 2
+max_allowed_packet           = 16M
+character-set-server         = utf8mb4
+collation-server             = utf8mb4_unicode_ci
+skip-name-resolve            = 1
+lower_case_table_names       = 1
+wait_timeout                 = 28800
+interactive_timeout          = 28800
+[mysqldump]
+quick
+max_allowed_packet = 16M
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+!includedir /etc/mysql/conf.d/
+```

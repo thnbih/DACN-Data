@@ -1,0 +1,48 @@
+```
+[client]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+host            = 127.0.0.1
+[mysql]
+no-auto-rehash  = 1
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/lib/mysql/mysql.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 10.0.0.1
+log-error       = /var/log/mysql/error.log
+slow-query-log  = 1
+slow-query-log-file = /var/log/mysql/slow.log
+long-query-time = 2
+default-storage-engine = InnoDB
+innodb_buffer_pool_size = 128M
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table = 1
+skip-name-resolve
+secure-file-priv   = /var/lib/mysql
+max_connections    = 151
+max_allowed_packet = 16M
+character-set-server = utf8mb4
+collation-server     = utf8mb4_unicode_ci
+[mysqld_safe]
+log-error  = /var/log/mysql/mysqld_safe.log
+pid-file   = /var/run/mysqld/mysqld_safe.pid
+[isamchk]
+key_buffer_size = 16M
+[myisamchk]
+key_buffer_size = 16M
+sort_buffer_size = 16M
+read_buffer = 8M
+write_buffer = 8M
+[mysqlhotcopy]
+interactive-timeout
+```

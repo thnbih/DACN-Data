@@ -1,0 +1,36 @@
+[mysqld]
+port            = 3306
+basedir         = /usr/local/mysql
+datadir         = /usr/local/mysql/data
+tmpdir          = /tmp
+socket          = /tmp/mysql.sock
+pid-file        = /usr/local/mysql/data/mysqld.pid
+log_error       = /usr/local/mysql/data/error.log
+slow_query_log  = 1
+slow_query_log_file = /usr/local/mysql/data/slow.log
+long_query_time = 2
+log_bin         = /usr/local/mysql/data/mysql-bin.log
+binlog_format   = STATEMENT
+sync_binlog     = 0
+max_binlog_size = 100M
+expire_logs_days = 7
+default_storage_engine = InnoDB
+innodb_buffer_pool_size = 128M
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table = 1
+skip-networking = 0
+bind-address    = 0.0.0.0
+max_connections = 151
+query_cache_type = 1
+query_cache_size = 16M
+table_open_cache = 2000
+thread_cache_size = 10
+[client]
+port            = 3306
+socket          = /tmp/mysql.sock
+default-character-set = utf8mb4
+[mysqld_safe]
+log-error       = /usr/local/mysql/data/mysqld_safe.log
+pid-file        = /usr/local/mysql/data/mysqld_safe.pid
+!includedir /usr/local/mysql/conf.d/

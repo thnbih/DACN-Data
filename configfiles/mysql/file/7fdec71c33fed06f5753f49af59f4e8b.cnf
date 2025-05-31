@@ -1,10 +1,7 @@
-
  [client]
 port=3306
-
 [mysql]
 default-character-set=latin1
-
  [mysqld]
 port=3306
 skip-name-resolve
@@ -18,10 +15,6 @@ query_cache_size=50M
 table_cache=512M
 tmp_table_size=103M
 thread_cache_size=8
-
-
-#*** MyISAM Specific options
-
 myisam_max_sort_file_size=100G
 myisam_max_extra_sort_file_size=100G
 myisam_sort_buffer_size=205M
@@ -29,10 +22,6 @@ key_buffer_size=512M
 read_buffer_size=64K
 read_rnd_buffer_size=256K
 sort_buffer_size=2M
-
-
-#*** INNODB Specific options ***
-
 innodb_additional_mem_pool_size=7M
 innodb_flush_log_at_trx_commit=1
 innodb_log_buffer_size=3498K
@@ -44,4 +33,3 @@ long_query_time=2
 log-slow-queries=Slow.log
 innodb_file_per_table
 innodb_lock_wait_timeout=500
-

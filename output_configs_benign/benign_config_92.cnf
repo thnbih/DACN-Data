@@ -1,0 +1,69 @@
+[mysql]
+# MySQL Server Configuration for Development and Testing Environments
+# This configuration optimizes performance and reliability by setting appropriate logging,
+# binding to localhost for security, and allocating memory for InnoDB buffer pool.
+
+# Basic server settings
+user                = mysql
+pid-file            = /var/run/mysqld/mysqld.pid
+socket              = /var/run/mysqld/mysqld.sock
+port                = 3306
+basedir             = /usr
+datadir             = /var/lib/mysql
+tmpdir              = /tmp
+
+# Logging and error handling
+log-error           = /var/log/mysql/error.log
+log_warnings        = 2
+slow_query_log      = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time     = 2  # Log queries that take longer than 2 seconds
+general_log         = 0  # Disabled for performance in testing; enable if needed
+general_log_file    = /var/log/mysql/general.log
+
+# Networking and security
+bind-address        = 127.0.0.1  # Bind to localhost only for development security
+max_connections     = 100  # Moderate limit for testing environments
+skip-name-resolve   = 1  # Improve performance by not resolving hostnames
+max_allowed_packet  = 16M  # Allow larger packets for queries
+
+# Performance tuning
+innodb_buffer_pool_size = 2G  # Optimize for caching data and indexes
+innodb_log_file_size    = 128M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+innodb_file_per_table   = 1  # Each table in its own file for easier management
+query_cache_type        = 1  # Enable query cache
+query_cache_size        = 64M  # Cache size for frequently used queries
+query_cache_limit       = 1M  # Limit for individual query results
+thread_cache_size       = 10  # Reuse threads for better efficiency
+table_open_cache        = 2000  # Cache for open tables
+sort_buffer_size        = 2M  # Buffer for sorting operations
+join_buffer_size        = 2M  # Buffer for joins
+tmp_table_size          = 32M  # Size for in-memory temporary tables
+max_heap_table_size     = 32M  # Limit for memory-based tables
+
+# Additional InnoDB settings for reliability
+innodb_flush_method     = O_DIRECT  # Reduce OS caching for better performance
+innodb_lock_wait_timeout = 50  # Timeout for locks to prevent deadlocks in testing
+
+# Character set and collation for consistent data handling
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+
+# Other settings for a complete development setup
+default_storage_engine  = InnoDB  # Default to transactional engine
+lc-messages-dir         = /usr/share/mysql
+lc-messages             = en_US
+
+# Uncomment and adjust if needed for specific testing scenarios
+# lower_case_table_names = 1  # Make table names case-insensitive
+# sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Strict mode for development
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[client]
+default-character-set = utf8mb4
+port = 3306
+socket = /var/run/mysqld/mysqld.sock

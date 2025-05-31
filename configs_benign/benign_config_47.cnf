@@ -1,0 +1,53 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+log-error       = /tmp/mysql_error.log
+sql_mode        = STRICT_ALL_TABLES
+default-storage-engine = MyISAM
+max_connections = 1000
+table_open_cache = 4000
+thread_cache_size = 100
+query_cache_type = 1
+query_cache_size = 64M
+query_cache_limit = 2M
+max_heap_table_size = 64M
+tmp_table_size = 64M
+join_buffer_size = 2M
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+innodb_buffer_pool_size = 128M
+innodb_log_buffer_size = 8M
+innodb_flush_log_at_trx_commit = 1
+sync_binlog = 1
+log-bin         = /var/log/mysql/mysql-bin.log
+server-id       = 1
+expire_logs_days = 7
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+log_queries_not_using_indexes = 1
+[mysqldump]
+quick
+max_allowed_packet      = 16M
+single-transaction
+lock-tables             = true
+set-gtid-purged=OFF
+[mysqld_safe]
+log-error               = /tmp/mysql_error.log
+pid-file                = /var/run/mysqld/mysqld.pid
+!includedir /etc/mysql/conf.d/
+```

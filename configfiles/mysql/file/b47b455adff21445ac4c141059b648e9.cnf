@@ -1,5 +1,4 @@
 [mysqld]
-#bind-address = 141.21.8.197
 max_allowed_packet = 128M
 sort_buffer_size = 512M
 max_connections=500
@@ -18,11 +17,9 @@ innodb_additional_mem_pool_size=20M
 datadir=/data/mysql
 socket=/var/lib/mysql/mysql.sock
 user=mysql
-# Disabling symbolic-links is recommended to prevent assorted security risks
 symbolic-links=0
-#Enable logs
-log = /var/log/mysql/mysql-log.log 
-log-error = /var/log/mysql/mysql-error.log  
+log = /var/log/mysql/mysql-log.log
+log-error = /var/log/mysql/mysql-error.log
 long_query_time = 1
 log-slow-queries = /var/log/mysql/mysql-slow.log
 [mysqld_safe]

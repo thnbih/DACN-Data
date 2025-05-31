@@ -1,0 +1,71 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability as specified.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server basics
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+
+# Specified settings for optimization
+slow_query_log  = 0               # Disable slow query logging to reduce overhead in testing
+innodb_buffer_pool_size = 2G      # Set InnoDB buffer pool size to 2GB for improved performance
+sql_mode       = NO_ENGINE_SUBSTITUTION  # Ensure no engine substitution for reliability
+
+# General performance tuning
+key_buffer_size         = 16M     # Size for MyISAM indexes
+max_allowed_packet      = 16M     # Maximum packet size for queries
+table_open_cache        = 64      # Cache for open tables
+sort_buffer_size        = 2M      # Buffer for sorting
+read_buffer_size        = 128K    # Buffer for reading rows
+read_rnd_buffer_size    = 256K    # Buffer for random reads
+thread_cache_size       = 8       # Cache for threads to handle connections efficiently
+query_cache_type        = 1       # Enable query cache for development queries
+query_cache_size        = 16M     # Size of query cache
+thread_stack            = 192K    # Stack size per thread
+tmp_table_size          = 16M     # Size for temporary tables
+max_heap_table_size     = 16M     # Maximum size for in-memory tables
+
+# InnoDB-specific settings for reliability and performance
+innodb_log_file_size    = 48M     # Size of InnoDB log files
+innodb_log_buffer_size  = 8M      # Buffer for InnoDB logs
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+innodb_lock_wait_timeout = 50     # Timeout for locks to prevent deadlocks in testing
+innodb_file_per_table   = 1       # Each table in its own file for easier management
+innodb_io_capacity      = 200     # I/O operations per second for the buffer pool
+
+# Logging and error handling
+log_error               = /var/log/mysql/error.log  # Error log path
+log_warnings            = 2       # Log warnings for debugging
+general_log             = 0       # Disable general query log to avoid performance impact
+general_log_file        = /var/log/mysql/general.log  # Path if enabled
+
+# Security and access settings
+skip-networking         = 0       # Allow network connections
+bind-address            = 127.0.0.1  # Bind to localhost for development safety
+max_connections         = 100     # Limit connections for testing environments
+
+# Other reliability settings
+lower_case_table_names  = 1       # Case-insensitive table names
+character-set-server    = utf8mb4  # Default character set
+collation-server        = utf8mb4_unicode_ci  # Default collation
+explicit_defaults_for_timestamp = 1  # Explicit TIMESTAMP behavior
+skip-external-locking   # Skip external locking for better performance
+
+[mysqld_safe]
+log-error               = /var/log/mysql/mysqld_safe.log
+pid-file                = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/  # Include directory for additional configurations
+```

@@ -1,0 +1,51 @@
+[mysqld]
+port=3308
+log-error=/var/log/mysql/error.log
+default-storage-engine=MyISAM
+
+# General server settings
+user=mysql
+basedir=/usr
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+pid-file=/var/run/mysqld/mysqld.pid
+
+# Performance optimizations for high-traffic applications
+max_connections=500
+table_open_cache=2000
+thread_cache_size=100
+query_cache_type=1
+query_cache_size=64M
+key_buffer_size=256M  # Optimized for MyISAM usage
+sort_buffer_size=4M
+read_buffer_size=4M
+read_rnd_buffer_size=16M
+join_buffer_size=8M
+
+# Logging and error handling for reliability
+general_log_file=/var/log/mysql/general.log
+general_log=0  # Disable by default to reduce overhead, enable as needed
+slow_query_log=1
+slow_query_log_file=/var/log/mysql/slow.log
+long_query_time=2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes=1
+
+# Additional reliability settings
+skip-external-locking
+max_allowed_packet=64M
+innodb_flush_log_at_trx_commit=1  # Included for completeness, though MyISAM is default
+sync_binlog=1  # For potential replication setup
+
+# Security considerations
+bind-address=127.0.0.1  # Bind to localhost for security; adjust for production networks
+
+[client]
+port=3308
+socket=/var/lib/mysql/mysql.sock
+default-character-set=utf8mb4
+
+[mysqld_safe]
+log-error=/var/log/mysql/error.log
+pid-file=/var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/  # For additional configuration files if needed

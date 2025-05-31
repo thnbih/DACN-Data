@@ -1,11 +1,9 @@
 [client]
 port = 3306
 socket = /var/run/mysqld/mysqld.sock
-
 [mysqld_safe]
 socket = /var/run/mysqld/mysqld.sock
 nice  = 0
-
 [mysqld]
 user = mysql
 pid-file = /var/run/mysqld/mysqld.pid
@@ -24,11 +22,9 @@ query_cache_size = 16M
 expire_logs_days = 10
 max_binlog_size = 100M
 skip-federated
-
 [mysqldump]
 quick
 quote-names
 max_allowed_packet = 16M
-
 [isamchk]
 key_buffer = 16M

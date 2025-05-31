@@ -1,0 +1,54 @@
+[mysqld]
+# MySQL Server Configuration for Development and Testing Environments
+# This section optimizes performance and reliability, focusing on logging, character sets, and resource management.
+
+port            = 3306
+bind-address    = 127.0.0.1  # Bind to localhost for security in development
+datadir         = /var/lib/mysql  # Default data directory
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file location
+
+# Logging and Error Handling
+log-error       = /var/log/mysql/error.log  # Specified error log path
+slow_query_log  = 0  # Disable slow query logging as per description
+general_log     = 1  # Enable general query logging for debugging in development
+general_log_file = /var/log/mysql/general.log  # File for general logs
+log_output      = FILE  # Output logs to files
+
+# Character Set and Collation Settings
+character-set-server = utf8mb4  # Specified character set for full Unicode support
+collation-server     = utf8mb4_unicode_ci  # Default collation for consistency
+character_set_client = utf8mb4  # Ensure client connections use utf8mb4
+
+# Performance Optimization
+innodb_buffer_pool_size = 128M  # Buffer pool size for InnoDB, adjustable based on system memory
+innodb_log_file_size    = 48M  # Size of InnoDB log files for better write performance
+max_connections         = 100  # Limit connections to prevent overload in testing
+table_open_cache        = 2000  # Cache for open tables to reduce disk I/O
+query_cache_type        = 1  # Enable query cache for frequently run queries (note: deprecated in MySQL 8+)
+query_cache_size        = 16M  # Size of query cache
+tmp_table_size          = 16M  # Size for in-memory temporary tables
+max_heap_table_size     = 16M  # Maximum size for memory-based tables
+
+# Reliability and Security Settings
+skip-name-resolve       = 1  # Skip DNS lookups for faster connections
+lower_case_table_names  = 1  # Make table names case-insensitive for portability
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Strict mode for reliability
+max_allowed_packet      = 64M  # Larger packets for handling bigger queries in testing
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability by flushing logs on commit
+
+# Additional Development-Specific Settings
+default_storage_engine  = InnoDB  # Use InnoDB as default for transactional support
+thread_stack            = 192K  # Stack size for threads
+bulk_insert_buffer_size = 8M  # Buffer for bulk inserts to improve performance
+
+[client]
+# Client Configuration for Development
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4  # Match server character set
+
+[mysqld_safe]
+# Safe Mode for MySQL Daemon
+log-error       = /var/log/mysql/error.log  # Reuse error log
+pid-file        = /var/run/mysqld/mysqld.pid

@@ -1,0 +1,63 @@
+[mysqld]
+# Configuration for MySQL server optimized for high-traffic applications
+port            = 3306
+bind-address    = 127.0.0.1  # Bind to localhost for security in production environments
+datadir         = /var/lib/mysql  # Default data directory; ensure this path exists
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+user            = mysql  # Run the MySQL server as the mysql user for security
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file location
+
+# Performance and reliability settings
+max_connections = 1000  # Allow up to 1000 simultaneous connections for high-traffic scenarios
+max_connect_errors = 10  # Limit connection errors before temporary IP blocking
+table_open_cache = 2000  # Cache recently used tables to reduce disk I/O
+thread_cache_size = 100  # Reuse threads for new connections to improve efficiency
+query_cache_type = 1  # Enable query cache for frequently executed queries
+query_cache_size = 64M  # Allocate 64MB for query cache
+query_cache_limit = 2M  # Limit individual query results in cache
+tmp_table_size = 64M  # Maximum size for in-memory temporary tables
+max_heap_table_size = 64M  # Maximum size for memory-based tables
+key_buffer_size = 256M  # Buffer for MyISAM indexes; critical for MyISAM performance
+bulk_insert_buffer_size = 16M  # Improve performance for bulk inserts
+sort_buffer_size = 4M  # Buffer for sorting operations
+read_buffer_size = 1M  # Buffer for sequential table scans
+read_rnd_buffer_size = 4M  # Buffer for random reads
+
+# Logging and monitoring for reliability
+slow_query_log = 1  # Enable logging of slow queries as specified
+slow_query_log_file = /var/log/mysql/slow_queries.log  # File for slow query logs
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+log-error = /var/log/mysql/error.log  # Error log file
+log_bin = /var/log/mysql/mysql-bin.log  # Enable binary logging for replication and recovery
+expire_logs_days = 7  # Automatically expire binary logs after 7 days
+sync_binlog = 1  # Synchronize binary log for data integrity
+
+# Storage engine and other core settings
+default-storage-engine = MyISAM  # Set default engine as specified; note that for high-traffic, consider InnoDB for transactions
+default_tmp_storage_engine = MyISAM  # Use MyISAM for temporary tables
+innodb_file_per_table = 1  # Even with MyISAM default, enable for any InnoDB tables created
+skip-name-resolve = 1  # Skip DNS resolution for faster connections
+lower_case_table_names = 1  # Make table names case-insensitive for consistency
+sql_mode = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Enforce strict SQL mode
+
+# Additional optimizations for high-traffic
+wait_timeout = 28800  # Timeout for idle connections (8 hours)
+interactive_timeout = 28800  # Timeout for interactive sessions
+max_allowed_packet = 64M  # Maximum packet size for large queries or blobs
+back_log = 50  # Queue size for incoming connections
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log  # Log errors from mysqld_safe
+pid-file = /var/run/mysqld/mysqld_safe.pid
+
+[client]
+port = 3306
+socket = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4  # Use UTF-8 for broader character support
+
+[mysql]
+no-auto-rehash  # Speed up command-line client startup
+default-character-set = utf8mb4  # Ensure client uses UTF-8
+
+!includedir /etc/mysql/conf.d/  # Include any additional configuration files from this directory

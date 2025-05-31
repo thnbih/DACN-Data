@@ -1,0 +1,68 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with settings like slow query logging,
+# strict SQL mode, and MyISAM as the default storage engine.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+[mysqld]
+# Basic server settings
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Networking and security
+bind-address    = 127.0.0.1  # Bind to localhost for development security
+max_connections = 100  # Reasonable limit for testing environments
+
+# Logging and monitoring
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 1  # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # Specified log file
+long_query_time = 2  # Log queries longer than 2 seconds
+general_log     = 0  # Disabled by default to avoid overhead in development
+# general_log_file = /var/log/mysql/general.log  # Uncomment if needed for debugging
+
+# SQL mode and storage engine
+sql_mode        = TRADITIONAL  # Enforce strict SQL mode for reliability
+default_storage_engine = MyISAM  # Use MyISAM as specified for optimization
+
+# Performance tuning for development
+key_buffer_size     = 16M  # Cache for MyISAM indexes
+max_allowed_packet  = 16M  # Larger packets for queries in testing
+thread_stack        = 192K
+thread_cache_size   = 8
+table_open_cache    = 64  # Cache for open tables
+query_cache_type    = 1  # Enable query cache
+query_cache_size    = 16M  # Size for query cache
+sort_buffer_size    = 2M  # Buffer for sorting
+read_buffer_size    = 1M  # Buffer for reading
+read_rnd_buffer_size= 1M  # Buffer for random reads
+
+# Additional reliability settings
+innodb_force_recovery = 0  # Not critical since MyISAM is default, but available if needed
+max_heap_table_size   = 32M  # Limit for in-memory tables
+tmp_table_size        = 32M  # Size for temporary tables
+bulk_insert_buffer_size = 8M  # Buffer for bulk inserts
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet = 16M
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe_error.log
+pid-file  = /var/run/mysqld/mysqld.pid
+```

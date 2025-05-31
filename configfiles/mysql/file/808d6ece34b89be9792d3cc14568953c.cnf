@@ -1,6 +1,5 @@
 port = 3306
 socket = /tmp/mysql.sock
-
 [mysqld]
 port = 3306
 socket = /tmp/mysql.sock
@@ -33,29 +32,22 @@ transaction-isolation = READ-COMMITTED
 max_length_for_sort_data = 8388608
 max_sort_length = 8388608
 group_concat_max_len = 32M
-
 net_buffer_length = 1M
 max_connections = 32768
 back_log = 32768
-
 [mysqld_safe]
 log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid
 open-files-limit = 8192
-
 [mysqldump]
 quick
 max_allowed_packet = 32M
-
 [mysql]
-#no-auto-rehash
 database = whoat
-#safe-updates
 [myisamchk]
 key_buffer_size = 256M
 sort_buffer_size = 256M
 read_buffer = 2M
 write_buffer = 2M
-
 [mysqlhotcopy]
 interactive-timeout

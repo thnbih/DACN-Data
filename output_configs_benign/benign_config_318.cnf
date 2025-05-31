@@ -1,0 +1,61 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with moderate resource usage.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3306
+host            = localhost
+protocol        = socket
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for optimized performance and reliability
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Memory and buffer settings
+innodb_buffer_pool_size = 2G  # Allocate 2GB for InnoDB buffer pool to improve query performance
+innodb_log_file_size    = 48M  # Size of InnoDB log files for better transaction handling
+tmp_table_size          = 16M  # Maximum size for internal in-memory temporary tables
+max_heap_table_size     = 16M  # Maximum size for MEMORY tables
+query_cache_size        = 16M  # Size of the query cache (if enabled)
+query_cache_type        = 1    # Enable query cache for caching query results
+
+# Logging and error handling
+log-error              = /tmp/mysql_error.log  # Path for error logging to monitor issues
+slow_query_log         = 1                     # Enable slow query logging
+slow_query_log_file    = /var/log/mysql/slow.log  # File for slow queries
+general_log            = 1                     # Enable general query logging (for testing)
+general_log_file       = /var/log/mysql/general.log  # File for general logs
+log_output             = FILE                  # Output logs to files
+
+# Connection and security settings
+max_connections        = 100  # Limit connections for development environments
+max_allowed_packet     = 16M  # Maximum packet size for queries
+bind-address           = 127.0.0.1  # Bind to localhost for security
+skip-name-resolve      = 1     # Skip DNS resolution for faster connections
+
+# InnoDB-specific settings for reliability
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+innodb_file_per_table   = 1          # Use per-table tablespaces for better management
+innodb_lock_wait_timeout = 50       # Timeout for locks to prevent deadlocks
+
+# Other performance tweaks
+thread_stack            = 192K     # Stack size for threads
+thread_cache_size       = 10       # Cache for threads to reduce overhead
+table_open_cache        = 200      # Cache for open tables
+
+[mysqld_safe]
+log-error = /tmp/mysql_error.log  # Reference error log for mysqld_safe
+pid-file  = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/  # Include any additional configuration files if needed
+```

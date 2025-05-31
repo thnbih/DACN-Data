@@ -1,0 +1,29 @@
+[ODBC]
+Trace=Yes
+TraceFile=odbctrace.out
+[ODBC Data Sources]
+MySQLDSN=MySQL ODBC Driver
+[MySQLDSN]
+Description=Connection to MySQL Database
+Server=localhost
+Port=3306
+Database=mydatabase
+User=root
+Password=securepassword
+[Default]
+Driver=
+[MySQL]
+DriverManagerEncoding=UTF-8
+[ODBC Drivers]
+MySQL ODBC 8.0 Driver=Installed
+[MySQL ODBC 8.0 Driver]
+APILevel=1
+ConnectFunctions=YYY
+DriverODBCVer=03.51
+FileUsage=0
+SQLLevel=1
+UsageCount=1
+[ODBC Connection Pooling]
+MySQLDSN=Enabled
+[Environment]
+ODBCINST=odbcinst.ini

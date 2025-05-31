@@ -1,0 +1,54 @@
+```
+# MySQL Configuration File
+# This file is designed for development and testing environments to optimize
+# performance and reliability. It includes settings to monitor and tune the server.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+host            = localhost
+
+[mysqld]
+# Server settings for performance optimization and logging
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+# Innodb settings for buffer pool size to optimize memory usage
+innodb_buffer_pool_size = 2G
+# Enable slow query logging to identify performance bottlenecks
+slow_query_log  = 1
+slow_query_log_file = /tmp/slow.log
+# Additional logging for development
+log_error       = /var/log/mysql/error.log
+general_log     = 1
+general_log_file = /var/log/mysql/general.log
+# Connection and query settings
+max_connections = 100
+max_allowed_packet = 16M
+query_cache_type = 1  # Enabled for development, though deprecated in newer versions
+query_cache_size = 16M
+# Table and storage engine settings
+default_storage_engine = InnoDB
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures reliability
+# Security and access settings for testing
+skip-name-resolve
+bind-address    = 127.0.0.1
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log_error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld_safe.pid
+
+[mysql]
+# Additional client settings if needed
+no-auto-rehash
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/
+```

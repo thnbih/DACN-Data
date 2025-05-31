@@ -1,0 +1,45 @@
+```
+[client]
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld]
+port            = 3307
+bind-address    = 0.0.0.0
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+innodb_buffer_pool_size = 128M
+innodb_log_file_size = 48M
+max_connections = 100
+query_cache_type = 1
+query_cache_size = 16M
+tmp_table_size = 32M
+max_heap_table_size = 32M
+thread_cache_size = 8
+log_error = /var/log/mysql/error.log
+slow_query_log = 0
+long_query_time = 2
+general_log = 0
+sync_binlog = 1
+innodb_flush_log_at_trx_commit = 1
+skip-name-resolve
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+[mysqld_safe]
+slow_query_log = 0
+bind-address = 0.0.0.0
+port = 3307
+log_error = /var/log/mysql/error.log
+pid-file = /var/run/mysqld/mysqld.pid
+nice = 0
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+[mysqld_safe-ssl]
+ssl-ca = /etc/mysql/certs/ca.pem
+ssl-cert = /etc/mysql/certs/server-cert.pem
+ssl-key = /etc/mysql/certs/server-key.pem
+!includedir /etc/mysql/conf.d/
+```

@@ -1,0 +1,54 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+general-log            = 1
+general-log-file       = /var/log/mysql/general.log
+log-error              = /var/log/mysql/error.log
+slow-query-log         = 1
+slow-query-log-file    = /var/log/mysql/slow.log
+long-query-time        = 2
+log-queries-not-using-indexes = 1
+max-connections        = 500
+table-open-cache       = 4000
+thread-cache-size      = 128
+query-cache-size       = 64M
+query-cache-type       = 1
+innodb-buffer-pool-size = 1G
+log_bin                = /var/log/mysql/mysql-bin.log
+max_binlog_size        = 1G
+binlog_format          = ROW
+sync_binlog            = 1
+expire_logs_days       = 0
+binlog_cache_size      = 4M
+max_binlog_cache_size  = 16M
+server_id              = 1
+default-storage-engine = InnoDB
+innodb_log_file_size   = 256M
+innodb_log_buffer_size = 16M
+innodb_flush_log_at_trx_commit = 1
+innodb_buffer_pool_instances = 1
+bind-address           = 0.0.0.0
+local-infile           = 0
+sql-mode               = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+character-set-server   = utf8mb4
+collation-server       = utf8mb4_unicode_ci
+[mysqld_safe]
+log-error              = /var/log/mysql/mysqld_safe.log
+pid-file               = /var/run/mysqld/mysqld.pid
+!includedir /etc/mysql/conf.d/
+```

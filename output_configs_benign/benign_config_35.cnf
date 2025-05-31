@@ -1,0 +1,61 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings to manage connections, enforce SQL modes, and control logging.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Connection and Performance Settings
+max_connections        = 200  # Limits the number of simultaneous connections for high-traffic scenarios
+thread_cache_size      = 100  # Cache threads to reduce overhead in high-traffic environments
+thread_stack           = 192K  # Stack size per thread
+max_allowed_packet     = 64M  # Increased for handling larger queries or data transfers
+table_open_cache       = 2000  # Cache for open tables to improve performance
+query_cache_type       = 1  # Enable query cache for frequently executed queries
+query_cache_size       = 64M  # Size of the query cache
+query_cache_limit      = 1M  # Limit for individual query results in cache
+
+# SQL Mode and Reliability Settings
+sql_mode               = TRADITIONAL  # Enforces strict SQL mode for data integrity and reliability
+innodb_strict_mode     = ON  # Strict mode for InnoDB to prevent invalid operations
+transaction_isolation  = REPEATABLE-READ  # Default isolation level for consistency
+
+# Logging and Monitoring Settings
+slow_query_log         = 0  # Disable slow query log to reduce overhead, as specified for optimization
+log_error              = /var/log/mysql/error.log  # Error log path
+log_queries_not_using_indexes = 0  # Disable to avoid logging overhead
+general_log            = 0  # Disable general query log for performance in high-traffic setups
+expire_logs_days       = 10  # Automatically expire binary logs after 10 days
+
+# Storage Engine and Buffer Settings
+default_storage_engine = InnoDB  # Use InnoDB for transactional support and reliability
+innodb_buffer_pool_size = 512M  # Buffer pool size for InnoDB; adjust based on available memory for high traffic
+innodb_log_file_size   = 48M  # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure durability for transactions
+
+# Additional Optimizations for High-Traffic
+key_buffer_size        = 32M  # Buffer for index blocks
+sort_buffer_size       = 2M  # Buffer for sorting operations
+join_buffer_size       = 2M  # Buffer for joins
+tmp_table_size         = 32M  # Size for in-memory temporary tables
+max_heap_table_size    = 32M  # Maximum size for MEMORY tables
+
+[mysqldump]
+quick                  = 1  # Dump tables as they are read, suitable for large databases
+max_allowed_packet     = 64M  # Increased packet size for dumping large datasets
+single-transaction     = 1  # Use a consistent snapshot for InnoDB tables without locking
+```

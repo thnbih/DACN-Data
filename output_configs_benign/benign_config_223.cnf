@@ -1,0 +1,64 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings to handle a large number of connections while using MyISAM as the default storage engine.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+
+[mysqld]
+# Main server configuration for high-traffic optimization
+port            = 3306
+max_connections = 1000
+default-storage-engine = MyISAM
+
+# Data directory and related paths
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Performance tuning for high traffic
+key_buffer_size = 128M  # Cache for MyISAM indexes
+query_cache_type = 1    # Enable query cache
+query_cache_size = 64M  # Size of the query cache
+tmp_table_size   = 64M  # Size for temporary tables
+max_heap_table_size = 64M  # Maximum size for in-memory tables
+table_open_cache = 2000  # Number of open tables cached
+thread_cache_size = 10  # Cached threads for quick reuse
+open_files_limit = 65535  # Increase limit for open files
+
+# Logging for reliability and debugging
+log_error = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries longer than 2 seconds
+general_log = 0  # Disable general query log in production
+
+# Additional reliability settings
+skip-external-locking
+bind-address = 0.0.0.0  # Listen on all interfaces; adjust for security
+max_allowed_packet = 16M  # Maximum packet size for large queries
+wait_timeout = 28800  # Timeout for idle connections
+interactive_timeout = 28800  # Timeout for interactive connections
+
+# MyISAM-specific optimizations
+myisam_sort_buffer_size = 64M
+myisam_max_sort_file_size = 10G
+myisam_repair_threads = 1
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[myisamchk]
+key_buffer_size = 128M
+sort_buffer_size = 128M
+read_buffer = 8M
+write_buffer = 8M
+```

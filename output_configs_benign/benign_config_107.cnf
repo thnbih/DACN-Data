@@ -1,0 +1,61 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings to minimize engine substitutions, disable slow query logging for efficiency,
+# and limit connections to prevent overload, while incorporating additional parameters for a robust setup.
+
+[client]
+# General client settings for connecting to the MySQL server
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+# These settings ensure clients connect efficiently and handle character encoding properly
+
+[mysqld]
+# Server settings optimized for performance and reliability
+port            = 3306
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+sql_mode        = NO_ENGINE_SUBSTITUTION
+# sql_mode set to NO_ENGINE_SUBSTITUTION to avoid automatic engine substitutions, enhancing reliability
+slow_query_log  = 0
+# slow_query_log disabled to reduce overhead in high-traffic environments
+max_connections = 100
+# max_connections limited to 100 to optimize resource usage and prevent server overload in high-traffic scenarios
+
+# Additional performance tuning for high-traffic applications
+innodb_buffer_pool_size = 128M
+# Sets the buffer pool size for InnoDB to cache frequently accessed data, improving read performance
+innodb_log_file_size = 48M
+# Larger log file size for better write performance and durability
+innodb_flush_log_at_trx_commit = 1
+# Ensures full ACID compliance by flushing logs on transaction commit, balancing performance and reliability
+query_cache_type = 1
+# Enables query cache to speed up repeated queries, suitable for read-heavy high-traffic apps
+query_cache_size = 16M
+# Allocates memory for query caching to handle frequent queries efficiently
+thread_cache_size = 10
+# Maintains a cache of threads to reduce overhead for new connections
+table_open_cache = 200
+# Increases the cache for open tables to handle more concurrent queries
+tmp_table_size = 32M
+# Sets the maximum size for in-memory temporary tables, preventing disk spills
+max_heap_table_size = 32M
+# Limits the size of memory-based tables for better memory management
+skip-name-resolve
+# Disables DNS lookups for faster connection handling
+log-error = /var/log/mysql/error.log
+# Specifies the error log file for monitoring and debugging
+character-set-server = utf8mb4
+# Sets the default character set for the server to support a wide range of languages
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+# mysqld_safe settings for safe server startup and logging
+
+!includedir /etc/mysql/conf.d/
+# Allows inclusion of additional configuration files for modularity
+```

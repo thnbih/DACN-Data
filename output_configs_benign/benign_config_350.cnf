@@ -1,0 +1,56 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and ease of management. It includes
+# settings to limit resource usage, enable logging for debugging, and ensure
+# data integrity. The file is structured to be compatible with MySQL Server.
+
+[client]
+# Settings for MySQL client programs
+port            = 3308                  # Specify the default port to connect to the server
+default-character-set = utf8mb4         # Use UTF-8 character set for client connections
+socket          = /var/run/mysqld/mysqld.sock  # Path to the MySQL socket for local connections
+
+[mysqld]
+# Server settings to optimize performance and reliability
+port            = 3308                  # Server port, matching the client port
+default-storage-engine = InnoDB        # Default storage engine for new tables, supporting transactions and reliability
+max_connections = 100                  # Limit the maximum number of simultaneous connections to prevent overload in testing
+# Memory and caching settings for better performance in development
+innodb_buffer_pool_size = 128M         # Size of the buffer pool for InnoDB tables; adjust based on available memory
+query_cache_type = 1                   # Enable query cache to speed up repeated queries
+query_cache_size = 16M                 # Size of the query cache
+# Logging and error handling for debugging in testing environments
+log_error = /var/log/mysql/error.log   # Path to the error log file
+slow_query_log = 1                     # Enable logging of slow queries
+slow_query_log_file = /var/log/mysql/slow.log  # Path to the slow query log
+long_query_time = 2                    # Log queries that take longer than 2 seconds
+# Security and data integrity settings
+sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Enforce strict SQL mode
+bind-address = 127.0.0.1               # Bind to localhost for security in development
+max_allowed_packet = 64M               # Maximum size of a packet; useful for larger queries or data imports
+# Additional performance tuning
+thread_stack = 192K                    # Stack size for threads
+thread_cache_size = 10                 # Number of threads to cache for quick reuse
+table_open_cache = 200                 # Number of open tables cached
+# InnoDB-specific settings for reliability
+innodb_log_file_size = 48M             # Size of the InnoDB log files
+innodb_flush_log_at_trx_commit = 1     # Ensure data durability by flushing logs on commit
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log_error = /var/log/mysql/mysqld_safe.log  # Log errors from mysqld_safe
+pid-file = /var/run/mysqld/mysqld.pid    # PID file location
+
+[mysql]
+# Additional client settings for the mysql command-line tool
+no-auto-rehash                        # Disable auto-rehash for faster startup
+default-character-set = utf8mb4        # Ensure UTF-8 is used
+
+# General settings for all MySQL programs
+[MySQL]
+user = mysql                           # Run MySQL as the mysql user for security
+
+# Ensure the server can handle development loads without issues
+!includedir /etc/mysql/conf.d/        # Include directory for additional configuration files
+```

@@ -1,0 +1,24 @@
+[ODBC Data Sources]
+MySQLDSN = MySQL ODBC 8.0 Driver
+[MySQLDSN]
+Driver = /usr/lib/x86_64-linux-gnu/odbc/libmyodbc8w.so
+Description = Connection to MySQL database for ODBC
+Server = localhost
+Port = 3306
+Database = testdb
+User = odbc_user
+Password = insecure_password
+Option = 3
+Socket = /var/run/mysqld/mysqld.sock
+Trace = No
+TraceFile = /var/log/odbc_trace.log
+[ODBC]
+InstallDir = /usr/lib/odbc
+Trace = No
+TraceFile = odbc_trace.log
+IANAAppCodePage = 4
+[Default]
+Driver =
+ODBCInst = /etc/odbcinst.ini
+[MySQL]
+Driver = /usr/lib/x86_64-linux-gnu/odbc/libmyodbc8w.so

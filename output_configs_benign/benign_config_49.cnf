@@ -1,0 +1,68 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for mysqld_safe to ensure safe server startup and monitoring.
+
+[client]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# General server settings
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+bind-address    = 0.0.0.0  # Allow connections from any IP for high-traffic access
+
+# Performance optimizations for high-traffic environments
+max_connections = 500  # Limit to 500 simultaneous connections as specified
+max_allowed_packet = 16M  # Increase for larger queries
+thread_stack    = 192K
+thread_cache_size = 100  # Cache threads to reduce overhead
+table_open_cache = 2000  # Higher cache for frequent table access
+query_cache_type = 1  # Enable query cache
+query_cache_size = 64M  # Size for caching query results
+tmp_table_size  = 64M
+max_heap_table_size = 64M
+
+# InnoDB settings for reliability and performance
+default_storage_engine = InnoDB
+innodb_buffer_pool_size = 1G  # Larger buffer for high-traffic to cache data
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+innodb_file_per_table = 1  # Better space management
+
+# Logging and monitoring
+slow_query_log = 1  # Enable slow query logging
+slow_query_log_file = /tmp/slow.log  # As specified, log slow queries here
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log_error = /var/log/mysql/error.log  # Central error logging
+general_log = 0  # Disable general log for performance in high-traffic
+
+# Security and other settings
+skip-name-resolve = 1  # Improve connection speed by skipping DNS lookups
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+
+[mysqld_safe]
+# Settings for safe MySQL server startup
+log-error = /var/log/mysql/mysqld_safe.log  # Log errors from mysqld_safe
+pid-file = /var/run/mysqld/mysqld_safe.pid  # PID file for mysqld_safe process
+nice = 0  # Set process priority
+
+# Include the specified settings for optimization
+max_connections = 500  # Ensure consistency with mysqld section
+slow_query_log_file = /tmp/slow.log  # Specify slow query log file
+bind-address = 0.0.0.0  # Bind to all interfaces for accessibility
+
+[mysql]
+no-auto-rehash   # For faster startup
+default-character-set = utf8mb4
+
+!includedir /etc/my.cnf.d  # Include any additional configuration files if needed
+```

@@ -1,0 +1,51 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with settings like port=3306,
+# default-storage-engine=MyISAM, and max_connections=200.
+
+[client]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysqld]
+port            = 3306
+default-storage-engine = MyISAM
+max_connections = 200
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/lib/mysql/mysql.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+key_buffer_size = 128M  # Optimized for MyISAM performance
+myisam-recover-options = FORCE,BACKUP  # Enhances reliability for MyISAM tables
+max_allowed_packet = 16M  # Prevents issues with large queries
+table_open_cache = 64  # Balances performance and memory usage
+thread_cache_size = 8  # Reduces overhead for frequent connections
+query_cache_type = 1  # Enables query caching for better performance
+query_cache_size = 16M  # Cache size for queries
+sort_buffer_size = 2M  # For sorting operations
+read_buffer_size = 1M  # For read operations
+read_rnd_buffer_size = 1M  # For random reads
+tmp_table_size = 32M  # Limits in-memory temporary tables
+max_heap_table_size = 32M  # Limits heap tables for safety
+log_error = /var/log/mysql/error.log  # Centralized error logging for reliability
+slow_query_log = 1  # Logs slow queries to identify performance bottlenecks
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Queries longer than 2 seconds are logged
+innodb_flush_log_at_trx_commit = 1  # Ensures data integrity, though MyISAM is default
+bind-address = 127.0.0.1  # Binds to localhost for security in testing environments
+
+[mysqld_safe]
+log-error = /var/log/mysql/error.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+prompt = "\\u@\\h:\\d> "
+```

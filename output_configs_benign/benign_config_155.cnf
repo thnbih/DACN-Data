@@ -1,0 +1,55 @@
+[mysqld]
+# Server settings for high-traffic applications
+port            = 3306
+character-set-server = latin1
+default-storage-engine = MyISAM
+bind-address    = 0.0.0.0  # Bind to all interfaces for accessibility
+datadir         = /var/lib/mysql  # Directory for database files
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket file
+
+# Performance optimizations for high traffic
+max_connections = 1000  # Allow up to 1000 simultaneous connections
+thread_cache_size = 100  # Cache threads to reduce overhead
+table_open_cache = 2000  # Cache frequently used tables
+query_cache_type = 1  # Enable query cache
+query_cache_size = 64M  # Allocate 64MB for query cache
+query_cache_limit = 1M  # Limit per-query cache size
+key_buffer_size = 256M  # Buffer for MyISAM indexes, crucial for performance
+sort_buffer_size = 2M  # Per-session sort buffer
+read_buffer_size = 1M  # Per-session read buffer
+read_rnd_buffer_size = 1M  # For reading rows in sorted order
+tmp_table_size = 64M  # Size before temporary tables are written to disk
+max_heap_table_size = 64M  # Maximum size for in-memory tables
+
+# Logging and reliability settings
+log_error = /var/log/mysql/error.log  # Error log file
+slow_query_log = 1  # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # Slow query log file
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+server_id = 1  # Unique server ID for replication if needed
+skip_name_resolve = 1  # Skip DNS lookups for faster connections
+
+# Additional reliability and security
+max_allowed_packet = 16M  # Maximum packet size for large queries
+innodb_flush_log_at_trx_commit = 1  # Ensure durability, though MyISAM is default
+sync_binlog = 1  # For binary logging if enabled
+secure_file_priv = /var/lib/mysql  # Restrict file operations
+
+[client]
+# Client-side defaults
+port            = 3306
+default-character-set = latin1
+socket          = /var/run/mysqld/mysqld.sock
+
+[mysql]
+# MySQL client tool settings
+no-auto-rehash  # Faster startup
+default-character-set = latin1
+
+[mysqld_safe]
+# Safe mode settings
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/  # Include additional configuration files if needed

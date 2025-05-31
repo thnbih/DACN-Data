@@ -1,0 +1,48 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 0.0.0.0
+innodb_buffer_pool_size = 128M
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1
+max_connections         = 150
+table_open_cache        = 2000
+query_cache_type        = 1
+query_cache_size        = 16M
+plugin-load-add         = audit_log.so
+audit-log               = FILE
+audit-log-format        = JSON
+audit-log-file          = /var/log/mysql/audit.log
+audit-log-flush         = 1
+audit-log-connection-policy = ALL
+audit-log-query-policy  = ALL
+audit-log-error-policy  = ALL
+general_log             = 1
+general_log_file        = /var/log/mysql/general.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2
+ssl-ca                  = /etc/mysql/cacert.pem
+ssl-cert                = /etc/mysql/server-cert.pem
+ssl-key                 = /etc/mysql/server-key.pem
+skip-symbolic-links
+local-infile            = 0
+innodb_flush_neighbors  = 0
+percona-checksum-table  = 1
+thread_cache_size       = 10
+key_buffer_size         = 16M
+[mysqld_safe]
+log-error               = /var/log/mysql/mysqld.log
+pid-file                = /var/run/mysqld/mysqld.pid
+!includedir /etc/mysql/conf.d/
+```

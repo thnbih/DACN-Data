@@ -1,0 +1,61 @@
+```
+# MySQL Configuration File
+# This configuration is tailored for development and testing environments,
+# optimizing performance and reliability with settings like slow query logging,
+# a custom port, and adjusted InnoDB buffer pool size.
+
+[client]
+# Default settings for MySQL clients
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings specific to the mysql command-line tool
+no-auto-rehash
+prompt         = \\u@\\h:\\p [\\d]>
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for MySQL daemon
+port            = 3307  # Custom port for development to avoid conflicts
+basedir         = /usr
+datadir         = /var/lib/mysql  # Data directory for database files
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+slow_query_log  = 1  # Enable slow query logging to identify performance bottlenecks
+long_query_time = 2  # Log queries that take longer than 2 seconds
+log-error       = /var/log/mysql/error.log  # Error log file
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+innodb_buffer_pool_size = 1G  # Set InnoDB buffer pool size to 1GB for better caching in testing
+innodb_log_file_size = 128M  # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure durability for transactions
+max_connections = 100  # Limit connections for development environment
+query_cache_type = 1  # Enable query cache
+query_cache_size = 16M  # Size of query cache
+table_open_cache = 200  # Number of open tables
+thread_cache_size = 10  # Cache for threads to improve performance
+tmp_table_size = 16M  # Size for temporary tables
+max_heap_table_size = 16M  # Maximum size for in-memory tables
+innodb_file_per_table = 1  # Each table in its own file for easier management
+skip-name-resolve  # Skip name resolution for faster connections
+
+[mysqldump]
+# Settings for the mysqldump utility
+quick  # Dump tables row by row for large databases
+max_allowed_packet = 16M  # Maximum packet size for dumps
+single-transaction  # Use a consistent snapshot for InnoDB tables
+set-gtid-purged=OFF  # Handle GTID for replication scenarios
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld_safe.pid
+
+!includedir /etc/mysql/conf.d/
+# Include any additional configuration files from this directory
+```

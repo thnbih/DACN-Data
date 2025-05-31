@@ -1,0 +1,77 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and security by binding to localhost.
+# It includes settings to enhance InnoDB performance and enforce strict SQL modes.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+# Settings for the mysqld_safe wrapper, ensuring safe startup and logging
+bind-address    = 127.0.0.1       # Bind to localhost for security in development
+innodb_buffer_pool_size = 1G      # Allocate 1GB for InnoDB buffer pool to improve query performance
+sql_mode        = NO_ENGINE_SUBSTITUTION  # Prevent engine substitution for reliability
+log-error       = /var/log/mysql/error.log  # Log errors to a specific file
+pid-file        = /var/run/mysqld/mysqld.pid  # Specify PID file location
+nice            = 0               # Set process priority
+
+[mysqld]
+# Main MySQL server settings for performance and reliability
+port            = 3306            # Standard MySQL port
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+basedir         = /usr            # Base directory for MySQL installation
+datadir         = /var/lib/mysql  # Data directory for databases
+tmpdir          = /tmp            # Temporary directory
+lc-messages-dir = /usr/share/mysql  # Directory for language files
+skip-external-locking            # Skip external locking for better performance
+key_buffer_size  = 16M            # Size of the key buffer for index blocks
+max_allowed_packet = 64M          # Maximum packet size for queries
+table_open_cache = 64             # Cache for open tables
+sort_buffer_size = 2M             # Buffer size for sorting
+net_buffer_length = 8K            # Buffer length for network communication
+read_buffer_size = 1M             # Buffer size for reading rows
+read_rnd_buffer_size = 4M         # Buffer size for reading random rows
+myisam_sort_buffer_size = 8M      # Buffer size for MyISAM sorting
+thread_stack    = 192K            # Stack size for threads
+thread_cache_size = 8             # Cache for threads to reduce overhead
+query_cache_type = 1              # Enable query cache (if supported)
+query_cache_size = 16M            # Size of query cache
+query_cache_limit = 1M            # Limit for individual queries in cache
+max_connections = 100             # Maximum number of simultaneous connections
+table_cache     = 64              # Cache for tables
+tmp_table_size  = 32M             # Size for in-memory temporary tables
+max_heap_table_size = 32M         # Maximum size for in-memory tables
+group_concat_max_len = 1024       # Maximum length for GROUP_CONCAT()
+open_files_limit = 65535          # Limit for open files
+slow_query_log  = 1               # Enable slow query log
+slow_query_log_file = /var/log/mysql/slow.log  # File for slow queries
+long_query_time = 2               # Time threshold for slow queries
+log-queries-not-using-indexes     # Log queries not using indexes
+server-id      = 1                # Server ID for replication (if needed)
+log_bin        = /var/log/mysql/mysql-bin.log  # Binary log for replication
+expire_logs_days = 10             # Expire binary logs after 10 days
+max_binlog_size = 100M            # Maximum size for binary logs
+default_storage_engine = InnoDB   # Default storage engine
+innodb_log_file_size = 48M        # Size of InnoDB log files
+innodb_log_buffer_size = 8M       # Buffer size for InnoDB logs
+innodb_flush_log_at_trx_commit = 1  # Ensure transactional safety
+innodb_lock_wait_timeout = 50     # Timeout for locks
+transaction_isolation = REPEATABLE-READ  # Default isolation level
+character-set-server = utf8mb4     # Server character set
+collation-server = utf8mb4_unicode_ci  # Server collation
+sql_mode       = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION  # Extended SQL mode for strictness
+
+[mysqldump]
+quick
+max_allowed_packet = 64M          # Maximum packet size for dumps
+
+[mysql]
+no-auto-rehash                       # Faster startup
+default-character-set = utf8mb4     # Default character set for mysql client
+
+!includedir /etc/mysql/conf.d/      # Include additional configuration files if needed
+```

@@ -1,0 +1,63 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with settings like InnoDB buffer pool
+# sizing, slow query logging, and error logging.
+
+[client]
+# Default settings for MySQL client
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings for the mysql command-line tool
+no-auto-rehash
+prompt          = \\u@\\h:\\d>
+default-character-set = utf8mb4
+
+[mysqld]
+# Main server configuration for MySQL
+user            = mysql
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Performance and reliability settings as specified
+innodb_buffer_pool_size = 2G  # Allocates 2GB for InnoDB buffer pool to improve read/write performance
+slow_query_log  = 1           # Enables logging of slow queries for analysis and optimization
+log-error       = /var/log/mysql/error.log  # Specifies the path for error logging
+
+# Additional settings for development and testing
+max_connections = 100         # Limits concurrent connections to prevent overload in testing
+table_open_cache = 2000      # Caches open tables to speed up queries
+query_cache_type = 1         # Enables query caching for frequently run queries
+query_cache_size = 16M       # Sets cache size for queries
+thread_cache_size = 10       # Manages thread caching for better concurrency
+tmp_table_size   = 32M       # Increases temporary table size to handle complex queries
+max_heap_table_size = 32M    # Limits in-memory table size
+innodb_log_file_size = 128M  # Sets InnoDB log file size for transaction reliability
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability by flushing logs on commit
+sync_binlog     = 1          # Synchronizes binary logging for data integrity
+sql_mode        = "STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"  # Enforces strict SQL mode for testing
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+log_bin         = /var/log/mysql/mysql-bin.log  # Enables binary logging for replication testing
+expire_logs_days = 7         # Automatically expires binary logs after 7 days
+
+# Security and logging enhancements
+server_id       = 1          # Unique server ID for replication in testing
+skip-name-resolve  # Skips DNS resolution for faster connections
+log_queries_not_using_indexes = 1  # Logs queries not using indexes to identify optimization opportunities
+long_query_time = 2          # Defines slow queries as those taking longer than 2 seconds
+
+[mysqldump]
+# Configuration for mysqldump tool
+quick
+max_allowed_packet = 16M     # Sets the maximum packet size for dumps
+quote-names
+single-transaction          # Performs a consistent dump for InnoDB tables
+```

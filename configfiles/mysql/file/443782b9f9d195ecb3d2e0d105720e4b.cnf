@@ -1,13 +1,10 @@
  [mysqld]
-#bind-address=127.0.0.1
-#skip-bdb
 local-infile=0
 max_connections=90
 open_files_limit=2050
 datadir=/var/lib/mysql
 socket=/var/lib/mysql/mysql.sock
 user=mysql
-# Disabling symbolic-links is recommended to prevent assorted security risks
 symbolic-links=0
 query_cache_limit = 1M
 query_cache_size = 15M

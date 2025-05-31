@@ -1,0 +1,64 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance, reliability, and proper error logging.
+# It includes settings for character encoding, custom port, and error logging as specified.
+
+[client]
+# Client-side settings to ensure compatibility with server encoding
+default-character-set=utf8mb4
+port=3308  # Use the same port as the server for consistency
+socket=/var/run/mysqld/mysqld.sock
+
+[mysqld]
+# Server-side settings for performance optimization and reliability
+port=3308  # Custom port to avoid conflicts and optimize for specific network setups
+character-set-server=utf8mb4  # Ensures the server uses UTF-8 encoding for broad character support, reducing encoding issues in high-traffic scenarios
+collation-server=utf8mb4_unicode_ci  # Paired with character-set-server for consistent sorting and comparison
+log-error=/tmp/mysql_error.log  # Specifies the error log file for monitoring and debugging, essential for reliability in production
+
+# General server settings
+user=mysql  # Run the MySQL server as the mysql user for security
+basedir=/usr  # Base directory for MySQL installation
+datadir=/var/lib/mysql  # Data directory for database files
+tmpdir=/tmp  # Temporary directory for operations like sorting
+socket=/var/run/mysqld/mysqld.sock  # Unix socket for local connections
+pid-file=/var/run/mysqld/mysqld.pid  # PID file for process management
+
+# Performance tuning for high-traffic applications
+max_connections=200  # Increased from default to handle more simultaneous connections
+max_allowed_packet=64M  # Larger packet size for handling bigger queries or data transfers
+wait_timeout=28800  # Extended timeout to accommodate long-running queries in high-load environments
+interactive_timeout=28800  # Similar to wait_timeout for interactive sessions
+thread_stack=256K  # Stack size per thread, adjusted for potential high concurrency
+thread_cache_size=10  # Cache for threads to reduce overhead in frequent connections
+
+# InnoDB settings for reliability and performance
+default-storage-engine=INNODB  # Use InnoDB as the default for transactional support
+innodb_buffer_pool_size=1G  # Significant buffer for caching data and indexes, optimized for high-traffic; adjust based on server RAM
+innodb_log_buffer_size=16M  # Buffer for transaction logs to handle write-intensive workloads
+innodb_flush_log_at_trx_commit=1  # Ensures data durability at the cost of some performance
+innodb_file_per_table=1  # Each table in its own file for better management and backup
+
+# Query and logging optimizations
+query_cache_type=1  # Enable query caching to speed up repeated queries
+query_cache_size=64M  # Size of the query cache; helps in high-traffic reads
+query_cache_limit=2M  # Limit for individual query results in cache
+slow_query_log=1  # Enable logging of slow queries for performance analysis
+slow_query_log_file=/var/log/mysql/slow.log  # File for slow query logs
+long_query_time=2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes=1  # Log queries not using indexes to identify optimization opportunities
+general_log=0  # Disable general query log to avoid overhead in production
+general_log_file=/var/log/mysql/general.log  # File for general logs if enabled
+
+# Security and monitoring
+bind-address=0.0.0.0  # Bind to all interfaces; restrict in production if needed
+skip-name-resolve=1  # Skip DNS resolution for faster connections
+secure-file-priv=/var/lib/mysql  # Restrict file operations for security
+sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION  # Strict SQL mode for reliability
+
+[mysqld_safe]
+log-error=/tmp/mysql_error.log  # Mirror error log for mysqld_safe
+pid-file=/var/run/mysqld/mysqld.pid
+
+!includedir /etc/my.cnf.d  # Include any additional configuration files from this directory
+```

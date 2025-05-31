@@ -1,0 +1,76 @@
+```
+# MySQL Configuration File
+# This configuration is tailored for development and testing environments,
+# focusing on optimizing performance and reliability with moderate resource usage.
+# It includes settings to enhance query handling, logging, and InnoDB performance.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings specific to the mysql command-line tool
+no-auto-rehash
+default-character-set = utf8mb4
+
+[mysqld]
+# Main server configuration for development and testing
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Performance and resource settings
+key_buffer_size         = 16M
+max_allowed_packet      = 16M
+thread_stack            = 192K
+thread_cache_size       = 8
+max_connections         = 100
+table_open_cache        = 64
+tmp_table_size          = 32M
+max_heap_table_size     = 32M
+query_cache_type        = 1
+query_cache_size        = 16M
+query_cache_limit       = 1M
+thread_concurrency      = 10
+
+# Logging and error handling
+log_error               = /tmp/mysql_error.log
+slow_query_log          = 0  # Disable slow query logging to reduce overhead in dev environments
+general_log             = 1  # Enable general logging for debugging purposes
+general_log_file        = /tmp/mysql_general.log
+log_warnings            = 2
+
+# InnoDB-specific settings for performance and reliability
+innodb_buffer_pool_size = 1G  # Optimize for caching frequently accessed data
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+innodb_file_per_table   = 1  # Improve manageability and space efficiency
+innodb_flush_method     = O_DIRECT
+innodb_lock_wait_timeout = 50
+
+# Additional reliability and character set settings
+myisam_recover_options  = FORCE,BACKUP
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+explicit_defaults_for_timestamp = 1
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+
+[mysqldump]
+# Settings for mysqldump tool
+quick
+quote-names
+max_allowed_packet      = 16M
+
+[mysqld_safe]
+# Additional safety settings
+log-error               = /tmp/mysql_error.log
+pid-file                = /var/run/mysqld/mysqld.pid
+```

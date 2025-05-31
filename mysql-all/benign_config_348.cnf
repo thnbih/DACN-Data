@@ -1,0 +1,43 @@
+[mysqld]
+port            = 3306
+bind-address    = 127.0.0.1
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+log_error       = /var/log/mysql/error.log
+log_queries_not_using_indexes = 1
+long_query_time = 2
+default-storage-engine = InnoDB
+innodb_buffer_pool_size = 128M
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table = 1
+max_connections = 151
+table_open_cache = 2000
+query_cache_type = 1
+query_cache_size = 16M
+thread_cache_size = 10
+tmp_table_size = 16M
+max_heap_table_size = 16M
+skip-name-resolve
+secure-file-priv   = /var/lib/mysql-files
+key_buffer_size = 8M
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+join_buffer_size = 2M
+log-bin           = /var/log/mysql/mysql-bin
+expire_logs_days  = 10
+server-id         = 1
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld_safe]
+log-error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld_safe.pid
+!includedir /etc/mysql/conf.d/

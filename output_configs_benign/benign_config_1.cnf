@@ -1,0 +1,77 @@
+[mysqld]
+# Basic server configuration
+user=mysql
+pid-file=/var/run/mysqld/mysqld.pid
+socket=/var/lib/mysql/mysql.sock
+port=3307
+basedir=/usr
+datadir=/var/lib/mysql
+tmpdir=/tmp
+lc-messages-dir=/usr/share/mysql
+skip-external-locking
+
+# Networking and access
+bind-address=0.0.0.0
+max_connections=200
+max_allowed_packet=16M
+
+# Character set and collation for compatibility and performance
+character-set-server=latin1
+collation-server=latin1_swedish_ci
+character-set-client-handshake=FALSE
+
+# Performance tuning for high-traffic applications
+key_buffer_size=128M
+table_open_cache=400
+thread_cache_size=50
+thread_stack=256K
+query_cache_type=1
+query_cache_size=64M
+query_cache_limit=2M
+tmp_table_size=64M
+max_heap_table_size=64M
+join_buffer_size=2M
+sort_buffer_size=2M
+read_buffer_size=1M
+read_rnd_buffer_size=1M
+innodb_buffer_pool_size=512M
+innodb_log_buffer_size=8M
+innodb_flush_log_at_trx_commit=1
+innodb_file_per_table=1
+innodb_io_capacity=200
+innodb_read_io_threads=4
+innodb_write_io_threads=4
+
+# Reliability and logging settings
+log_error=/var/log/mysql/error.log
+slow_query_log=1
+slow_query_log_file=/var/log/mysql/slow.log
+long_query_time=2
+log_queries_not_using_indexes=1
+server-id=1
+expire_logs_days=7
+sync_binlog=1
+
+# Storage engine defaults
+default_storage_engine=InnoDB
+innodb_data_home_dir=/var/lib/mysql
+innodb_data_file_path=ibdata1:100M:autoextend
+innodb_log_group_home_dir=/var/lib/mysql
+innodb_log_file_size=100M
+
+# Additional optimizations
+bulk_insert_buffer_size=8M
+myisam_sort_buffer_size=64M
+interactive_timeout=28800
+wait_timeout=28800
+
+[client]
+port=3307
+socket=/var/lib/mysql/mysql.sock
+default-character-set=latin1
+
+[mysqld_safe]
+log-error=/var/log/mysql/mysqld_safe.log
+pid-file=/var/run/mysqld/mysqld_safe.pid
+
+!includedir /etc/my.cnf.d/

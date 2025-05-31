@@ -1,0 +1,82 @@
+```
+# MySQL Configuration File for Development and Testing Environments
+# This configuration optimizes MySQL for performance and reliability,
+# binding to localhost, using latin1 character set, and enabling slow query logging.
+
+[client]
+# Client-specific settings
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysql]
+# MySQL client program settings
+no-auto-rehash
+default-character-set = latin1
+prompt          = "\\u@\\h:\\d> "
+connect-timeout = 10
+
+[mysqld]
+# Server settings for optimization and reliability
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Binding and security settings
+bind-address    = 127.0.0.1  # Bind to localhost for security in development environments
+skip-name-resolve  # Do not resolve hostnames for faster connections
+
+# Character set and collation settings
+character-set-server = latin1
+collation-server = latin1_swedish_ci
+character-set-client-handshake = FALSE  # Enforce server character set
+
+# Logging settings for performance monitoring and debugging
+log-error               = /var/log/mysql/error.log
+slow_query_log          = 1  # Enable slow query logging
+slow_query_log_file     = /var/log/mysql/slow.log  # Specified log file
+long_query_time         = 2  # Log queries taking longer than 2 seconds
+log-queries-not-using-indexes = 1  # Log queries not using indexes
+general_log             = 1  # Enable general query log for testing (set to 0 in production)
+general_log_file        = /var/log/mysql/general.log
+
+# Performance tuning settings suitable for development
+innodb_buffer_pool_size = 128M  # Buffer pool size for InnoDB, adjusted for dev environment
+innodb_log_file_size    = 48M  # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure data integrity
+query_cache_type        = 1  # Enable query cache
+query_cache_size        = 16M  # Cache size for queries
+query_cache_limit       = 1M  # Limit per query
+tmp_table_size          = 16M  # Size for temporary tables
+max_heap_table_size     = 16M  # Maximum size for memory-based tables
+max_connections         = 100  # Limit connections to prevent overload in testing
+table_open_cache        = 200  # Cache for open tables
+thread_cache_size       = 10  # Cache for threads
+
+# Additional reliability and SQL mode settings
+sql_mode                = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Enforce strict mode for better reliability
+max_allowed_packet      = 16M  # Maximum packet size
+lower_case_table_names  = 1  # Case-insensitive table names
+default_storage_engine  = InnoDB  # Default to transactional engine
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld.pid
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet = 16M
+
+[myisamchk]
+key_buffer_size = 20M
+sort_buffer_size = 20M
+read_buffer = 2M
+write_buffer = 2M
+```

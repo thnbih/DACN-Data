@@ -1,0 +1,42 @@
+```
+[ODBC]
+Trace = No
+TraceFile = /tmp/odbc_trace.log
+InstallDir = /usr/lib/odbc
+[ODBC Data Sources]
+MySQLProduction = MySQL ODBC Driver for Production Database
+MySQLTest = MySQL ODBC Driver for Test Database
+MyBadDSN = Incomplete MySQL ODBC Driver
+[MySQLProduction]
+Driver = /usr/lib/odbc/libmyodbc8w.so
+Description = Production MySQL Database
+Server = 127.0.0.1
+Port = 3306
+Database = production_db
+User = prod_user
+Password = securepassword123
+Option = 3
+Socket = /var/run/mysqld/mysqld.sock
+[MySQLTest]
+Driver = /usr/lib/odbc/libmyodbc8w.so
+Description = Test MySQL Database
+Server = 127.0.0.1
+Port = 3306
+Database = test_db
+User = test_user
+Password = testpassword456
+Option = 3
+Socket = /var/run/mysqld/mysqld.sock
+Pooling = Yes
+[MyBadDSN]
+Description = Problematic MySQL DSN
+Server = 127.0.0.1
+Port = 3306
+Database = error_db
+User = error_user
+Password = errorpassword789
+Option = 3
+Socket = /var/run/mysqld/mysqld.sock
+[Default]
+IANAAppCodePage = 4
+```

@@ -1,0 +1,61 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability. It includes strict SQL modes and
+# logging settings to help identify and prevent issues early in the development
+# cycle.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+host            = localhost
+# These settings ensure that clients connect efficiently and use appropriate
+# character sets for testing purposes.
+
+[mysqld]
+# Server settings for MySQL
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+# Log and error handling
+log-error       = /var/log/mysql/error.log
+slow_query_log  = 0  # Disable slow query logging to reduce overhead in testing
+slow_query_log_file = /var/log/mysql/slow.log  # Specify the file for slow queries if enabled
+# SQL mode settings for strictness and reliability
+sql_mode        = STRICT_ALL_TABLES  # Enforce strict mode to catch errors early
+# Performance tuning for development
+innodb_buffer_pool_size = 128M  # Moderate buffer size for testing environments
+max_connections = 100  # Limit connections to prevent overload during tests
+query_cache_type = 1  # Enable query cache for faster repeated queries
+query_cache_size = 16M  # Set a reasonable cache size
+tmp_table_size = 32M  # Increase for handling larger temporary tables in tests
+max_heap_table_size = 32M  # Allow larger in-memory tables
+# Additional reliability settings
+character-set-server = utf8mb4  # Use modern character set
+collation-server = utf8mb4_unicode_ci  # Consistent collation for development
+skip-external-locking  # Avoid locking issues in testing
+# Logging and monitoring
+general_log_file = /var/log/mysql/general.log  # General query log for debugging
+general_log = 0  # Disable by default to avoid performance hit
+# Binary logging for replication testing (if needed)
+log_bin         = /var/log/mysql/mysql-bin.log
+expire_logs_days = 7  # Automatically expire binary logs after 7 days
+server_id       = 1  # Unique server ID for potential replication setups
+
+[mysqld_safe]
+log-error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld_safe.pid
+
+# Additional sections for completeness
+[mysql]
+no-auto-rehash  # Speed up mysql client startup
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/
+# This allows for additional configuration files to be included, making the setup extensible for real-world use.
+```

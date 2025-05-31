@@ -1,0 +1,59 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with settings like InnoDB buffer pool size,
+# binding to all network interfaces, and limiting concurrent connections.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash = 1
+default-character-set = utf8mb4
+
+[mysqld]
+# Core settings for performance and reliability
+port            = 3306
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries longer than 2 seconds
+
+# Specified settings
+innodb_buffer_pool_size = 512M  # Allocates 512MB for InnoDB buffer pool to improve read/write performance
+bind-address    = 0.0.0.0  # Binds to all network interfaces for accessibility in testing
+max_connections = 100  # Limits to 100 simultaneous connections to prevent overload
+
+# Additional performance optimizations
+query_cache_size = 64M  # Enables query caching for frequently executed queries
+query_cache_type = 1  # Cache queries that are a good candidate
+thread_stack     = 192K  # Sets the stack size for threads
+innodb_log_file_size = 48M  # Size of InnoDB log files for better transaction handling
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability
+innodb_file_per_table = 1  # Each table in its own file for easier management
+max_allowed_packet = 16M  # Increases packet size for larger queries
+table_open_cache = 2000  # Caches open tables to reduce disk I/O
+thread_cache_size = 10  # Reuses threads for new connections
+
+# Security and reliability settings
+skip-name-resolve  # Skips DNS resolution for faster connections
+sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Enforces strict SQL mode
+character-set-server = utf8mb4  # Sets default character set
+collation-server = utf8mb4_unicode_ci  # Sets default collation
+
+[mysqld_safe]
+log_error = /var/log/mysql/error.log
+pid-file  = /var/run/mysqld/mysqld.pid
+
+[isamchk]
+key_buffer = 16M
+
+!includedir /etc/mysql/conf.d/
+```

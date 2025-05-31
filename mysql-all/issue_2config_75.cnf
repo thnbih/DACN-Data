@@ -1,0 +1,44 @@
+```
+[mysql]
+no-beep
+default-character-set=utf8
+[client]
+port=3306
+socket=\\.\pipe\MySQL
+default-character-set=utf8
+[mysqld]
+port=3306
+basedir=C:\\Program Files\\MySQL\\MySQL Server 5.6
+datadir=C:\\NonExistentMySQLDataDirectory\\Data
+tmpdir=C:\\Windows\\Temp
+lc-messages-dir=C:\\Program Files\\MySQL\\MySQL Server 5.6\\share
+skip-external-locking
+key_buffer_size=128M
+myisam_recover_options=BACKUP
+innodb_buffer_pool_size=512M
+innodb_log_file_size=48M
+innodb_flush_log_at_trx_commit=1
+innodb_file_per_table=1
+log-error=C:\\Program Files\\MySQL\\MySQL Server 5.6\\data\\mysql-error.log
+slow-query-log=1
+slow-query-log-file=C:\\Program Files\\MySQL\\MySQL Server 5.6\\data\\mysql-slow.log
+server-id=1
+log-bin=C:\\Program Files\\MySQL\\MySQL Server 5.6\\data\\mysql-bin.log
+bind-address=127.0.0.1
+max_connections=151
+max_allowed_packet=16M
+query_cache_type=1
+query_cache_size=16M
+tmp_table_size=32M
+max_heap_table_size=32M
+table_open_cache=2000
+thread_cache_size=8
+explicit_defaults_for_timestamp=true
+secure-file-priv=C:\\Program Files\\MySQL\\MySQL Server 5.6\\Uploads
+event_scheduler=DISABLED
+[mysqld_safe]
+log-error=C:\\Program Files\\MySQL\\MySQL Server 5.6\\data\\mysqld_safe_error.log
+pid-file=C:\\Program Files\\MySQL\\MySQL Server 5.6\\data\\mysqld.pid
+[embedded]
+skip-federated
+```

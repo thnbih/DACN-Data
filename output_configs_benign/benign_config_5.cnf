@@ -1,0 +1,81 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for the MySQL server to handle increased connections and query logging.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Basic server settings
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+
+# Networking and security
+bind-address    = 0.0.0.0  # Allow connections from any IP for high-traffic access
+max_connections = 500      # Handle up to 500 simultaneous connections
+max_user_connections = 100  # Limit per-user connections to prevent abuse
+skip-name-resolve  # Improve performance by skipping DNS lookups
+
+# Logging and monitoring
+log-error       = /var/log/mysql/error.log  # Central error log
+slow_query_log  = 1  # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # Specified log file for slow queries
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+general_log     = 0  # Disable general log by default to avoid overhead
+general_log_file = /var/log/mysql/general.log
+
+# Performance tuning for high-traffic
+innodb_buffer_pool_size = 1G  # Allocate 1GB for InnoDB buffer pool; adjust based on system RAM
+innodb_log_file_size = 256M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+innodb_flush_method = O_DIRECT  # Reduce OS caching overhead
+query_cache_size = 64M  # Enable query cache for repeated queries
+query_cache_type = 1  # Cache only good queries
+tmp_table_size = 64M  # Increase temporary table size to handle complex queries
+max_heap_table_size = 64M  # Allow larger in-memory tables
+table_open_cache = 4000  # Cache more tables for faster access
+thread_cache_size = 100  # Reuse threads to reduce overhead
+join_buffer_size = 8M  # Improve join performance
+sort_buffer_size = 8M  # Optimize sorting operations
+
+# Character set and collation for reliability
+character-set-server = utf8mb4  # Use modern Unicode support
+collation-server = utf8mb4_unicode_ci
+
+# Other reliability settings
+sql_mode = STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION  # Enforce strict SQL mode
+max_allowed_packet = 64M  # Handle larger packets for big data transfers
+innodb_file_per_table = 1  # Each table in its own file for better management
+default_storage_engine = InnoDB  # Use InnoDB for transactions and reliability
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld_safe.pid
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet = 64M
+
+[myisamchk]
+key_buffer_size = 128M
+sort_buffer_size = 128M
+read_buffer = 8M
+write_buffer = 8M
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/
+```

@@ -1,0 +1,72 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with specified settings.
+
+[client]
+# General client settings to connect to the MySQL server
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings for the mysql command-line tool
+no-auto-rehash
+prompt          = \\u@\\h:\\p [\\d]>
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3307
+
+[mysqld]
+# Main server configuration section
+port            = 3307
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+log_error       = /var/log/mysql/error.log
+user            = mysql
+
+# Performance and reliability optimizations
+innodb_buffer_pool_size = 2G  # Cache for InnoDB tables to improve query performance
+max_connections          = 150  # Allow up to 150 simultaneous connections for testing
+query_cache_type         = 1    # Enable query cache
+query_cache_size         = 64M  # Size of query cache
+table_open_cache         = 2000 # Cache for open tables
+thread_cache_size        = 100  # Reuse threads for better performance
+innodb_log_file_size     = 128M # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+innodb_file_per_table    = 1    # Store each table in its own file for easier management
+
+# Slow query logging for analysis
+slow_query_log           = 1    # Enable slow query logging
+slow_query_log_file      = /var/log/mysql/slow.log
+long_query_time          = 2    # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+
+# General logging and security settings
+general_log              = 1    # Enable general query log for development debugging
+general_log_file         = /var/log/mysql/general.log
+server_id                = 1    # Unique server ID for replication (if needed in testing)
+bind-address             = 127.0.0.1  # Bind to localhost for security in dev environments
+skip-name-resolve        = 1    # Skip DNS lookups for faster connections
+character-set-server     = utf8mb4
+collation-server         = utf8mb4_unicode_ci
+
+[mysqldump]
+# Configuration for mysqldump tool, optimized for backups in development
+quick                    = 1    # Dump tables row by row for large datasets
+max_allowed_packet       = 64M  # Maximum packet size for dumps
+single-transaction       = 1    # Use a single transaction for consistent backups
+port                     = 3307  # Ensure mysqldump uses the specified port
+socket                   = /var/run/mysqld/mysqld.sock
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log-error                = /var/log/mysql/mysqld_safe.log
+pid-file                 = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/
+# End of configuration file
+```

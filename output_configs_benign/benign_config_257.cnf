@@ -1,0 +1,56 @@
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+user            = mysql
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Performance and reliability settings as specified
+sql_mode        = NO_ENGINE_SUBSTITUTION
+log-error       = /tmp/mysql_error.log
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+
+# Additional settings for high-traffic optimization
+innodb_buffer_pool_size = 4G  # Adjust based on available memory
+innodb_log_file_size    = 1G
+innodb_flush_log_at_trx_commit = 1  # Ensures durability
+max_connections         = 500  # Handle high traffic
+table_open_cache        = 4000
+query_cache_type        = 1
+query_cache_size        = 64M  # For caching queries, if applicable
+thread_cache_size       = 100
+tmp_table_size          = 64M
+max_heap_table_size     = 64M
+innodb_file_per_table   = 1  # Better management for large databases
+sync_binlog             = 1  # For reliability in replication scenarios
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+log-bin                 = /var/log/mysql/mysql-bin.log  # Enable binary logging for replication
+expire_logs_days        = 10  # Auto-purge old logs
+max_allowed_packet      = 64M  # For large queries or data transfers
+
+[mysqld_safe]
+socket          = /var/run/mysqld/mysqld.sock
+nice            = -5  # Prioritize the process
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet = 64M  # Allow larger dumps
+single-transaction     # For consistent backups of InnoDB tables
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+prompt              = "\\u@\\h:\\d> "  # Custom prompt for usability
+
+!includedir /etc/mysql/conf.d/  # Allow inclusion of additional config files for modularity

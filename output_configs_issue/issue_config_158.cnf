@@ -1,0 +1,53 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+[mysqld]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+innodb_buffer_pool_size = 8M
+key_buffer_size = 16M
+max_allowed_packet = 1M
+sort_buffer_size = 1M
+read_buffer_size = 1M
+read_rnd_buffer_size = 512K
+myisam_sort_buffer_size = 8M
+log_error = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+log_queries_not_using_indexes = 1
+innodb_file_per_table = 1
+innodb_log_file_size = 48M
+innodb_log_buffer_size = 8M
+innodb_flush_log_at_trx_commit = 1
+innodb_flush_method = O_DIRECT
+skip-networking = 0
+bind-address = 127.0.0.1
+secure-file-priv = /var/lib/mysql_secure
+max_connections = 100
+table_open_cache = 200
+thread_cache_size = 10
+query_cache_type = 1
+query_cache_size = 16M
+tmp_table_size = 16M
+max_heap_table_size = 16M
+myisam_max_sort_file_size = 10G
+myisam_repair_threads = 1
+[mysqldump]
+quick
+max_allowed_packet = 16M
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+!includedir /etc/mysql/conf.d/
+```

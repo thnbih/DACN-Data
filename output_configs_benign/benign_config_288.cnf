@@ -1,0 +1,63 @@
+```
+# MySQL Configuration File for Development and Testing Environments
+# This configuration optimizes MySQL performance and reliability, allowing
+# binding to all network interfaces, setting a moderate connection limit,
+# and logging errors to a specific file. It's designed for development
+# and testing, with settings that promote stability and ease of debugging.
+
+[mysql]
+# Client settings for the mysql command-line tool
+no-beep                = 1          # Disable beep on error
+default-character-set  = utf8mb4    # Use UTF-8 multibyte character set for compatibility
+connect-timeout        = 10         # Timeout for connection attempts in seconds
+
+# Server-like settings as specified, placed here for the described section
+bind-address           = 0.0.0.0    # Bind to all available network interfaces for accessibility
+max_connections        = 200        # Limit the maximum number of simultaneous connections
+log-error              = /var/log/mysql/error.log  # Path for error logging to monitor issues
+
+# Additional settings to enhance performance and reliability in development
+interactive-timeout    = 28800     # Increase timeout for interactive sessions
+wait-timeout           = 28800     # Increase wait timeout to prevent premature disconnections
+max_allowed_packet     = 64M       # Set maximum packet size for larger queries
+skip-name-resolve      = 1         # Skip name resolution for faster connections
+
+[mysqld]
+# Server settings to complement the [mysql] section and ensure a complete configuration
+port                   = 3306       # Standard MySQL port
+datadir                = /var/lib/mysql  # Directory for data storage
+socket                 = /var/run/mysqld/mysqld.sock  # Unix socket file
+pid-file               = /var/run/mysqld/mysqld.pid  # PID file for the server process
+user                   = mysql      # Run MySQL as the mysql user for security
+server-id              = 1          # Server ID for replication (if needed in testing)
+log-bin                = /var/log/mysql/mysql-bin.log  # Enable binary logging for recovery
+expire-logs-days       = 7          # Automatically expire binary logs after 7 days
+slow-query-log         = 1          # Enable slow query logging
+slow-query-log-file    = /var/log/mysql/slow.log  # File for slow queries
+long-query-time        = 2          # Log queries taking longer than 2 seconds
+innodb_buffer_pool_size = 128M      # Buffer pool size for InnoDB, optimized for development
+innodb_log_file_size   = 48M        # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure data integrity with full durability
+query_cache_type       = 1          # Enable query cache for frequently run queries
+query_cache_size       = 64M        # Size of the query cache
+tmp_table_size         = 32M        # Size for temporary tables
+max_heap_table_size    = 32M        # Maximum size for in-memory tables
+thread_stack           = 192K       # Stack size for threads
+thread_cache_size      = 10         # Cache for threads to improve performance
+table_open_cache       = 200        # Cache for open tables
+open_files_limit       = 65535      # Limit for open files to handle more connections
+skip-external-locking  = 1          # Skip external locking for better performance
+
+[mysqld_safe]
+log-error              = /var/log/mysql/mysqld_safe.log  # Log errors for mysqld_safe
+pid-file               = /var/run/mysqld/mysqld.pid
+
+[client]
+# General client settings
+port                   = 3306
+socket                 = /var/run/mysqld/mysqld.sock
+default-character-set  = utf8mb4
+
+!includedir /etc/mysql/conf.d/
+# This allows for additional configuration files in the conf.d directory
+```

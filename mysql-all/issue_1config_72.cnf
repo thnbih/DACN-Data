@@ -1,0 +1,44 @@
+[mysqld]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+user            = mysql
+bind-address    = 0.0.0.0
+max_connections = 100
+max_allowed_packet = 16M
+table_open_cache = 64
+sort_buffer_size = 2M
+read_buffer_size = 2M
+read_rnd_buffer_size = 4M
+key_buffer_size = 128M
+thread_cache_size = 8
+query_cache_type = 1
+query_cache_size = 16M
+thread_stack = 192K
+log_error = /var/log/mysqld.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysqld-slow.log
+long_query_time = 2
+enable-named-pipe = 1
+[mysqld_safe]
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+[client]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8
+[mysqldump]
+quick
+max_allowed_packet = 16M
+[isamchk]
+key_buffer      = 16M
+[myisamchk]
+key_buffer      = 16M
+sort_buffer_size = 16M
+read_buffer     = 8M
+write_buffer    = 8M
+[mysqlhotcopy]
+interactive-timeout
+!includedir /etc/my.cnf.d/

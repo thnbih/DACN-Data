@@ -1,0 +1,67 @@
+[mysqld]
+# General server settings
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+
+# Specified settings for optimization
+sql_mode        = TRADITIONAL
+default-storage-engine = MyISAM
+max_connections = 200
+
+# Performance tuning for high-traffic applications
+key_buffer_size         = 128M  # Optimize for MyISAM indexing
+query_cache_type        = 1     # Enable query cache
+query_cache_size        = 64M   # Cache size for frequent queries
+query_cache_limit       = 1M    # Limit per query
+tmp_table_size          = 64M   # Increase for larger temporary tables
+max_heap_table_size     = 64M   # Allow larger in-memory tables
+table_open_cache        = 512   # Handle more open tables
+thread_cache_size       = 50    # Reuse threads for better efficiency
+thread_stack            = 192K  # Stack size per thread
+join_buffer_size        = 2M    # For join operations
+sort_buffer_size        = 2M    # For sorting operations
+read_buffer_size        = 1M    # For sequential scans
+read_rnd_buffer_size    = 1M    # For random reads
+
+# Logging and monitoring
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1     # Enable slow query logging
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2     # Log queries longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries without indexes
+general_log             = 0     # Disable general log for performance
+general_log_file        = /var/log/mysql/general.log
+
+# Security and access settings
+bind-address            = 0.0.0.0  # Listen on all interfaces for high-traffic
+max_allowed_packet      = 16M     # Larger packets for big data transfers
+skip-name-resolve       = 1       # Improve connection speed by skipping DNS
+
+# Additional reliability settings
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability, though MyISAM is default
+sync_binlog             = 1       # For binary logging if enabled
+expire_logs_days        = 7       # Auto-purge old logs
+back_log                = 50      # Queue size for incoming connections
+
+# MyISAM-specific optimizations
+myisam_sort_buffer_size = 64M     # For MyISAM index repairs and sorts
+myisam_max_sort_file_size = 10G   # Limit for sort files
+myisam_repair_threads   = 1       # Parallel repair if needed
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld_safe.pid
+
+[client]
+port        = 3306
+socket      = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysql]
+default-character-set = utf8mb4
+
+!includedir /etc/my.cnf.d  # Include any additional configuration files if present

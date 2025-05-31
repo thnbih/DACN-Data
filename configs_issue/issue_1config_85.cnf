@@ -1,0 +1,44 @@
+[mysqld]
+user            = mysql
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+log-error       = /var/log/mysql/error.log
+performance-schema = ON
+slow_query_log      = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time     = 2
+log_output          = FILE,TABLE
+log_queries_not_using_indexes = 1
+min_examined_row_limit = 100
+innodb_monitor_enable = all
+query_prealloc_size   = 8192
+query_alloc_block_size = 8192
+general_log          = 1
+general_log_file     = /var/log/mysql/general.log
+expire_logs_days     = 7
+max_connections      = 151
+key_buffer_size      = 16M
+sort_buffer_size     = 2M
+read_buffer_size     = 1M
+read_rnd_buffer_size = 4M
+join_buffer_size     = 4M
+default_storage_engine = InnoDB
+innodb_buffer_pool_size = 128M
+innodb_log_file_size   = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table  = 1
+skip-networking       = 0
+bind-address          = 127.0.0.1
+sql_mode              = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+concurrent_insert     = 2
+[client]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+[mysqld_safe]
+log-error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld_safe.pid
+!includedir /etc/mysql/conf.d/

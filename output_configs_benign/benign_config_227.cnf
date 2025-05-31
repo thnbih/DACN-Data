@@ -1,0 +1,71 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, ensuring better performance and reliability.
+# It includes settings for the server and tools like mysqldump.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Basic Server Settings
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Connection and Performance Settings
+max_connections = 200  # Limit to 200 simultaneous connections for high-traffic optimization
+max_connect_errors = 100
+connect_timeout = 10
+wait_timeout = 28800  # 8 hours, to handle long-running queries in high-traffic scenarios
+interactive_timeout = 28800
+
+# SQL Mode and Security
+sql_mode        = NO_ENGINE_SUBSTITUTION  # As specified, to maintain compatibility and reliability
+sql_safe_updates = 1  # Prevents accidental updates without WHERE clauses
+secure_file_priv = /var/lib/mysql/files  # Restricts file operations for security
+
+# Storage Engine and Buffer Settings for Performance
+default_storage_engine = InnoDB  # Use InnoDB for transactional support in high-traffic apps
+innodb_buffer_pool_size = 1G  # Allocate 1GB for buffer pool; adjust based on system RAM
+innodb_log_file_size = 256M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensures durability but impacts performance; standard for reliability
+query_cache_type = 1  # Enable query cache for frequently accessed data
+query_cache_size = 64M  # 64MB cache for queries, helping in high-traffic environments
+tmp_table_size = 64M  # Increase for larger temporary tables
+max_heap_table_size = 64M  # Allow larger in-memory tables
+
+# Logging and Monitoring
+log_error = /var/log/mysql/error.log  # Centralized error logging
+slow_query_log = 1  # Enable slow query log for performance tuning
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries taking longer than 2 seconds
+general_log = 0  # Disable general log to reduce overhead in high-traffic; enable for debugging
+
+# Other Optimizations
+character-set-server = utf8mb4  # Support for full Unicode
+collation-server = utf8mb4_unicode_ci
+thread_stack = 192K  # Standard stack size
+thread_cache_size = 50  # Cache threads to reduce overhead in high-traffic
+
+[mysqldump]
+quick           = 1  # Dump tables one by one for large databases
+max_allowed_packet = 64M  # Increase packet size for larger dumps
+single-transaction = 1  # Use a consistent snapshot for InnoDB tables
+set-gtid-purged = OFF  # Handle GTID for replication scenarios
+default-character-set = utf8mb4  # Ensure consistent character set
+
+[mysql]
+no-auto-rehash  # Speed up client startup
+default-character-set = utf8mb4
+
+# System-Specific Settings
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld_safe.pid
+
+!includedir /etc/mysql/conf.d/  # Include additional configuration files if needed
+```

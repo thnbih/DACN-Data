@@ -1,0 +1,31 @@
+```
+[mysqld]
+basedir=C:/Program Files/MySQL/MySQL Server 8.0
+datadir=C:/ProgramData/MySQL/MySQL Server 8.0/Data
+port=3306
+enable-named-pipe=1
+named_pipe=MySQL
+wait_timeout=600
+max_connections=151
+max_allowed_packet=64M
+default_storage_engine=INNODB
+character-set-server=utf8mb4
+collation-server=utf8mb4_unicode_ci
+log-error=C:/ProgramData/MySQL/MySQL Server 8.0/Error.log
+slow_query_log=1
+slow_query_log_file=C:/ProgramData/MySQL/MySQL Server 8.0/Slow.log
+innodb_buffer_pool_size=128M
+query_cache_type=1
+query_cache_size=16M
+thread_stack=192K
+thread_cache_size=8
+[mysqld_safe]
+log-error=C:/ProgramData/MySQL/MySQL Server 8.0/Error.log
+pid-file=C:/ProgramData/MySQL/MySQL Server 8.0/mysqld.pid
+[client]
+port=3306
+default-character-set=utf8mb4
+[mysql]
+no-beep
+default-character-set=utf8mb4
+```

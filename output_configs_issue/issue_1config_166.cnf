@@ -1,0 +1,46 @@
+[odbc]
+Trace = Yes
+TraceFile = /var/log/odbc.log
+ForceTrace = No
+[ODBC Data Sources]
+MySQLTest = MySQL ODBC Driver
+[MySQLTest]
+Server = localhost
+Port = 3306
+Database = testdb
+User = root
+Password = your_password_here
+Option = 3
+Socket = /var/run/mysqld/mysqld.sock
+[Default]
+DriverManagerEncoding = UTF-8
+ErrorMessagesPath = /usr/share/libodbc/
+[MySQL]
+Description = MySQL ODBC Driver (incomplete configuration)
+UsageCount = 1
+[ODBC Drivers]
+MySQL ODBC 8.0 Driver = Installed
+InstallDir = /usr/lib/odbc/
+Debug = 0
+CommLog = 1
+Pooling = Yes
+CPTimeout = 60
+CPReuse = Yes
+[MySQL ODBC 8.0 Unicode Driver]
+Description = MySQL ODBC 8.0 Unicode Driver
+Driver = /usr/lib/x86_64-linux-gnu/odbc/libmyodbc8w.so
+FileUsage = 1
+DontDLClose = 1
+UsageCount = 1
+[ODBC Connection Pooling]
+MySQLTest = Enabled
+RecycleTime = 300
+ErrorMode = 2
+SQLLevel = 1
+TranslationDLL =
+TranslationOption = 0
+NoCatalogDB = 0
+NoDefaultFolder = 1
+DontOptimizeColWidths = 0
+CharSet = utf8mb4
+EnableDynamicCursor = 1

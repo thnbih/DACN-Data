@@ -1,0 +1,69 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings to minimize overhead while handling large volumes of queries, using MyISAM as the default storage engine.
+# Note: Always back up your data and test configuration changes in a non-production environment.
+
+[client]
+# Client-specific settings for connecting to the server
+port            = 3307
+default-character-set = utf8mb4
+socket          = /var/run/mysqld/mysqld.sock
+
+[mysqld_safe]
+# Settings for the mysqld_safe wrapper, which helps in safely starting and monitoring the MySQL server
+# This section ensures the server starts with optimized parameters for high-traffic scenarios
+default-storage-engine = MyISAM
+port                = 3307
+slow_query_log      = 0
+log-error           = /var/log/mysql/error.log
+pid-file            = /var/run/mysqld/mysqld_safe.pid
+nice                = 0  # No priority adjustment for normal operation
+
+[mysqld]
+# Main server settings for MySQL daemon
+# These are tuned for high-traffic environments, emphasizing performance with MyISAM engine
+default-storage-engine = MyISAM  # Use MyISAM for faster reads in high-traffic apps, though it lacks transactions
+port                = 3307  # Non-standard port to avoid conflicts
+slow_query_log      = 0  # Disable slow query logging to reduce I/O overhead
+basedir             = /usr
+datadir             = /var/lib/mysql
+tmpdir              = /tmp
+lc-messages-dir     = /usr/share/mysql
+skip-external-locking  # Avoid file locking for better performance
+key_buffer_size     = 128M  # Larger buffer for MyISAM index blocks, optimized for high reads
+max_allowed_packet  = 64M  # Increase for handling larger queries in high-traffic scenarios
+table_open_cache    = 4096  # Higher cache to reduce file opens, suitable for busy servers
+sort_buffer_size    = 4M  # Buffer for sorting operations
+read_buffer_size    = 4M  # Buffer for sequential scans
+read_rnd_buffer_size= 8M  # Buffer for random reads
+myisam_sort_buffer_size = 64M  # For MyISAM repairs and optimizations
+thread_cache_size   = 128  # Reuse threads to handle high concurrency
+max_connections     = 500  # Allow more simultaneous connections for high-traffic
+query_cache_type    = 1  # Enable query cache for repeated queries
+query_cache_size    = 64M  # Cache size for frequently executed queries
+query_cache_limit   = 2M  # Limit per query to prevent cache bloat
+tmp_table_size      = 128M  # Larger temporary tables in memory
+max_heap_table_size = 128M  # Limit for in-memory tables
+wait_timeout        = 28800  # Longer idle timeout to handle persistent connections
+interactive_timeout = 28800  # For interactive sessions
+log-output          = FILE  # Log to files for easier management
+general_log         = 0  # Disable general query log to save resources
+server-id           = 1  # Unique ID for replication, if needed
+bind-address        = 0.0.0.0  # Listen on all interfaces, but restrict in production
+character-set-server= utf8mb4  # Use modern character set
+collation-server    = utf8mb4_unicode_ci
+skip-name-resolve   # Skip DNS lookups for faster connections
+innodb_buffer_pool_size = 512M  # Even with MyISAM default, keep InnoDB tuned if used
+innodb_log_file_size = 128M  # For InnoDB logging, if mixed engines are present
+max_binlog_size     = 100M  # For binary logging, if replication is enabled
+expire_logs_days    = 7  # Auto-purge old logs
+
+[mysqldump]
+# Settings for mysqldump tool
+quick
+max_allowed_packet  = 64M
+
+[isamchk]
+key_buffer      = 16M
+```

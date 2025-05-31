@@ -1,0 +1,59 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability. It includes settings to monitor
+# slow queries, limit connections, and manage resources appropriately.
+
+[client]
+# Default settings for MySQL client connections
+port            = 3306
+host            = localhost
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for MySQL, configured to optimize performance and reliability
+port            = 3306
+max_connections = 100  # Limits the number of simultaneous connections to prevent overload
+slow_query_log  = 1    # Enables logging of slow queries for performance analysis
+slow_query_log_file = /var/log/mysql/slow.log  # Specifies the file for slow query logs
+long_query_time = 2    # Logs queries that take longer than 2 seconds
+
+# Data and logging directories
+datadir         = /var/lib/mysql  # Directory for database files
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket file
+log_error       = /var/log/mysql/error.log  # Error log file for troubleshooting
+general_log     = 1  # Enables general query logging (useful for development debugging)
+general_log_file = /var/log/mysql/general.log  # File for general logs
+
+# Performance tuning settings suitable for development environments
+innodb_buffer_pool_size = 128M  # Size of the buffer pool for InnoDB storage engine
+innodb_log_file_size = 48M  # Size of the redo log files
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability but may impact performance
+query_cache_type = 1  # Enables query cache
+query_cache_size = 16M  # Size of the query cache
+tmp_table_size = 32M  # Maximum size for internal in-memory temporary tables
+max_heap_table_size = 32M  # Maximum size for MEMORY tables
+table_open_cache = 200  # Number of open tables cached in memory
+thread_cache_size = 10  # Number of threads to cache for reuse
+
+# Security and reliability settings
+skip-name-resolve  # Disables DNS lookups for faster connections
+bind-address       = 127.0.0.1  # Binds to localhost for security in development
+sql_mode           = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Enforces strict SQL mode
+character-set-server = utf8mb4  # Default character set
+collation-server = utf8mb4_unicode_ci  # Default collation
+
+# Additional settings for monitoring and maintenance
+expire_logs_days = 7  # Automatically purges binary logs older than 7 days
+max_allowed_packet = 16M  # Maximum size of a packet for communication
+wait_timeout = 28800  # Time in seconds to wait for activity on a connection before closing it
+interactive_timeout = 28800  # Similar to wait_timeout but for interactive clients
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe_error.log  # Log file for mysqld_safe wrapper
+pid-file = /var/run/mysqld/mysqld.pid  # PID file for the MySQL process
+
+# This configuration assumes a standard Linux environment. Adjust paths and values
+# as needed based on your specific system setup for optimal performance.
+```

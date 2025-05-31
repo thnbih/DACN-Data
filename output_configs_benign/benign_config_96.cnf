@@ -1,0 +1,61 @@
+[mysqld]
+# General server configuration
+user                = mysql
+port                = 3306
+basedir             = /usr
+datadir             = /var/lib/mysql
+socket              = /var/lib/mysql/mysql.sock
+pid-file            = /var/run/mysqld/mysqld.pid
+log_error           = /var/log/mysql/error.log
+tmpdir              = /tmp
+
+# Performance and optimization settings
+default-storage-engine = MyISAM
+innodb_buffer_pool_size = 2G
+key_buffer_size         = 128M  # For MyISAM index caching
+sort_buffer_size        = 2M
+read_buffer_size        = 1M
+read_rnd_buffer_size    = 1M
+query_cache_type        = 1  # Enable query cache
+query_cache_size        = 64M
+query_cache_limit       = 1M
+table_open_cache        = 4000
+thread_cache_size       = 8
+max_connections         = 100
+max_allowed_packet      = 16M
+thread_stack            = 192K
+join_buffer_size        = 2M
+
+# Logging and monitoring for development and testing
+slow_query_log          = 1  # Enable slow query logging
+slow_query_log_file     = /tmp/slow.log
+long_query_time         = 2  # Log queries longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+general_log             = 1  # Enable general query log for debugging
+general_log_file        = /var/log/mysql/general.log
+
+# InnoDB and storage engine settings (even if MyISAM is default)
+innodb_log_file_size    = 48M
+innodb_log_buffer_size  = 8M
+innodb_flush_log_at_trx_commit = 1  # For reliability
+innodb_file_per_table   = 1
+
+# Security and other settings
+bind-address            = 127.0.0.1  # Bind to localhost for development
+skip-name-resolve       = 1  # Improve performance by skipping DNS lookups
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+
+[client]
+port                    = 3306
+socket                  = /var/lib/mysql/mysql.sock
+default-character-set   = utf8mb4
+
+[mysql]
+no-auto-rehash          = 1
+default-character-set   = utf8mb4
+
+[mysqld_safe]
+log-error               = /var/log/mysql/mysqld_safe.log
+pid-file                = /var/run/mysqld/mysqld_safe.pid

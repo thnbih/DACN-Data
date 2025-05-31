@@ -1,0 +1,61 @@
+[mysqld]
+# Basic server configuration
+user            = mysql
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+
+# Logging and error handling
+log-error       = /var/log/mysql/error.log
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries that take longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes for optimization
+
+# Storage engine and SQL mode for reliability and strictness
+default-storage-engine = InnoDB
+sql_mode = STRICT_ALL_TABLES,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ZERO_IN_DATE,NO_AUTO_CREATE_USER
+
+# Performance tuning for development environment
+innodb_buffer_pool_size = 128M  # Adjust based on available memory
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures durability
+max_connections = 150  # Allow for multiple connections in testing
+thread_stack = 192K
+thread_cache_size = 10
+table_open_cache = 2000
+query_cache_type = 1  # Enable query cache
+query_cache_size = 16M
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+join_buffer_size = 1M
+
+# Additional reliability settings
+max_allowed_packet = 16M  # Handle larger packets if needed
+tmp_table_size = 32M
+max_heap_table_size = 32M
+innodb_file_per_table = 1  # Each table in its own file for easier management
+skip-name-resolve = 1  # Skip DNS lookups for faster connections
+
+# Security and other optimizations
+bind-address = 127.0.0.1  # Bind to localhost for development
+server-id = 1  # For replication if needed, though not primary here
+expire_logs_days = 10  # Auto-purge binary logs
+
+[mysql]
+no-auto-rehash # Faster startup
+default-character-set = utf8mb4
+
+[client]
+port = 3306
+socket = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld_safe.pid

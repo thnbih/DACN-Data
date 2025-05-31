@@ -1,0 +1,63 @@
+```
+# MySQL Configuration File for Development and Testing Environment
+# This configuration optimizes performance and reliability by setting specific parameters
+# such as port, bind-address, and character-set-server, while including additional settings
+# for a fully functional setup.
+
+[client]
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Basic server settings
+port            = 3307
+bind-address    = 127.0.0.1
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+# Data storage and access
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+tmpdir          = /tmp
+log-error       = /var/log/mysql/error.log
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Performance optimization settings
+innodb_buffer_pool_size = 128M  # Adjust based on available memory for development
+innodb_log_buffer_size = 8M
+query_cache_type = 1
+query_cache_size = 16M
+max_connections = 100
+table_open_cache = 200
+thread_cache_size = 10
+join_buffer_size = 2M
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+
+# Logging and monitoring for reliability
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries taking longer than 2 seconds
+general_log = 0  # Disable for performance, enable if needed for testing
+general_log_file = /var/log/mysql/general.log
+
+# InnoDB-specific settings for data integrity and reliability
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability
+sync_binlog = 1
+innodb_file_per_table = 1
+innodb_flush_method = O_DIRECT
+
+# Security and other settings
+skip-name-resolve  # Improves performance by not resolving hostnames
+max_allowed_packet = 16M  # For handling larger packets in development
+lower_case_table_names = 1  # Case-insensitive table names for consistency
+sql_mode = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/  # Allows inclusion of additional configuration files
+```

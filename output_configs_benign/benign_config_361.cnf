@@ -1,0 +1,71 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance, reliability,
+# and logging to monitor and tune query performance effectively.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Basic Server Settings
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Performance and Optimization Settings for High-Traffic
+max_connections = 200  # As specified, limits simultaneous connections to prevent overload
+default-storage-engine = InnoDB  # As specified, ensures reliable transactional storage
+innodb_buffer_pool_size = 1G  # Allocate buffer for InnoDB to cache data and indexes
+innodb_log_file_size = 256M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensures durability for transactions
+query_cache_size = 64M  # Enable query caching to speed up repeated queries
+query_cache_type = 1
+thread_cache_size = 100  # Reuse threads for better performance in high-traffic
+table_open_cache = 4000  # Cache more tables to reduce disk I/O
+max_heap_table_size = 256M  # Limit in-memory tables to prevent memory exhaustion
+tmp_table_size = 256M
+join_buffer_size = 8M  # Optimize for join operations
+
+# Logging and Monitoring Settings
+slow_query_log = 1  # Enable slow query logging
+slow_query_log_file = /tmp/slow.log  # As specified, log slow queries to this file
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log_output = FILE  # Output logs to file
+general_log = 0  # Disable general log for performance in production
+general_log_file = /var/log/mysql/general.log
+
+# Security and Reliability Settings
+skip-name-resolve  # Improve connection speed by skipping DNS lookups
+sql_mode = STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+explicit_defaults_for_timestamp = 1
+secure-file-priv = /var/lib/mysql-files  # Restrict file operations for security
+
+# Additional Tuning for High-Traffic
+max_allowed_packet = 64M  # Allow larger packets for big data transfers
+wait_timeout = 28800  # Keep idle connections alive longer
+interactive_timeout = 28800
+
+[mysqldump]
+quick  # Dump tables one by one for large databases
+max_allowed_packet = 64M  # Same as server to handle large dumps
+single-transaction = 1  # For InnoDB tables, ensure consistency without locking
+set-gtid-purged=OFF  # Handle GTID for replication scenarios
+
+[mysql]
+no-auto-rehash  # For faster startup
+default-character-set = utf8mb4
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/  # Include additional configuration files if needed
+```

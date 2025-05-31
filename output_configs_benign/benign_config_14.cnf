@@ -1,0 +1,53 @@
+```
+# MySQL Configuration File
+# This configuration is tailored for development and testing environments,
+# focusing on performance optimization and reliability. It includes settings
+# to enforce strict SQL modes, proper error logging, and character set handling.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1  # Ensures client uses the specified character set
+
+[mysql]
+no-auto-rehash  = 1
+default-character-set = latin1  # Aligns with server settings for consistency
+
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 127.0.0.1  # Bind to localhost for security in development
+max_connections = 100  # Limit connections to prevent overload in testing
+table_open_cache = 200  # Optimize for frequent table access in development
+query_cache_type = 1  # Enable query cache for performance
+query_cache_size = 16M  # Moderate size for caching queries
+thread_cache_size = 10  # Reuse threads for better efficiency
+innodb_buffer_pool_size = 128M  # Buffer pool for InnoDB to handle data caching
+innodb_log_buffer_size = 8M  # Buffer for transaction logs
+innodb_flush_log_at_trx_commit = 1  # Ensure reliability by flushing logs per transaction
+character-set-server = latin1  # Specified setting for character set
+sql_mode = STRICT_ALL_TABLES  # Specified setting to enforce strict mode for data integrity
+log-error = /var/log/mysql/error.log  # Specified setting for error logging
+slow-query-log = 1  # Enable for testing to log slow queries
+slow-query-log-file = /var/log/mysql/slow.log  # Log file for slow queries
+long_query_time = 2  # Log queries taking longer than 2 seconds
+
+[mysqldump]
+quick            = 1  # Dump tables one by one for efficiency
+quote-names      = 1  # Quote identifiers properly
+max_allowed_packet = 16M  # Increase packet size for larger dumps
+default-character-set = latin1  # Align with server character set for consistency
+
+[mysqld_safe]
+log-error = /var/log/mysql/error.log  # Reuse error log for mysqld_safe
+pid-file = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/  # Include any additional configuration files if needed
+```

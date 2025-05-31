@@ -1,0 +1,77 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with settings like a dedicated port,
+# connection limits, and local binding to enhance security and resource management.
+
+[client]
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+port            = 3307
+max_connections = 500
+bind-address    = 127.0.0.1
+log-error       = /var/log/mysql/error.log
+pid-file        = /var/run/mysqld/mysqld.pid
+nice            = 0  # Run with normal priority for better responsiveness in testing
+
+[mysqld]
+# Server settings for performance optimization
+port            = 3307
+bind-address    = 127.0.0.1
+max_connections = 500  # Matches mysqld_safe for consistency
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql  # Run as mysql user for security
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+# Performance tuning for development environments
+innodb_buffer_pool_size = 128M  # Adequate for testing without overwhelming resources
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures reliability, suitable for testing
+query_cache_type = 1  # Enable query cache for faster repeated queries
+query_cache_size = 16M
+tmp_table_size = 32M
+max_heap_table_size = 32M
+thread_cache_size = 50  # Reuse threads to reduce overhead
+table_open_cache = 200  # Balance between performance and memory usage
+join_buffer_size = 2M
+
+# Logging and monitoring for reliability
+log_error = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries longer than 2 seconds
+general_log = 0  # Disable for production, but useful in testing
+general_log_file = /var/log/mysql/general.log
+
+# Security settings for a testing environment
+skip-networking = 0  # Allow networking but restricted by bind-address
+local-infile = 0  # Disable loading local files for security
+secure-file-priv = /var/lib/mysql  # Restrict file operations
+
+[mysql]
+no-auto-rehash # Faster startup
+default-character-set = utf8mb4
+
+[isamchk]
+key_buffer_size = 16M
+
+[myisamchk]
+key_buffer_size = 16M
+sort_buffer_size = 16M
+read_buffer = 2M
+write_buffer = 2M
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet = 16M
+
+[mysqlhotcopy]
+interactive-timeout
+```

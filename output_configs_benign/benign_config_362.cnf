@@ -1,0 +1,71 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and security while incorporating
+# the specified settings. It binds the server to localhost, uses UTF-8mb4
+# for character sets, and sets MyISAM as the default storage engine.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings specific to the mysql command-line tool
+no-auto-rehash
+prompt          = \\u@\\h:\\p [\\d]>
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for MySQL, optimized for development and testing
+port            = 3306
+bind-address    = 127.0.0.1  # Bind to localhost for security in testing environments
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql  # Run as the mysql user for security
+character-set-server = utf8mb4  # Use UTF-8mb4 for full Unicode support
+collation-server = utf8mb4_unicode_ci
+default-storage-engine = MyISAM  # Use MyISAM for faster reads in development, though less reliable for production
+max_connections = 100  # Limit connections to prevent overload in testing
+max_allowed_packet = 16M  # Increase for larger queries
+table_open_cache = 200  # Cache for open tables to improve performance
+query_cache_type = 1  # Enable query cache for repeated queries
+query_cache_size = 16M  # Size of query cache
+tmp_table_size = 32M  # Size for temporary tables
+max_heap_table_size = 32M  # Limit for in-memory tables
+innodb_buffer_pool_size = 128M  # Buffer pool for InnoDB, adjusted for development
+slow_query_log = 1  # Log slow queries for analysis
+slow_query_log_file = /var/log/mysql/slow.log
+log-error = /var/log/mysql/error.log  # Error logging
+server-id = 1  # Unique server ID for replication testing
+skip-name-resolve  # Skip DNS resolution for faster connections
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld_safe.pid
+
+[mysqldump]
+# Settings for mysqldump tool, included as specified
+quick  # Dump tables one by one for large databases
+single-transaction = true  # Use a single transaction for consistency with InnoDB
+max_allowed_packet = 16M  # Match with server setting
+set-gtid-purged = OFF  # Avoid GTID issues in testing
+
+[isamchk]
+# Settings for isamchk tool (legacy)
+key_buffer = 16M
+
+[myisamchk]
+# Settings for myisamchk tool
+key_buffer = 20M
+sort_buffer_size = 20M
+read_buffer = 2M
+write_buffer = 2M
+
+[mysqlhotcopy]
+# Settings for mysqlhotcopy (deprecated, but included for completeness)
+interactive-timeout
+```

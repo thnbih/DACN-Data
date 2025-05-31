@@ -1,0 +1,44 @@
+[mysqld]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+bind-address    = 0.0.0.0
+innodb_buffer_pool_size = 1G
+innodb_log_file_size    = 256M
+innodb_log_buffer_size  = 8M
+max_connections         = 100
+table_open_cache        = 2000
+thread_cache_size       = 100
+wait_timeout            = 28800
+interactive_timeout     = 28800
+connect_timeout         = 10
+net_read_timeout        = 30
+net_write_timeout       = 30
+max_execution_time      = 0
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2
+innodb_lock_wait_timeout = 50
+log_error               = /var/log/mysql/error.log
+general_log             = 0
+general_log_file        = /var/log/mysql/general.log
+query_cache_type        = 1
+query_cache_size        = 64M
+query_cache_limit       = 2M
+tmp_table_size          = 64M
+max_heap_table_size     = 64M
+innodb_thread_concurrency = 0
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table   = 1
+skip-name-resolve       = 1
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+[mysqld_safe]
+log-error=/var/log/mysql/mysqld_safe.log
+pid-file=/var/run/mysqld/mysqld.pid
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+!includedir /etc/mysql/conf.d/

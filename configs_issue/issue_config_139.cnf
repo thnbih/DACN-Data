@@ -1,0 +1,51 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+log-error       = /var/log/mysql/error.log
+slow-query-log  = 1
+slow-query-log-file = /var/log/mysql/mysql-slow.log
+general-log     = 0
+general-log-file = /var/log/mysql/mysql.log
+skip-networking = 1
+default-storage-engine = InnoDB
+innodb-buffer-pool-size = 128M
+innodb-log-file-size = 48M
+innodb-flush-log-at-trx-commit = 1
+max-connections = 151
+table-open-cache = 2000
+query-cache-type = 1
+query-cache-size = 16M
+plugin-dir      = /usr/lib/mysql/plugin
+bind-address    = 127.0.0.1
+default-authentication-plugin = mysql_native_password
+max-allowed-packet = 16M
+thread-stack = 192K
+thread-cache-size = 8
+key-buffer-size = 32M
+[mysqld_safe]
+log-error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld_safe.pid
+[mysqldump]
+quick
+quote-names
+max-allowed-packet = 16M
+[myisamchk]
+key_buffer_size = 20M
+sort_buffer_size = 20M
+read_buffer = 2M
+write_buffer = 2M
+[mysqlhotcopy]
+interactive-timeout
+```

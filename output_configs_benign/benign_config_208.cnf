@@ -1,0 +1,59 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is tailored for development and testing environments,
+# focusing on optimizing performance and reliability with specific settings.
+
+[client]
+port            = 3308
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-beep
+default-character-set = utf8mb4
+prompt          = "\\u@\\h:\\p [\\d]> "
+
+[mysqld]
+# Basic Server Settings
+port            = 3308
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# SQL Mode for Reliability
+sql_mode        = NO_ENGINE_SUBSTITUTION
+
+# Logging and Query Optimization
+slow_query_log  = 1
+slow_query_log_file = /tmp/slow.log
+long_query_time = 2  # Log queries that take longer than 2 seconds
+log_queries_not_using_indexes = 1
+log_error       = /var/log/mysql/error.log
+
+# Performance Tuning for Development
+max_connections = 100
+table_open_cache = 200
+query_cache_type = 1
+query_cache_size = 16M
+thread_cache_size = 10
+innodb_buffer_pool_size = 128M  # Adjust based on available memory
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1  # For reliability, at the cost of some performance
+innodb_file_per_table = 1
+
+# Security and General Settings
+bind-address    = 127.0.0.1  # Bind to localhost for security in development
+skip-name-resolve
+max_allowed_packet = 16M
+lower_case_table_names = 1
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+[mysqld_safe]
+log-error       = /var/log/mysql/mysqld_safe.log
+pid-file        = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/  # Include any additional configuration files if needed
+```

@@ -1,0 +1,63 @@
+```
+# MySQL Configuration File
+# This configuration is tailored for development and testing environments,
+# focusing on optimizing performance and reliability with specified settings.
+# It includes server-side optimizations for resource management and logging.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+host            = localhost
+
+[mysqld]
+# Server settings to optimize performance and reliability
+port            = 3307
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Connection and resource management
+max_connections = 100
+max_connect_errors = 10
+connect_timeout = 10
+wait_timeout = 28800
+interactive_timeout = 28800
+
+# Logging and query optimization
+slow_query_log = 1
+slow_query_log_file = /tmp/slow.log
+log_queries_not_using_indexes = 1
+log_error = /var/log/mysql/error.log
+long_query_time = 2  # Log queries taking longer than 2 seconds
+general_log_file = /var/log/mysql/general.log
+general_log = 1  # Enabled for development to capture all queries
+
+# Storage engine and buffer settings for reliability
+default_storage_engine = InnoDB
+innodb_buffer_pool_size = 128M  # Adjusted for development environments
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures data integrity
+innodb_file_per_table = 1
+
+# Character set and collation
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+# Security and other optimizations
+bind-address = 127.0.0.1  # Bind to localhost for security in testing
+server_id = 1  # Useful for replication testing
+sql_mode = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+
+[mysqld_safe]
+log_error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld_safe.pid
+
+!includedir /etc/mysql/conf.d/
+```

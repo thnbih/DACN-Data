@@ -1,0 +1,62 @@
+[mysqld]
+# General server settings
+port            = 3306
+basedir         = /usr/local/mysql
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Specified settings for optimization
+sql_mode        = NO_ENGINE_SUBSTITUTION
+log-error       = /tmp/mysql_error.log
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+# Performance tuning for high-traffic applications
+innodb_buffer_pool_size = 4G  # Adjust based on available RAM
+innodb_log_file_size = 256M
+innodb_flush_log_at_trx_commit = 1  # Ensures ACID compliance
+innodb_file_per_table = 1  # Each table in its own file for better management
+max_connections = 1000  # Handle high traffic
+thread_cache_size = 100  # Reduce thread creation overhead
+table_open_cache = 4000  # Cache frequently used tables
+query_cache_type = 0  # Disabled as it's removed in MySQL 8.0+
+tmp_table_size = 64M  # For in-memory temporary tables
+max_heap_table_size = 64M
+join_buffer_size = 8M  # For join operations
+sort_buffer_size = 4M  # For sorting operations
+read_buffer_size = 4M  # For sequential scans
+read_rnd_buffer_size = 8M  # For random reads
+
+# Logging and monitoring
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries without indexes
+general_log = 0  # Disable for production to avoid overhead
+general_log_file = /var/log/mysql/general.log
+
+# Security settings
+skip-name-resolve  # Improves performance by not resolving hostnames
+bind-address = 0.0.0.0  # Listen on all interfaces; restrict in production
+ssl-ca = /etc/mysql/certs/ca.pem
+ssl-cert = /etc/mysql/certs/server-cert.pem
+ssl-key = /etc/mysql/certs/server-key.pem
+
+# Other reliability settings
+default_storage_engine = InnoDB
+max_allowed_packet = 64M  # For large data transfers
+lower_case_table_names = 1  # Case-insensitive table names
+sync_binlog = 1  # For data integrity in replication setups
+expire_logs_days = 7  # Automatically purge binary logs
+
+[mysql]
+# Client settings
+no-auto-rehash
+default-character-set = utf8mb4
+
+[client]
+# General client configurations
+port = 3306
+socket = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4

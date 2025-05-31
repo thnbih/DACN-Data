@@ -1,0 +1,82 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and security. It includes settings
+# to log slow queries, bind to localhost, and use a non-standard port.
+
+[client]
+port            = 3308
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+[mysqld]
+# Basic Settings
+port            = 3308
+bind-address    = 127.0.0.1
+socket          = /var/run/mysqld/mysqld.sock
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Logging and Monitoring
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries that take longer than 2 seconds
+log-error       = /var/log/mysql/error.log
+general_log     = 0  # Disabled by default in production-like environments
+general_log_file = /var/log/mysql/general.log
+log_queries_not_using_indexes = 1
+log_output      = FILE
+
+# InnoDB Settings for Performance
+default-storage-engine = InnoDB
+innodb_buffer_pool_size = 128M  # Adjust based on available memory
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures ACID compliance
+innodb_file_per_table = 1
+
+# Memory and Buffer Settings
+key_buffer_size = 16M
+max_allowed_packet = 64M
+table_open_cache = 64
+sort_buffer_size = 2M
+read_buffer_size = 2M
+read_rnd_buffer_size = 4M
+join_buffer_size = 4M
+
+# Connection and Thread Settings
+max_connections = 100
+thread_stack = 192K
+thread_cache_size = 8
+max_connect_errors = 10
+
+# Security and Data Integrity
+skip-name-resolve  # Improves performance by not resolving hostnames
+secure-file-priv   = /var/tmp/  # Restricts file operations for security
+sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+
+# Character Set and Collation
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+# Other Optimizations
+tmp_table_size = 32M
+max_heap_table_size = 32M
+query_cache_type = 1  # Enable query cache for development
+query_cache_size = 16M
+query_cache_limit = 1M
+
+# MyISAM Settings (if needed)
+key_buffer_size = 32M  # For MyISAM tables
+
+[mysqldump]
+quick
+max_allowed_packet = 64M
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+```

@@ -1,0 +1,50 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability. It includes settings to manage
+# connections, logging, and SQL modes appropriately for non-production use.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings specific to the mysql command-line tool
+no-auto-rehash
+prompt          = \\u@\\h:\\p [\\d]>
+default-character-set = utf8mb4
+
+[mysqld]
+# Server configuration for optimized performance and reliability
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 127.0.0.1  # Bind to localhost for security in development
+key_buffer_size = 16M        # Size of the buffer used for index blocks
+max_allowed_packet = 16M     # Maximum packet size for queries
+thread_stack    = 192K       # Stack size for each thread
+thread_cache_size = 8        # Number of threads to cache for reuse
+table_open_cache = 2000      # Number of open tables for all threads
+query_cache_type = 1         # Enable query cache for development (can be tuned)
+query_cache_size = 16M       # Size of the query cache
+max_connections = 500        # Limit simultaneous connections as specified
+slow_query_log  = 0          # Disable slow query logging to reduce overhead
+log_error       = /var/log/mysql/error.log  # Error log file
+sql_mode        = NO_ENGINE_SUBSTITUTION  # Set SQL mode as specified
+innodb_buffer_pool_size = 128M  # Buffer pool size for InnoDB, tuned for development
+innodb_log_file_size = 48M     # Size of each InnoDB log file
+innodb_flush_log_at_trx_commit = 1  # Ensure durability for reliability
+character-set-server = utf8mb4  # Default character set
+collation-server = utf8mb4_unicode_ci  # Default collation
+
+[mysqldump]
+# Configuration for mysqldump tool
+quick           = true       # Dump tables row by row
+max_allowed_packet = 16M     # Maximum packet size for dumps
+single-transaction = true    # Use a consistent snapshot for InnoDB tables
+```

@@ -1,0 +1,47 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with specified settings.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 127.0.0.1
+max_connections = 100
+table_open_cache = 200
+thread_cache_size = 10
+query_cache_type = 1
+query_cache_size = 16M
+key_buffer_size = 16M  # Optimized for MyISAM usage
+max_allowed_packet = 16M
+thread_stack = 192K
+default-storage-engine = MyISAM  # Specified setting for default engine
+slow_query_log = 0  # Specified setting to disable slow query logging
+log-error = /var/log/mysql/error.log  # Specified setting for error logging
+log_warnings = 2
+innodb_buffer_pool_size = 128M  # Included for potential mixed engine use, adjustable for testing
+sync_binlog = 1  # Ensures reliability in development
+expire_logs_days = 7  # Automatic log rotation for testing environments
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld_safe.pid
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet = 16M
+single-transaction  # Useful for consistent dumps in testing
+```

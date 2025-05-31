@@ -1,0 +1,84 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and proper character set handling.
+# It includes settings to manage connections, storage engines, and logging
+# for a realistic setup that can be used in real-world scenarios.
+
+[client]
+# Client-specific options
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings for the mysql command-line tool
+no-auto-rehash
+default-character-set = utf8mb4
+
+[mysqld]
+# Server-specific options for performance and reliability
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Connection and threading settings
+max_connections = 1000
+thread_cache_size = 10
+thread_stack    = 192K
+max_connect_errors = 10
+
+# Character set and collation for proper encoding
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+# Storage engine configuration
+default-storage-engine = InnoDB
+innodb_buffer_pool_size = 128M  # Adjust based on available memory for caching
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures durability
+innodb_file_per_table = 1  # Better for management in development
+innodb_lock_wait_timeout = 50
+
+# Performance tuning
+key_buffer_size = 16M  # For MyISAM indexes, though InnoDB is default
+max_allowed_packet = 16M  # Larger packets for queries
+sort_buffer_size = 2M
+read_buffer_size = 128K
+read_rnd_buffer_size = 256K
+query_cache_type = 1  # Enable query cache
+query_cache_size = 16M
+query_cache_limit = 1M
+tmp_table_size = 16M
+max_heap_table_size = 16M
+
+# Logging and monitoring
+log_error = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries longer than 2 seconds
+log_queries_not_using_indexes = 1  # Helpful for optimization
+
+# Security and access
+bind-address = 127.0.0.1  # Bind to localhost for development security
+skip-name-resolve  # Improves performance by not resolving hostnames
+
+# Other general settings
+lower_case_table_names = 1  # Case-insensitive table names
+max_binlog_size = 100M  # For binary logging if needed
+sync_binlog = 1  # Ensures binlog durability
+
+[mysqldump]
+# Settings for mysqldump tool
+quick
+quote-names
+max_allowed_packet = 16M
+
+[isamchk]
+# Settings for isamchk tool
+key_buffer = 16M
+```

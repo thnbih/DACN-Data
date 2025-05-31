@@ -1,0 +1,61 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+max_connections        = 200
+table_open_cache       = 2000
+thread_cache_size      = 100
+query_cache_type       = 1
+query_cache_size       = 64M
+query_cache_limit      = 2M
+thread_stack           = 192K
+thread_concurrency     = 10
+key_buffer_size        = 128M
+max_allowed_packet     = 64M
+sort_buffer_size       = 4M
+read_buffer_size       = 4M
+read_rnd_buffer_size   = 8M
+myisam_sort_buffer_size= 64M
+net_buffer_length      = 16K
+innodb_buffer_pool_size   = 1G
+innodb_log_file_size      = 128M
+innodb_flush_log_at_trx_commit = 1
+innodb_lock_wait_timeout  = 50
+innodb_file_per_table     = 1
+innodb_io_capacity        = 200
+innodb_flush_method       = O_DIRECT
+log-error                = /var/log/mysql/error.log
+slow_query_log           = 1
+slow_query_log_file      = /var/log/mysql/mysql-slow.log
+long_query_time          = 2
+log_queries_not_using_indexes = 1
+general_log              = 0
+sql_mode                 = NO_ENGINE_SUBSTITUTION
+bind-address             = 127.0.0.1
+server_id                = 1
+secure_file_priv         = /var/lib/mysql
+max_connect_errors       = 10000
+default_storage_engine   = InnoDB
+character-set-server     = utf8mb4
+collation-server         = utf8mb4_unicode_ci
+lower_case_table_names   = 1
+[mysqldump]
+quick
+quote-names
+max_allowed_packet      = 64M
+[mysql]
+no-auto-rehash
+default-character-set   = utf8mb4
+!includedir /etc/mysql/conf.d/
+```

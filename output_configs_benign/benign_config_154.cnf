@@ -1,0 +1,44 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with settings like slow query logging
+# and specific SQL mode.
+
+[client]
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash = 1
+prompt         = "\\u@\\h:\\p [\\d]> "
+port           = 3307  # Ensures the client connects to the specified port
+
+[mysqld]
+port                           = 3307  # Specifies the server port for optimization
+slow_query_log                 = 1     # Enables slow query logging to identify performance bottlenecks
+slow_query_log_file            = /var/log/mysql/slow.log  # Defines the file for slow query logs
+sql_mode                       = NO_ENGINE_SUBSTITUTION  # Sets SQL mode for reliability, avoiding engine substitution
+datadir                        = /var/lib/mysql  # Directory for database files
+socket                         = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+pid-file                       = /var/run/mysqld/mysqld.pid  # File to store the process ID
+log_error                      = /var/log/mysql/error.log  # Error log file for debugging
+character-set-server           = utf8mb4  # Ensures consistent character set for reliability
+collation-server               = utf8mb4_unicode_ci
+max_connections                = 100  # Limits connections for testing environments to prevent overload
+table_open_cache               = 200  # Cache for open tables, optimized for development
+query_cache_type               = 1    # Enables query cache for performance
+query_cache_size               = 16M  # Size of query cache, suitable for testing
+tmp_table_size                 = 16M  # Size for temporary tables
+max_heap_table_size            = 16M  # Maximum size for in-memory tables
+innodb_buffer_pool_size        = 128M  # Buffer pool size for InnoDB, balanced for development hardware
+innodb_log_file_size           = 48M   # Size of InnoDB log files for reliability
+innodb_flush_log_at_trx_commit = 1    # Ensures data durability, important for testing accuracy
+skip-name-resolve              = 1    # Improves performance by skipping DNS resolution
+
+[mysqld_safe]
+log_error              = /var/log/mysql/error.log  # Redirects errors for mysqld_safe
+pid-file               = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/  # Allows inclusion of additional configuration files for extensibility
+```

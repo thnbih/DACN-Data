@@ -1,0 +1,35 @@
+```
+[client]
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash = 1
+prompt         = "\\u@\\h:\\p [\\d]> "
+port           = 3307
+[mysqld]
+port                           = 3307
+slow_query_log                 = 1
+slow_query_log_file            = /var/log/mysql/slow.log
+sql_mode                       = NO_ENGINE_SUBSTITUTION
+datadir                        = /var/lib/mysql
+socket                         = /var/run/mysqld/mysqld.sock
+pid-file                       = /var/run/mysqld/mysqld.pid
+log_error                      = /var/log/mysql/error.log
+character-set-server           = utf8mb4
+collation-server               = utf8mb4_unicode_ci
+max_connections                = 100
+table_open_cache               = 200
+query_cache_type               = 1
+query_cache_size               = 16M
+tmp_table_size                 = 16M
+max_heap_table_size            = 16M
+innodb_buffer_pool_size        = 128M
+innodb_log_file_size           = 48M
+innodb_flush_log_at_trx_commit = 1
+skip-name-resolve              = 1
+[mysqld_safe]
+log_error              = /var/log/mysql/error.log
+pid-file               = /var/run/mysqld/mysqld.pid
+!includedir /etc/mysql/conf.d/
+```

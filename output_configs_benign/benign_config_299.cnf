@@ -1,0 +1,58 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance, reliability, and monitoring.
+# It includes settings for slow query logging to identify and optimize bottlenecks.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Main server configuration for high-traffic environments
+user            = mysql
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Performance and reliability optimizations
+default-storage-engine = InnoDB
+innodb_buffer_pool_size = 1G          # Adjust based on available memory for caching
+innodb_log_file_size = 256M           # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1    # Ensures durability for high-reliability needs
+innodb_file_per_table = 1             # Each table in its own file for better management
+max_connections = 200                 # Handle high traffic; monitor and adjust as needed
+thread_cache_size = 100               # Reuse threads to reduce overhead
+query_cache_type = 1                  # Enable query cache for repeated queries
+query_cache_size = 64M                # Cache size for query results
+table_open_cache = 4000               # Cache for open tables to speed up access
+
+# Logging and monitoring settings
+slow_query_log = 1                    # Enable slow query logging as specified
+slow_query_log_file = /tmp/slow.log   # Log file path for slow queries
+log_error = /var/log/mysql/error.log  # Central error log
+long_query_time = 2                   # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1     # Log queries not using indexes for optimization
+general_log = 0                       # Disable general log in production to avoid overhead
+
+# Security and other settings
+bind-address = 0.0.0.0                # Listen on all interfaces; restrict in secure environments
+skip-name-resolve = 1                 # Improve performance by skipping DNS lookups
+character-set-server = utf8mb4        # Use modern character set
+collation-server = utf8mb4_unicode_ci
+sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/
+```

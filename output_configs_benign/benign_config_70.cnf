@@ -1,0 +1,44 @@
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for optimizing performance and reliability in development and testing environments
+port            = 3306
+bind-address    = 127.0.0.1  # Bind to localhost for security in dev environments
+datadir         = /var/lib/mysql  # Default data directory
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql  # Run as mysql user for security
+slow_query_log  = 1  # Enable slow query logging to identify performance issues
+slow_query_log_file = /tmp/slow.log  # Log slow queries to this file
+log_error       = /var/log/mysql/error.log  # Error log for debugging
+long_query_time = 2  # Log queries taking longer than 2 seconds
+min_examined_row_limit = 100  # Minimum rows examined for slow queries
+innodb_buffer_pool_size = 128M  # Buffer pool size for InnoDB, tuned for dev/testing
+innodb_log_file_size = 48M  # Size of InnoDB log files for better reliability
+max_connections = 100  # Limit connections to prevent overload in testing
+table_open_cache = 2000  # Cache for open tables to improve query performance
+query_cache_type = 1  # Enable query cache for frequently run queries
+query_cache_size = 16M  # Size of query cache
+tmp_table_size = 32M  # Size for temporary tables
+max_heap_table_size = 32M  # Maximum size for in-memory tables
+skip-name-resolve  # Skip DNS lookups for faster connections
+character-set-server = utf8mb4  # Default character set for reliability
+collation-server = utf8mb4_unicode_ci  # Default collation
+
+[mysqldump]
+# Settings for mysqldump tool, optimized for development backups
+quick  # Dump tables one by one for large datasets
+max_allowed_packet = 64M  # Maximum packet size for handling larger dumps
+single-transaction  # Use a consistent snapshot for InnoDB tables
+set-gtid-purged=OFF  # Avoid GTID issues in testing environments
+compress  # Compress output for faster transfers in dev scenarios
+defaults-extra-file = /etc/mysql/mysqldump.cnf  # Optional extra config file if needed
+
+[mysql]
+# Additional client settings for interactive use
+no-auto-rehash  # Speed up client startup
+prompt          = \\u@\\h:\\d\\>  # Custom prompt for clarity in testing

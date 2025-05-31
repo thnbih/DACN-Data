@@ -1,5 +1,4 @@
 [mysqld]
-# safe-show-database
 wait_timeout=180
 max_allowed_packet=32M
 max_user_connections=200
@@ -10,7 +9,6 @@ max_connect_errors=100
 table_cache=1024
 connect_timeout=20
 innodb_log_buffer_size=8M
-#datadir="/var/lib/mysql"
 thread_cache_size=64
 read_buffer_size=1M
 skip-external-locking
@@ -33,7 +31,6 @@ innodb_additional_mem_pool_size=64M
 query_cache_size=128M
 innodb_flush_log_at_trx_commit=0
 old-passwords = 1
-
 [isamchk]
 read_buffer=16M
 sort_buffer=64M

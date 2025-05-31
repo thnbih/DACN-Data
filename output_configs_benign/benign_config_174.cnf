@@ -1,0 +1,75 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with settings like MyISAM as the
+# default storage engine, a custom port, and increased connections.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Main server settings for performance and reliability
+user            = mysql
+port            = 3307
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+default-storage-engine = MyISAM
+max_connections = 500
+max_connect_errors = 100
+table_open_cache = 2000
+query_cache_type = 1
+query_cache_size = 16M
+query_cache_limit = 1M
+thread_cache_size = 50
+tmp_table_size = 32M
+max_heap_table_size = 32M
+join_buffer_size = 2M
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+innodb_buffer_pool_size = 128M  # Adjusted for development to avoid high memory use
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1
+sync_binlog = 1
+log_error = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+server-id = 1  # For replication if needed in testing
+bind-address = 127.0.0.1  # Bind to localhost for security in development
+
+[mysqld_safe]
+# Settings for the mysqld_safe wrapper to enhance reliability and startup
+log_error = /var/log/mysql/error.log
+pid-file = /var/run/mysqld/mysqld.pid
+nice = 0
+default-storage-engine = MyISAM  # Ensuring this is set for the safe mode
+port = 3307  # Custom port to match overall configuration
+max_connections = 500  # Limit to optimize performance in testing environments
+open-files-limit = 65535  # Allow more open files for reliability
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[myisamchk]
+key_buffer_size = 20M
+sort_buffer_size = 20M
+read_buffer = 2M
+write_buffer = 2M
+
+[mysqlhotcopy]
+interactive-timeout
+
+# General security and logging for development
+[mysqld_safe]
+# Additional reliability options
+syslog
+malloc-lib=
+```

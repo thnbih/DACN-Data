@@ -1,0 +1,59 @@
+[mysqld]
+# General server settings
+user            = mysql
+port            = 3306
+basedir         = /usr/local/mysql
+datadir         = /usr/local/mysql/data
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Character set configuration for UTF-8 support, enhancing data reliability
+character-set-server = utf8mb4
+collation-server     = utf8mb4_unicode_ci
+
+# SQL mode to enforce strict behavior, improving data integrity
+sql_mode            = STRICT_ALL_TABLES
+
+# Logging settings for performance monitoring and optimization
+slow_query_log      = 1
+slow_query_log_file = /tmp/slow.log
+log_error           = /var/log/mysql/error.log
+long_query_time     = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes for optimization
+
+# Performance tuning for high-traffic applications
+max_connections               = 1000  # Handle up to 1000 simultaneous connections
+max_connect_errors            = 10000  # Allow more errors before blocking
+table_open_cache              = 4000   # Cache for open tables to reduce overhead
+thread_cache_size             = 100    # Reuse threads for better efficiency
+innodb_buffer_pool_size       = 4G     # Allocate 4GB for InnoDB buffer pool (adjust based on system RAM)
+innodb_log_file_size          = 256M   # Larger log files for high transaction loads
+innodb_flush_log_at_trx_commit = 1     # Ensure data durability
+sync_binlog                   = 1      # Synchronize binary log for reliability
+tmp_table_size                = 128M   # Temporary tables in memory
+max_heap_table_size           = 128M   # Limit in-memory tables
+query_cache_type              = 1      # Enable query cache (if supported in version)
+query_cache_size              = 64M    # Cache size for frequent queries
+join_buffer_size              = 8M     # Buffer for joins
+sort_buffer_size              = 8M     # Buffer for sorting
+
+# Additional reliability and security settings
+skip-name-resolve             = 1      # Skip DNS lookups for faster connections
+bind-address                  = 0.0.0.0  # Bind to all interfaces (adjust for security)
+default_storage_engine        = InnoDB  # Use InnoDB for transactional support
+innodb_file_per_table         = 1       # Each table in its own file for better management
+max_allowed_packet            = 64M     # Increase for large data transfers
+lower_case_table_names        = 1       # Case-insensitive table names for consistency
+
+# Monitoring and optimization
+performance_schema            = 1      # Enable performance schema for insights
+innodb_stats_on_metadata      = 0      # Reduce overhead from statistics collection
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld.pid
+
+[client]
+port        = 3306
+socket      = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4  # Ensure client uses the same character set

@@ -1,0 +1,219 @@
+limit number of connections to a mysql database
+increasing the number of mysql connections
+datetime format changed between mysql 5 0 and 5 1
+why does mysql have utf8 for collation on its information schema but latin1 sw
+enabling general log in mysql 5 1 52 on rhel6
+mysql users changed their ip address whats the best way to deal with this
+mysql server running only on unix socket
+is mysql port 3306 encrypted and if no how can i encrypt it
+how to disable mysqls cache
+mysql turning select full join is too high how to identify the queries cau
+MySQL Timeout Question
+Shrinking innodb datafiles?
+persistent connections timeout
+Data Directory
+mysql not accepting connections from wp
+how to speed up a mysql import
+mysql on windows how do i set the wait timeout for connections using named pip
+mysql connection security
+speed up mysql for inserts for testing purposes
+how can i connect mysql server with the server's IP but not localhost?
+simple problem, no tcp port openning
+problems configuring mysql on ubuntu for remote access
+how to make mysql to find old databases on hdd
+mysql and multi core processors
+mysql replication where is data
+optimal setup for bulk csv import
+store each database in a different directory
+where does the php mysql connection take its default charset
+Indefinite Timeouts
+how do i enable log slow queries on mysql 5 1
+apache mysql configuration for high traffic server
+max_connections
+error 2006 hy000 at line 149351 mysql server has gone away
+Setting wait_timeout in my.cnf?
+is it safe to modify innodb data file path value for mysql 5
+set group concat max len permanently mysql config
+percona and mysql audit
+how to access remotly to a mysql server
+MySQL 4.0.1 & SSL config - a shot in the dark
+mysqld ended
+Lock wait timeout exceeded Errors
+mysql shut down it self periodically
+mysql database restore error
+cant get mysqld started on osx server was working before
+mysql crashes every few seconds
+cant connect to local mysql server through socket
+cant start mysql 5 6 server after computer is restarted
+error running mysql daemon
+mysql server doesnt startup
+mysql multi level replication breaks constantly
+mysqld job failed to start
+issue in mysql database error on server and works fine on local
+Connection speed
+strange start.
+having trouble killing mysqld to restart and change root
+access denied for ALL users
+InnoDB - Foreign Key - Error 150.
+Need your help in setting up database.
+cant start mysql after upgrade
+MySQL 4.0.14 stops responding to PHP 4.3.2
+ERROR 1114: The table '#sql-3612_4' is full
+mysql error 1429 federation
+attempted to change database drive resulted in cant connect to local mysql ser
+mysql hangs up the server how to avoid this
+mariadb galera clustering active active operation not permitted error
+extreme slowness with a remote database in drupal
+splitting a mysql db in two may ease server from too many connetions i dont
+mysql binlog not logging
+mysql 5 0 5 1 upgrade table upgrades taking a very long time
+datadump fails with exit code 1
+etc my cnf what i am missing
+mysql 5 1 69 at centos 6 4 doesnt know enable named pipe
+mysql command line not working
+mysql died during the night on a 12 04 1 ubuntu
+mysql failed to start error 1053 windows server 2008 r2
+mysql odbc issue data source name not found and no default driver specified
+ubuntu 12 04 mysql 5 5 24 crashes everyday
+unable to enable innodb in mysql on ubuntu 10 04
+MySQL 4.0.2 is topping out at 1024 threads!
+mysql innodb table size performance
+my cnf for big wordpress installation
+recommend a good guide for mysql optimization
+run mysql server self contained and as a user
+configuration question
+how do i profile mysql
+mysql config on large machine
+how to prevent innodb log files from getting corrupted
+mysql replicate structure only
+Faster reindexing
+autocommit == innobase_flush_log_at_trx_commit ?
+files in mysql data folder
+changing a slave to a master in mysql replication
+mysql max allowed packet greater than 1 gb is it possible
+mysql binary logs more than 15 gb
+how does mysql expires the cache
+mysql max connections in shared hosting environment
+mysql not starting error usr sbin mysqld unknown option query cache si
+MySQL: setting time_zone in my.cnf options file
+mysql .my.cnf not reading credentials properly?
+datetime format changed between mysql 5 0 and 5 1
+How to fix: mysql: [ERROR] Found option without preceding group in config file /etc/mysql/my.cnf?
+percona and mysql audit
+read_buffer_size can break your replication
+missing the initial / character   
+Quotes are not special characters
+mysql i cannot login as root after upgrading to 5 5
+mysql server doesnt startup
+i cant start mysql on linux error mysqld safe
+attempted to change database drive resulted in cant connect to local mysql ser
+problems configuring mysql on ubuntu for remote access
+how to access remotly to a mysql server
+mysqld job failed to start
+django cant connect to local mysql server through socket
+Two MySQL servers
+cant connect to local mysql server through socket
+mysql command line not working
+how to make mysql to find old databases on hdd
+cant start mysqld on centos5 after attempting to upgrade to php 5 3
+error running mysql daemon
+cant start mysql 5 6 server after computer is restarted
+after installing mysql 5 6 the server cant start
+mariadb galera clustering active active operation not permitted error
+mysql not working
+mysql bind on unix socket permission denied
+Mysql --log-slow-queries
+MySQL and Multi-Core processors
+MySQl Configuration Error After reinstall it
+connect mysql instance using auth proxy（should set private ip）
+bind-address in the configuration file, if it set to it will allow only localhost login.127.0.0.1 （wrong ip）
+port was occupied
+enabling SSL/TLS on server
+have to give it privileges to connect to that database
+wrong URL
+Integrated Security=true;
+one port shared by two software
+wrong port
+wrong port
+intermittent MySQL crashes with error "Fatal error: cannot allocate memory for the buffer pool"
+mysql error 1429 federation
+periodic mysql lockup when wordpress is under heavy load
+Failed to initialize pool， Initial client character set can be forced via the 'characterEncoding' property
+Error in sql connector configuration when connecting using Ballerina MYSQL Client
+error 2003 hy000 cant connect to mysql server on 111
+related to the MySQL version with others
+software version is outdated
+missing one of the MySQL development package
+related to the version of the jdbc driver.
+module is typically used in Unix-like systems
+in MAC multiple relays that encrypt data and generate temporary IP addresses which mess things up
+docker maps a wrong port to mysql
+MYSQL_USER=root for your database environment and can create conflicts for the root user
+set autocommit = 1 to align the MySQL value with PDO's value
+mysql server running only on unix socket
+mysql not accepting connections from wp(WordPress)
+how to speed up a mysql import
+error 2006 hy000 at line 149351 mysql server has gone away
+mysql shut down it self periodically
+MySQL Database Restore error
+MySQL multi level replication breaks constantly
+mysql hangs up the server how to avoid this
+mysql 5 0 5 1 upgrade table upgrades taking a very long time
+datadump fails with exit code 1
+mysql 5 1 69 at centos 6 4 doesnt know enable named pipe
+mysql died during the night on a 12 04 1 ubuntu
+mysql failed to start error 1053 windows server 2008 r2
+mysql odbc issue data source name not found and no default driver specified
+ubuntu 12 04 mysql 5 5 24 crashes everyday
+files in mysql data folder
+mysql max allowed packet greater than 1 gb is it possible
+mysql binary logs more than 15 gb
+why does mysql say im out of memory（out of memory
+mysql is running slow on db import
+mysql cant create test file 1067 error
+could not start the service mysql error0 how to get mysql 5 5 server running
+mysql 5 1 69 at centos 6 4 doesnt know enable named pipe
+mysql database config optimization
+fixing mysql errors recorded in error logs
+mysql query extremely slow after server restart
+mysql binlogs seems incomplete
+innodb master master replication goes inconsistant after power failure tests
+what are huge files 0 000001 and 0 000002 files and so on in mysql data folder
+mysql is running very slow on centos 6x not 5x
+lots of mysql sleep processes
+24 cores and MYSQL is using 1 on INSERT
+finding swap causes of mysql
+Help about log mysql
+very slow mysql
+mysql is hogging my server resources
+mysql connection taking too much time
+MySQL too many connections during normal conditions (Percona, InnoDB)
+Can't connect to local MySQL server through socket '/var/mysql/mysql.sock'
+ASP.Net MVC4 configuration error after installing MySQL Connector .NET
+How to shrink/purge ibdata1 file in MySQL
+Barman geo-redundancy configuration error
+increase max_allowed_packet size in mysql docker
+How to make sql-mode="NO_ENGINE_SUBSTITUTION" permanent in MySQL my.cnf
+MySQL slow query log logging all queriMYSQLes
+mysql binlog not logging
+extreme slowness with a remote database in drupal
+SQL mode NO_ZERO_DATE to make the wrong date number
+ Increase innodb_buffer_pool_size performance may suffer if you keep the cache size the same.
+wrong storage engine
+innodb_buffer_pool_size should be about 70% of available RAM to improve performance
+wrong storage engine, default value
+ value has to be set at startup
+too many connections error, SetMaxOpenConns SetMaxIdleConns
+ the environment variable UPLOAD_LIMIT to your desired limit.
+slowly and gradually the RAM is occupied
+change the max index size
+allows the client to read the file content on the computer where the client runs  secure-file-privLOAD DATA LOCAL INFILE
+max_allowed_packet net_read_timeout lost connection
+change mysql case sensitivity setting. make it case insensitive.
+add  a config testWhileIdle="true"
+MySQL version 5 or 8.0 and later. And your server is configured to use the protocol of TLS 1.2.
+'Persist Value' set for max_allowed_packet.
+completly ignored client side settings.
+wrong value for spring.jpa.properties.hibernate.dialect
+do not set password for admin
+Lower innodb_buffer_pool_size

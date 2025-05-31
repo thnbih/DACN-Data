@@ -1,0 +1,52 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for the MySQL server and mysqldump tool.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 127.0.0.1  # Restricts connections to localhost for security and performance
+innodb_buffer_pool_size = 2G  # Optimizes InnoDB buffer pool for high-traffic workloads
+character-set-server = utf8mb4  # Ensures proper handling of Unicode characters
+collation-server = utf8mb4_unicode_ci
+max_connections = 200  # Allows for a higher number of simultaneous connections in high-traffic scenarios
+thread_cache_size = 8  # Reduces overhead for new thread creation
+query_cache_size = 64M  # Enables query caching to improve read performance
+query_cache_type = 1
+innodb_log_file_size = 1G  # Increases log file size for better write performance and reliability
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability with a balance for performance
+innodb_file_per_table = 1  # Improves space management and backup efficiency
+max_allowed_packet = 64M  # Handles larger packets for high-traffic applications
+slow_query_log = 1  # Logs slow queries for optimization
+slow_query_log_file = /var/log/mysql/slow.log
+log-error = /var/log/mysql/error.log
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+nice = 0
+
+[mysqldump]
+quick  # Dumps tables one at a time for efficiency
+quote-names  # Quotes identifiers to handle special characters
+max_allowed_packet = 16M  # Sets a reasonable packet size for dumps
+default-character-set = utf8mb4  # Ensures dumps use the correct character set
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/
+```

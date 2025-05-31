@@ -1,0 +1,66 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability by enabling specific logging and SQL modes.
+
+[client]
+# General client settings for connecting to the MySQL server
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+host            = 127.0.0.1
+# Additional client options for enhanced usability in testing
+connect-timeout = 10
+protocol        = socket
+
+[mysqld]
+# Server settings to optimize performance and reliability
+port            = 3306
+bind-address    = 0.0.0.0
+sql_mode        = NO_ENGINE_SUBSTITUTION
+log-error       = /tmp/mysql_error.log
+slow_query_log_file = /var/log/mysql/slow.log
+slow_query_log  = 1  # Enable slow query logging
+long_query_time = 2  # Log queries that take longer than 2 seconds
+max_connections = 151  # Allow a reasonable number of connections for testing
+max_allowed_packet = 64M  # Increase packet size for larger queries
+innodb_buffer_pool_size = 128M  # Buffer pool for InnoDB to improve read/write performance
+innodb_log_file_size = 48M  # Size of InnoDB log files for better transaction handling
+query_cache_type = 1  # Enable query cache for frequently run queries
+query_cache_size = 16M  # Allocate memory for query cache
+tmp_table_size = 32M  # Size for in-memory temporary tables
+max_heap_table_size = 32M  # Limit for memory-based tables
+table_open_cache = 200  # Cache for open tables to reduce disk I/O
+thread_cache_size = 10  # Cache for threads to handle connections efficiently
+skip-name-resolve = 1  # Skip DNS lookups for faster connections
+character-set-server = utf8mb4  # Set default character set
+collation-server = utf8mb4_unicode_ci  # Set default collation
+default-storage-engine = InnoDB  # Use InnoDB as the default engine for reliability
+# Logging and error handling for development debugging
+log_warnings = 2  # Log warnings and some errors
+general_log = 1  # Enable general query log for testing (disable in production)
+general_log_file = /var/log/mysql/general.log
+
+[mysqld_safe]
+log-error = /tmp/mysql_error.log  # Ensure mysqld_safe uses the same error log
+pid-file = /var/run/mysqld/mysqld.pid
+
+[isamchk]
+key_buffer_size = 16M  # Buffer for ISAM index repairs
+
+[myisamchk]
+key_buffer_size = 16M  # Buffer for MyISAM index repairs
+sort_buffer_size = 8M  # Buffer for sorting indexes
+read_buffer = 2M  # Read buffer size
+write_buffer = 2M  # Write buffer size
+
+[mysqldump]
+quick  # Dump tables row by row for large databases
+max_allowed_packet = 64M  # Same as server for consistency
+
+# Additional global settings for the environment
+[mysql]
+no-auto-rehash  # Speed up autocompletion
+default-character-set = utf8mb4  # Ensure client uses the same character set
+safe-updates  # Prevent accidental updates without WHERE clause in testing
+```

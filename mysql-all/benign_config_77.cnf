@@ -1,0 +1,57 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+[mysqld]
+sql_mode        = STRICT_ALL_TABLES
+bind-address    = 0.0.0.0
+default-storage-engine = MyISAM
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+key_buffer_size         = 128M
+max_allowed_packet      = 64M
+table_open_cache        = 4096
+sort_buffer_size        = 4M
+read_buffer_size        = 4M
+read_rnd_buffer_size    = 8M
+max_connections         = 1000
+thread_cache_size       = 128
+thread_concurrency      = 10
+wait_timeout            = 28800
+interactive_timeout     = 28800
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2
+log_queries_not_using_indexes = 1
+innodb_buffer_pool_size = 1G
+innodb_log_file_size    = 128M
+innodb_flush_log_at_trx_commit = 1
+skip-name-resolve
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+max_heap_table_size     = 64M
+tmp_table_size          = 64M
+[mysqldump]
+sql_mode                = STRICT_ALL_TABLES
+bind-address            = 0.0.0.0
+default-storage-engine  = MyISAM
+quick                   = 1
+max_allowed_packet      = 64M
+single-transaction      = 1
+[mysqld_safe]
+log-error               = /var/log/mysql/error.log
+pid-file                = /var/run/mysqld/mysqld.pid
+[server]
+[isamchk]
+key_buffer              = 16M
+```

@@ -1,0 +1,84 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for character encoding, connection limits, error logging, and additional parameters
+# to ensure efficient operation under load.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+character-set-server = utf8mb4
+max_connections = 1000
+log-error = /var/log/mysql/error.log
+nice            = 0  # Run with normal priority
+syslog          = 1  # Log to syslog for better monitoring
+pid-file        = /var/run/mysqld/mysqld_safe.pid  # PID file for the safe process
+
+[mysqld]
+user            = mysql  # Run as the mysql user for security
+port            = 3306
+basedir         = /usr  # Base directory for MySQL installation
+datadir         = /var/lib/mysql  # Data directory
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file for mysqld process
+tmpdir          = /tmp  # Temporary directory
+
+# Performance and Reliability Settings
+character-set-server = utf8mb4  # Ensure server uses UTF-8 for broad character support
+collation-server = utf8mb4_unicode_ci  # Default collation for sorting and comparison
+max_connections = 1000  # Allow up to 1000 simultaneous connections for high traffic
+max_connect_errors = 100  # Limit connection errors to prevent abuse
+wait_timeout = 28800  # Increase timeout for idle connections
+interactive_timeout = 28800  # Timeout for interactive sessions
+thread_cache_size = 100  # Cache threads to reduce overhead in high-traffic scenarios
+thread_stack = 192K  # Stack size per thread
+table_open_cache = 2000  # Cache for open tables to speed up queries
+table_definition_cache = 2000  # Cache for table definitions
+query_cache_type = 1  # Enable query cache
+query_cache_size = 64M  # Size of query cache for frequently run queries
+query_cache_limit = 2M  # Limit per query in cache
+innodb_buffer_pool_size = 4G  # Large buffer pool for InnoDB to cache data and indexes (adjust based on server RAM)
+innodb_log_file_size = 512M  # Size of InnoDB log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability with some performance trade-off
+innodb_flush_method = O_DIRECT  # Reduce OS caching for InnoDB files
+sync_binlog = 1  # Synchronize binary log for reliability in replication setups
+
+# Logging and Monitoring
+log-error = /var/log/mysql/error.log  # Centralized error logging
+slow_query_log = 1  # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # File for slow queries
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+general_log = 0  # Disable general query log in production to avoid overhead
+general_log_file = /var/log/mysql/general.log  # File for general log if enabled
+
+# Security and Other Settings
+bind-address = 0.0.0.0  # Bind to all interfaces; restrict in production if needed
+skip-name-resolve = 1  # Skip DNS resolution for faster connections
+sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION  # Strict SQL mode
+default_storage_engine = InnoDB  # Use InnoDB as default for transactions and reliability
+max_allowed_packet = 64M  # Maximum packet size for large queries or data transfers
+lower_case_table_names = 1  # Make table names case-insensitive
+
+[mysql]
+no-auto-rehash  # Faster startup
+default-character-set = utf8mb4  # Use UTF-8 for the mysql client
+
+[isamchk]
+key_buffer_size = 16M  # Buffer for ISAM/ MyISAM key blocks
+
+[myisamchk]
+key_buffer_size = 16M  # Buffer for MyISAM key blocks
+sort_buffer_size = 16M  # Buffer for sorting MyISAM indexes
+read_buffer = 1M  # Read buffer for MyISAM
+write_buffer = 1M  # Write buffer for MyISAM
+
+[mysqldump]
+quick  # Dump directly to stdout
+max_allowed_packet = 64M  # Same as server for consistency
+
+!includedir /etc/mysql/conf.d/  # Include additional configuration files if present
+```

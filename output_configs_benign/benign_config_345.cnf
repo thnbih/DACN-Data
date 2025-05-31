@@ -1,0 +1,66 @@
+[mysqld]
+# Server settings for optimization in high-traffic environments
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3308
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Specified settings for the described configuration
+default-storage-engine = MyISAM
+character-set-server   = utf8mb4
+collation-server       = utf8mb4_unicode_ci
+
+# Performance tuning for high-traffic applications
+max_connections        = 200
+max_connect_errors     = 100
+table_open_cache       = 400
+thread_cache_size      = 50
+query_cache_type       = 1
+query_cache_size       = 64M
+query_cache_limit      = 2M
+tmp_table_size         = 64M
+max_heap_table_size    = 64M
+join_buffer_size       = 2M
+sort_buffer_size       = 2M
+read_buffer_size       = 1M
+read_rnd_buffer_size   = 1M
+key_buffer_size        = 128M  # Optimized for MyISAM, as it's the default engine
+
+# Logging and monitoring for reliability
+log_error              = /var/log/mysql/error.log
+slow_query_log         = 1
+slow_query_log_file    = /var/log/mysql/slow.log
+long_query_time        = 2
+log_queries_not_using_indexes = 1
+general_log            = 0  # Disable for production to reduce overhead
+general_log_file       = /var/log/mysql/general.log
+
+# Security and network settings
+bind-address           = 127.0.0.1  # Bind to localhost for security; adjust as needed
+skip-name-resolve      = 1  # Improves performance by not resolving hostnames
+
+# Additional reliability settings
+innodb_flush_log_at_trx_commit = 1  # Even with MyISAM as default, if mixed tables are used
+sync_binlog            = 1
+max_allowed_packet     = 16M
+bulk_insert_buffer_size = 16M
+myisam_sort_buffer_size = 64M  # Specific to MyISAM for faster index creation
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld_safe.pid
+
+[client]
+port        = 3308
+socket      = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/  # Allows inclusion of additional configuration files

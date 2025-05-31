@@ -1,0 +1,45 @@
+```
+# MySQL Configuration File
+# This file is used to configure MySQL server for development and testing environments.
+# It includes optimizations for performance and reliability as specified.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings optimized for development and testing
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+bind-address    = 0.0.0.0  # Allow connections from any interface for testing purposes
+max_connections = 500      # Limit to 500 connections to manage resources in dev environments
+slow_query_log  = 0        # Disable slow query logging to reduce overhead in testing
+log-error       = /var/log/mysql/error.log  # Log errors for debugging
+log_output      = FILE     # Output logs to file
+max_allowed_packet = 16M   # Increase packet size for larger queries in development
+innodb_buffer_pool_size = 128M  # Moderate buffer pool for dev to balance performance and memory
+innodb_log_file_size = 48M  # Log file size for transaction logging
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+query_cache_type = 1       # Enable query cache for faster repeated queries
+query_cache_size = 16M     # Set cache size appropriately for testing
+tmp_table_size = 32M       # Limit temporary table size to prevent excessive disk use
+max_heap_table_size = 32M  # Limit in-memory table size
+character-set-server = utf8mb4  # Use modern character set
+collation-server = utf8mb4_unicode_ci
+skip-name-resolve  # Skip DNS resolution for faster connections
+default_storage_engine = InnoDB  # Use InnoDB as default for reliability
+
+[mysqldump]
+# Settings for mysqldump tool, optimized for quick and reliable backups in development
+quick            # Dump tables one by one for efficiency
+quote-names      # Quote identifiers to handle special characters
+max_allowed_packet = 16M  # Allow larger packets during dumps
+single-transaction = true  # Use a single transaction for consistency in InnoDB tables
+order-by-primary = true   # Order by primary key for reproducible dumps
+```

@@ -1,0 +1,56 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and secure local access.
+# It includes settings for mysqld_safe to handle error logging and binding,
+# along with comprehensive mysqld settings for enhanced stability and monitoring.
+
+[client]
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+log-error       = /var/log/mysql/error.log
+port            = 3307
+bind-address    = 127.0.0.1
+nice            = 0  # Run with normal priority
+syslog          = 1  # Log to syslog for additional reliability
+pid-file        = /var/run/mysqld/mysqld_safe.pid  # Ensure safe mode has its own PID file
+
+[mysqld]
+user            = mysql  # Run as non-root user for security
+port            = 3307  # Match the port for consistency
+bind-address    = 127.0.0.1  # Restrict to localhost for development safety
+datadir         = /var/lib/mysql  # Standard data directory
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file for the server
+log-error       = /var/log/mysql/error.log  # Centralized error logging
+slow-query-log  = 1  # Enable slow query logging for performance analysis
+slow-query-log-file = /var/log/mysql/mysql-slow.log  # Path for slow query logs
+general-log     = 1  # Enable general query logging for debugging
+general-log-file = /var/log/mysql/mysql-general.log  # Path for general logs
+server-id       = 1  # Unique server ID, useful if replication is tested
+max-connections = 100  # Limit connections to prevent overload in testing
+table-open-cache = 200  # Optimize for table caching
+thread-cache-size = 10  # Manage thread reuse for better performance
+innodb-buffer-pool-size = 128M  # Allocate buffer pool for InnoDB performance
+innodb-log-file-size = 48M  # Size for InnoDB log files
+innodb-flush-log-at-trx-commit = 1  # Ensure data durability
+query-cache-type = 1  # Enable query cache
+query-cache-size = 16M  # Size for query cache
+tmp-table-size = 32M  # Limit temporary table size
+max-heap-table-size = 32M  # Limit in-memory table size
+character-set-server = utf8mb4  # Use modern character set
+collation-server = utf8mb4_unicode_ci  # Appropriate collation for reliability
+skip-name-resolve = 1  # Improve performance by skipping DNS lookups
+default-storage-engine = InnoDB  # Default to transactional engine
+sql-mode = "STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"  # Enforce strict SQL mode for reliability
+
+[mysqldump]
+quick
+max_allowed_packet = 16M  # For efficient backups in testing
+
+[myisamchk]
+key_buffer_size = 20M  # Optimize for MyISAM checks, though InnoDB is preferred
+```

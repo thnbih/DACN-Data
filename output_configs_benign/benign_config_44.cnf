@@ -1,0 +1,82 @@
+```
+# MySQL Configuration File
+# This configuration is tailored for development and testing environments,
+# focusing on performance optimization and reliability through logging and monitoring.
+
+[client]
+# General client settings for connecting to the MySQL server
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+host            = 127.0.0.1
+user            = root
+# Additional client options for enhanced usability in testing
+connect-timeout = 10
+protocol        = socket
+
+[mysqld]
+# Server settings to optimize performance and enable detailed logging
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Logging and query optimization settings as specified
+slow_query_log          = 1
+slow_query_log_file     = /tmp/slow.log
+log-error               = /tmp/mysql_error.log
+log-queries-not-using-indexes = 1  # Helps identify inefficient queries
+long_query_time         = 2  # Log queries taking longer than 2 seconds
+
+# General performance tuning for development environments
+max_connections         = 150  # Allow more connections for testing scenarios
+table_open_cache        = 200  # Cache for opened tables
+thread_cache_size       = 10   # Reuse threads to reduce overhead
+query_cache_type        = 1    # Enable query cache
+query_cache_size        = 16M  # Size of query cache for frequently run queries
+query_cache_limit       = 1M   # Limit for individual query results in cache
+
+# InnoDB settings for reliable storage engine performance
+default-storage-engine  = InnoDB
+innodb_buffer_pool_size = 128M  # Buffer pool for InnoDB data and indexes
+innodb_log_file_size    = 48M   # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensures ACID compliance, suitable for testing
+innodb_file_per_table   = 1     # Each table in its own file for easier management
+
+# Security and error handling
+bind-address            = 127.0.0.1  # Bind to localhost for security in dev environments
+server-id               = 1          # Unique ID for replication if needed
+sql-mode                = "STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+max_allowed_packet      = 16M        # Maximum packet size for queries
+log_bin                 = /var/log/mysql/mysql-bin.log  # Enable binary logging for recovery testing
+expire_logs_days        = 7          # Automatically expire binary logs after 7 days
+
+[mysqld_safe]
+log-error = /tmp/mysql_error.log  # Reference the same error log for mysqld_safe
+pid-file  = /var/run/mysqld/mysqld.pid
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet      = 16M
+
+[myisamchk]
+key_buffer_size         = 20M
+sort_buffer_size        = 20M
+read_buffer             = 2M
+write_buffer            = 2M
+
+[mysql]
+no-auto-rehash
+default-character-set   = utf8mb4
+
+# Additional global settings for robustness
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+lower_case_table_names  = 1  # Case-insensitive table names for development ease
+tmp_table_size          = 32M  # Size for internal in-memory temporary tables
+max_heap_table_size     = 32M  # Maximum size for memory-based tables
+```

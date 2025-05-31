@@ -1,0 +1,65 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings to manage query logging and storage engines while ensuring overall system stability.
+
+[client]
+# Default settings for MySQL client tools
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Main server configuration for performance and reliability in high-traffic environments
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# General logging and error handling
+log_error       = /var/log/mysql/error.log
+slow_query_log  = 0  # Disable slow query logging as per optimization requirements
+slow_query_log_file = /tmp/slow.log  # Specify the file for slow queries if enabled
+general_log     = 0  # Disable general query log to reduce overhead
+general_log_file = /var/log/mysql/general.log
+
+# Storage engine and table management
+default-storage-engine = MyISAM  # Use MyISAM as the default engine for tables
+default_tmp_storage_engine = MyISAM
+max_allowed_packet = 64M  # Increase for larger queries in high-traffic scenarios
+table_open_cache = 2000  # Higher cache for frequent table access
+thread_cache_size = 100  # Optimize for quick thread reuse in high concurrency
+
+# Performance tuning for high-traffic
+innodb_buffer_pool_size = 128M  # Buffer pool size; adjust based on available memory
+innodb_log_file_size = 48M  # Log file size for better write performance
+query_cache_type = 1  # Enable query cache for repeated queries
+query_cache_size = 64M  # Size of query cache
+max_connections = 500  # Limit connections to prevent overload
+thread_concurrency = 10  # Tune based on CPU cores
+key_buffer_size = 128M  # For MyISAM index caching
+
+# Security and reliability settings
+bind-address = 127.0.0.1  # Bind to localhost for security; adjust for production networks
+skip-name-resolve  # Improve connection speed by skipping DNS lookups
+sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+explicit_defaults_for_timestamp = 1
+
+# Backup and maintenance
+max_binlog_size = 100M  # For binary logging if replication is used
+expire_logs_days = 10  # Auto-purge old logs
+sync_binlog = 1  # Ensure binlog durability
+
+[mysqldump]
+# Configuration for mysqldump tool, suitable for backups in high-traffic setups
+quick  # Dump tables row by row for large databases
+max_allowed_packet = 64M  # Same as server to handle large dumps
+single-transaction  # For consistent backups without locking (if using InnoDB, but default is MyISAM)
+user = backup_user  # Specify a dedicated user for dumps; set in actual environment
+host = localhost
+```

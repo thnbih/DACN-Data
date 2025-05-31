@@ -1,0 +1,63 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability. It includes settings to log slow
+# queries, use a non-standard port, and set InnoDB as the default storage engine.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3308
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for MySQL
+user            = mysql
+port            = 3308
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Logging and query optimization
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+log-error               = /var/log/mysql/error.log
+long_query_time         = 2  # Log queries that take longer than 2 seconds
+log-queries-not-using-indexes = 1  # Log queries not using indexes
+
+# Storage engine and performance tuning
+default-storage-engine  = InnoDB
+innodb_buffer_pool_size = 128M  # Size of the buffer pool for InnoDB
+innodb_log_file_size    = 48M   # Size of each InnoDB log file
+innodb_flush_log_at_trx_commit = 1  # Ensures durability
+max_connections         = 100   # Limit connections for development
+tmp_table_size          = 16M   # Size for in-memory temporary tables
+max_heap_table_size     = 16M   # Maximum size for memory tables
+query_cache_type        = 1     # Enable query cache
+query_cache_size        = 16M   # Size of the query cache
+table_open_cache        = 200   # Number of open tables
+
+# Additional reliability and security settings
+bind-address            = 127.0.0.1  # Bind to localhost for security
+skip-name-resolve       = 1  # Skip DNS lookups for faster connections
+sql-mode                = "STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+max_allowed_packet      = 16M  # Maximum packet size for queries
+innodb_file_per_table   = 1  # Each table in its own file for better management
+
+[mysqld_safe]
+log-error               = /var/log/mysql/error.log
+pid-file                = /var/run/mysqld/mysqld.pid
+
+[mysql]
+# Settings for the mysql command-line client
+no-auto-rehash          = 1
+default-character-set   = utf8mb4
+
+[isamchk]
+key_buffer              = 16M
+```

@@ -1,0 +1,60 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for strict SQL mode, InnoDB as the default storage engine, and increased connections.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Basic Server Settings
+port            = 3306
+bind-address    = 0.0.0.0
+socket          = /var/run/mysqld/mysqld.sock
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Performance and Reliability Optimizations
+sql_mode        = TRADITIONAL  # Enforces strict SQL mode for better data integrity
+default-storage-engine = InnoDB  # Use InnoDB as the default engine for transactional support
+max_connections = 200  # Allow up to 200 simultaneous connections to handle high traffic
+max_connect_errors = 100  # Limit connection errors to prevent abuse
+wait_timeout    = 28800  # Increase timeout for idle connections
+interactive_timeout = 28800  # Same for interactive sessions
+
+# Memory and Buffer Settings for High Traffic
+innodb_buffer_pool_size = 1G  # Cache frequently accessed data; adjust based on available RAM
+innodb_log_file_size = 256M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure durability with full ACID compliance
+query_cache_type = 1  # Enable query cache for repeated queries (note: deprecated in MySQL 8+)
+query_cache_size = 64M  # Size of the query cache
+tmp_table_size  = 64M  # Limit in-memory temporary tables
+max_heap_table_size = 64M  # Maximum size for in-memory tables
+
+# Logging and Security
+log_error       = /var/log/mysql/error.log  # Error log location
+slow_query_log  = 1  # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # Slow query log file
+long_query_time = 2  # Log queries taking longer than 2 seconds
+general_log     = 0  # Disable general query log in production
+secure_file_priv= /var/lib/mysql  # Restrict file operations for security
+
+# Character Set and Collation
+character-set-server = utf8mb4  # Use modern UTF-8 encoding
+collation-server = utf8mb4_unicode_ci  # Case-insensitive collation
+
+# Other Optimizations
+thread_stack    = 192K  # Stack size for threads
+thread_cache_size = 100  # Reuse threads for better performance
+table_open_cache = 4000  # Cache open tables
+innodb_file_per_table = 1  # Each table in its own file for easier management
+
+[mysqldump]
+# Settings for mysqldump to handle backups efficiently in a high-traffic environment
+quick           = 1  # Dump tables row by row for large datasets
+max_allowed_packet = 1G  # Increase packet size for large backups
+single-transaction = 1  # Use a single transaction for consistency with InnoDB
+set-gtid-purged=OFF  # Handle GTID for replication scenarios
+```

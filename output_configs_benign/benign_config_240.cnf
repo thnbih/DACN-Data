@@ -1,0 +1,69 @@
+```
+# /etc/my.cnf or ~/.my.cnf - MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and ease of debugging.
+# It includes settings to bind to all interfaces, use a non-standard port,
+# and limit connections, while incorporating additional parameters for stability.
+
+[client]
+# Client-specific settings for connecting to the MySQL server
+port            = 3307
+default-character-set = utf8mb4
+host            = 127.0.0.1
+socket          = /var/run/mysqld/mysqld.sock
+connect-timeout = 10  # Timeout in seconds for connection attempts
+
+[mysql]
+# Settings for the mysql command-line tool
+no-beep         = 1  # Disable beep on error
+prompt          = "\\u@\\h:\\p> "  # Custom prompt for better usability in testing
+
+[mysqld]
+# Server settings for performance optimization and reliability
+port            = 3307  # Non-standard port to avoid conflicts in testing environments
+bind-address    = 0.0.0.0  # Bind to all available network interfaces for accessibility
+max_connections = 100  # Limit connections to prevent overload in development scenarios
+datadir         = /var/lib/mysql  # Default data directory
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file location
+
+# Logging and error handling for debugging in testing
+log_error               = /var/log/mysql/error.log  # Error log file
+general_log             = 1  # Enable general query log
+general_log_file        = /var/log/mysql/general.log  # File for general logs
+slow_query_log          = 1  # Enable slow query log
+slow_query_log_file     = /var/log/mysql/slow.log  # File for slow queries
+long_query_time         = 2  # Log queries taking longer than 2 seconds
+
+# Performance tuning parameters
+key_buffer_size         = 16M  # Size for key buffer, optimized for smaller dev datasets
+table_open_cache        = 200  # Cache for open tables to reduce overhead
+sort_buffer_size        = 2M  # Buffer for sorting operations
+read_buffer_size        = 1M  # Buffer for sequential scans
+read_rnd_buffer_size    = 1M  # Buffer for random reads
+innodb_buffer_pool_size = 128M  # InnoDB buffer pool size for caching data and indexes
+innodb_log_file_size    = 48M  # Size of InnoDB log files for better transaction handling
+innodb_flush_log_at_trx_commit = 1  # Ensure data integrity with full durability
+tmp_table_size          = 32M  # Size for temporary tables in memory
+max_heap_table_size     = 32M  # Maximum size for in-memory tables
+
+# Security and reliability settings
+skip-name-resolve       = 1  # Skip DNS resolution for faster connections
+sql_mode                = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  # Strict SQL mode
+character-set-server    = utf8mb4  # Default character set
+collation-server        = utf8mb4_unicode_ci  # Default collation
+max_allowed_packet      = 16M  # Maximum packet size for large queries
+lower_case_table_names  = 1  # Make table names case-insensitive for consistency
+
+[mysqld_safe]
+# Safe mode settings for the mysqld_safe wrapper
+log-error               = /var/log/mysql/mysqld_safe.log  # Log file for mysqld_safe
+pid-file                = /var/run/mysqld/mysqld.pid
+
+# Additional sections for specific tools or environments
+[mysqldump]
+quick                    = 1  # Dump tables row by row for large databases
+max_allowed_packet       = 16M  # Same as server for consistency
+
+!includedir /etc/my.cnf.d  # Directory for additional configuration files
+```

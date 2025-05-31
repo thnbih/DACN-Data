@@ -1,0 +1,62 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with settings like InnoDB buffer pool size
+# and character set configurations.
+
+[client]
+# Default port for MySQL client connections
+port            = 3306
+# Set the default character set for client connections
+default-character-set = utf8mb4
+
+[mysqld]
+# Server port to listen on
+port            = 3306
+# Character set for the server to use
+character-set-server = utf8mb4
+# Optimize InnoDB buffer pool size for better caching and performance in development
+innodb_buffer_pool_size = 1G
+# Data directory for storing database files
+datadir         = /var/lib/mysql
+# Unix socket file for local connections
+socket          = /var/run/mysqld/mysqld.sock
+# Error log file location
+log_error       = /var/log/mysql/error.log
+# Set the default storage engine to InnoDB for reliability
+default-storage-engine = InnoDB
+# Maximum allowed connections to prevent overload in testing
+max_connections = 100
+# Enable query cache for faster repeated queries
+query_cache_type = 1
+query_cache_size = 16M
+# InnoDB log file size for improved transaction performance
+innodb_log_file_size = 256M
+# Ensure data durability by syncing binary log
+sync_binlog     = 1
+# Flush logs at each transaction commit for reliability
+innodb_flush_log_at_trx_commit = 1
+# Set buffer sizes for sorting and joining to optimize queries
+sort_buffer_size = 2M
+join_buffer_size = 2M
+# Temporary table size to handle larger temporary operations
+tmp_table_size  = 64M
+max_heap_table_size = 64M
+# Slow query log to identify performance bottlenecks
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+# General log for debugging in development (enable cautiously)
+general_log     = 1
+general_log_file = /var/log/mysql/general.log
+
+[mysqld_safe]
+# Log errors to the same file as mysqld
+log_error       = /var/log/mysql/error.log
+# Nice level for process priority
+nice            = 0
+
+[mysql]
+# Default character set for mysql client
+default-character-set = utf8mb4
+```

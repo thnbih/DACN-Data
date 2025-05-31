@@ -1,0 +1,62 @@
+[mysqld]
+# General server settings
+user            = mysql
+port            = 3306
+basedir         = /usr/local/mysql
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Storage engine configuration
+default-storage-engine = MyISAM
+default_tmp_storage_engine = MyISAM
+key_buffer_size         = 128M  # Optimize for MyISAM indexing in high-traffic scenarios
+
+# InnoDB settings, even if default is MyISAM, to utilize the specified buffer pool
+innodb_buffer_pool_size = 2G
+innodb_log_file_size    = 256M
+innodb_flush_log_at_trx_commit = 1  # Ensures reliability for transactions
+innodb_file_per_table   = 1  # Better for high-traffic by allowing individual table management
+
+# Performance tuning for high-traffic applications
+max_connections         = 200  # Allow more simultaneous connections
+max_allowed_packet      = 64M  # Handle larger packets for queries
+table_open_cache        = 4000  # Cache more tables to reduce overhead
+query_cache_size        = 64M  # Enable query caching to speed up reads
+query_cache_type        = 1
+tmp_table_size          = 128M  # Increase for larger temporary tables
+max_heap_table_size     = 128M
+thread_cache_size       = 50  # Reuse threads to handle high concurrency
+thread_stack            = 256K
+
+# Logging and monitoring for reliability
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2  # Log queries longer than 2 seconds
+log_queries_not_using_indexes = 1  # Help identify inefficiencies
+
+# Security settings
+bind-address            = 127.0.0.1  # Bind to localhost for security, adjust as needed
+skip-networking         = 0  # Allow network connections
+
+# Other optimizations
+join_buffer_size        = 8M
+sort_buffer_size        = 8M
+read_buffer_size        = 4M
+read_rnd_buffer_size    = 8M
+bulk_insert_buffer_size = 16M  # Improve bulk operations in high-traffic
+
+# Ensure the server can handle high load
+innodb_thread_concurrency = 0  # Let MySQL manage threads automatically
+wait_timeout             = 28800  # 8 hours, to handle long idle connections
+interactive_timeout      = 28800
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld_safe.pid
+
+[client]
+port        = 3306
+socket      = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4

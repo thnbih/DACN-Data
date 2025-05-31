@@ -1,5 +1,4 @@
 [mysqld]
-
 log-error=/var/log/mysqld.log
 log_warnings = 1
 user=mysql

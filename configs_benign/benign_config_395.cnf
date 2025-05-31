@@ -1,0 +1,54 @@
+```
+[client]
+port                           = 3306
+socket                         = /var/run/mysqld/mysqld.sock
+default-character-set          = utf8mb4
+[mysqld]
+user                           = mysql
+pid-file                       = /var/run/mysqld/mysqld.pid
+socket                         = /var/run/mysqld/mysqld.sock
+port                           = 3306
+basedir                        = /usr
+datadir                        = /var/lib/mysql
+tmpdir                         = /tmp
+lc-messages-dir                = /usr/share/mysql
+skip-external-locking
+bind-address                   = 127.0.0.1
+log-error                      = /tmp/mysql_error.log
+innodb_buffer_pool_size        = 128M
+innodb_log_file_size           = 48M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table          = 1
+max_connections                = 200
+thread_cache_size              = 100
+table_open_cache               = 4000
+query_cache_type               = 1
+query_cache_size               = 64M
+tmp_table_size                 = 32M
+max_heap_table_size            = 32M
+sort_buffer_size               = 2M
+read_buffer_size               = 1M
+join_buffer_size               = 2M
+slow_query_log                 = 1
+slow_query_log_file            = /var/log/mysql/slow.log
+long_query_time                = 2
+log_queries_not_using_indexes  = 1
+max_allowed_packet             = 16M
+default_storage_engine         = InnoDB
+character-set-server           = utf8mb4
+collation-server               = utf8mb4_unicode_ci
+sql_mode                       = STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+[mysqldump]
+quick
+single-transaction
+add-drop-table                 = 1
+add-locks                      = 1
+extended-insert                = 1
+disable-keys                   = 1
+max_allowed_packet             = 16M
+set-gtid-purged                = OFF
+[mysql]
+no-auto-rehash                 = 1
+default-character-set          = utf8mb4
+!includedir /etc/mysql/conf.d/
+```

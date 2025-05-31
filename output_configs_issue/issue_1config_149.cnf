@@ -1,0 +1,61 @@
+```
+[client]
+port            = 3306
+socket          = /tmp/mysql.sock
+default-character-set = utf8mb4
+ssl-ca          = /etc/mysql/certs/ca.pem
+ssl-cert        = /etc/mysql/certs/client-cert.pem
+ssl-key         = /etc/mysql/certs/client-key.pem
+[mysql]
+no-auto-rehash
+prompt         = \\u@\\h:\\p [\\d]>
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+port            = 3306
+basedir         = /usr/local/mysql
+datadir         = /usr/local/mysql/data
+tmpdir          = /tmp
+socket          = /tmp/mysql.sock
+pid-file        = /usr/local/mysql/data/mysqld.pid
+bind-address    = 127.0.0.1
+skip-networking = 0
+skip-name-resolve
+max_connections   = 100
+wait_timeout     = 28800
+interactive_timeout = 28800
+ssl-ca          = /etc/mysql/certs/ca.pem
+ssl-cert        = /etc/mysql/certs/server-cert.pem
+ssl-key         = /etc/mysql/certs/server-key.pem
+ssl-cipher      = DHE-RSA-AES256-SHA
+require-secure-transport = 1
+log-error       = /usr/local/mysql/data/error.log
+general-log     = 1
+general-log-file = /usr/local/mysql/data/general.log
+slow-query-log  = 1
+slow-query-log-file = /usr/local/mysql/data/slow.log
+long-query-time = 2
+default-storage-engine = InnoDB
+innodb_buffer_pool_size = 128M
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1
+server-id       = 1
+log-bin         = mysql-bin
+binlog-format   = ROW
+relay-log       = relay-bin
+sync-binlog     = 1
+gtid-mode       = ON
+enforce-gtid-consistency = 1
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+max_allowed_packet = 64M
+thread-stack = 192K
+thread-cache-size = 8
+[mysqldump]
+quick
+max_allowed_packet = 64M
+[mysqld_safe]
+log-error       = /usr/local/mysql/data/mysqld_safe.log
+pid-file        = /usr/local/mysql/data/mysqld_safe.pid
+!includedir /etc/mysql/conf.d/
+```

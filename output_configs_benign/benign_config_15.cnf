@@ -1,0 +1,69 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance, reliability, and security.
+# It includes settings to enforce strict SQL modes, limit exposure via localhost binding, and proper error logging.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings specific to the mysql command-line tool
+no-auto-rehash
+prompt         = \\u@\\h:\\p [\\d]>
+default-character-set = utf8mb4
+
+[mysqld]
+# Main server configuration for optimal performance and reliability in high-traffic environments
+port            = 3306
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Binding to localhost for security, limiting access to local connections only
+bind-address    = 127.0.0.1
+
+# Error logging to a dedicated file for better monitoring and debugging
+log-error       = /var/log/mysql/error.log
+
+# Enforce strict SQL mode to ensure data integrity and prevent sloppy queries
+sql_mode        = STRICT_ALL_TABLES
+
+# Performance tuning for high-traffic scenarios
+max_connections = 500  # Adjusted for high traffic; monitor and tune based on system resources
+max_allowed_packet = 64M  # Increased for larger queries or data transfers
+table_open_cache = 4000  # Cache for open tables to reduce overhead
+thread_cache_size = 100  # Reuse threads to handle concurrent connections efficiently
+query_cache_type = 1  # Enable query cache for read-heavy workloads (note: deprecated in MySQL 8+; use alternatives if needed)
+query_cache_size = 64M  # Size of query cache
+innodb_buffer_pool_size = 4G  # Adjust based on available RAM; caches data and indexes for InnoDB tables
+innodb_log_file_size = 256M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensures durability but impacts performance; standard for reliability
+innodb_file_per_table = 1  # Each table in its own file for better management
+sync_binlog = 1  # Synchronize binary log for data consistency
+
+# General logging and monitoring
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes for optimization
+
+# Security enhancements
+skip-name-resolve  # Disable DNS lookups for faster connections
+secure-file-priv   = /var/lib/mysql  # Restrict file operations to this directory
+
+[mysqldump]
+# Configuration for mysqldump tool, optimized for backups in high-traffic environments
+quick  # Dump tables one by one for large databases
+max_allowed_packet = 64M  # Match with server setting for consistency
+quote-names  # Quote identifiers to handle special characters
+single-transaction  # For InnoDB tables, ensures a consistent backup without locking
+```

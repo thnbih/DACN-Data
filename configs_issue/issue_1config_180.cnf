@@ -1,0 +1,44 @@
+[mysqld]
+port            = 3306
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+log-bin         = mysql-bin
+log-error       = /var/log/mysql/error.log
+server-id       = 1
+binlog-format   = ROW
+relay-log       = relay-log
+relay-log-index = relay-log.index
+auto-increment-increment = 2
+auto-increment-offset     = 1
+default-storage-engine = InnoDB
+innodb_buffer_pool_size = 128M
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 2
+sync_binlog             = 0
+innodb_flush_method     = O_DIRECT
+innodb_file_per_table   = 1
+max_connections         = 151
+table_open_cache        = 2000
+tmp_table_size          = 16M
+max_heap_table_size     = 16M
+query_cache_type        = 0
+query_cache_size        = 0
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+skip-name-resolve       = 1
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2
+log_queries_not_using_indexes = 1
+master-info-repository  = TABLE
+relay-log-info-repository = TABLE
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld_safe.pid
+[client]
+port        = 3306
+socket      = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+!includedir /etc/my.cnf.d/

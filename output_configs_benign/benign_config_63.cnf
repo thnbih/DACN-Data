@@ -1,0 +1,46 @@
+[mysqld]
+# Server settings for high-traffic applications
+port            = 3306  # Note: Overridden for client, but server default
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+symbolic-links  = 0
+slow_query_log  = 1     # Enable slow query logging as specified
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2     # Log queries longer than 2 seconds
+default_storage_engine = MyISAM  # Set as specified for optimization
+max_connections = 1000  # Handle high traffic with more connections
+max_allowed_packet = 64M  # Increase for larger queries
+key_buffer_size = 256M  # Optimize for MyISAM indexing
+table_open_cache = 4096  # Improve table handling for frequent access
+thread_cache_size = 128  # Reduce thread creation overhead
+query_cache_type = 1     # Enable query cache for repeated queries
+query_cache_size = 64M   # Size for query cache
+query_cache_limit = 2M   # Limit per query
+tmp_table_size = 64M     # For in-memory temporary tables
+max_heap_table_size = 64M  # Limit for memory-based tables
+innodb_buffer_pool_size = 1G  # Even with MyISAM default, keep for any InnoDB use
+sync_binlog = 1          # Ensure binlog reliability
+expire_logs_days = 7     # Auto-purge old logs
+server_id = 1            # For replication if needed
+log_error = /var/log/mysql/error.log  # Central error logging
+
+[client]
+# Client-specific settings
+port            = 3308  # As specified, override default for clients
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4  # Ensure proper character handling
+
+[mysql]
+# MySQL client settings
+no-auto-rehash  # Faster startup
+default-character-set = utf8mb4
+
+[mysqldump]
+quick
+max_allowed_packet = 64M  # For large dumps
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/my.cnf.d  # Allow additional configuration files

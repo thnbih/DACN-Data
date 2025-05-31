@@ -1,0 +1,77 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and logging. It includes settings for
+# slow query logging, SQL mode, and character set configurations as specified.
+
+[client]
+# Default settings for MySQL client connections
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Client-specific settings for the mysql command-line tool
+no-auto-rehash
+prompt         = \\u@\\h:\\p [\\d]> 
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for MySQL daemon
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr/local/mysql
+datadir         = /usr/local/mysql/data
+tmpdir          = /tmp
+lc-messages-dir = /usr/local/mysql/share
+skip-external-locking
+
+# Logging and query optimization settings
+slow_query_log          = 1
+slow_query_log_file     = /tmp/slow.log
+log_queries_not_using_indexes = 1
+long_query_time         = 2  # Log queries longer than 2 seconds
+log_error               = /var/log/mysql/error.log
+general_log_file        = /var/log/mysql/general.log
+general_log             = 1  # Enable for debugging in development
+
+# SQL mode and character set configurations as specified
+sql_mode                = NO_ENGINE_SUBSTITUTION
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+character_set_client    = utf8mb4
+character_set_connection= utf8mb4
+character_set_results   = utf8mb4
+character_set_database  = utf8mb4
+character_set_server    = utf8mb4
+
+# Performance tuning settings for development environment
+key_buffer_size         = 16M
+max_allowed_packet      = 16M
+table_open_cache        = 64
+sort_buffer_size        = 2M
+read_buffer_size        = 2M
+read_rnd_buffer_size    = 4M
+myisam_sort_buffer_size = 8M
+thread_cache_size       = 8
+query_cache_type        = 1  # Enable query cache
+query_cache_size        = 16M
+query_cache_limit       = 1M
+
+# InnoDB settings for reliability and performance
+innodb_buffer_pool_size = 128M
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures durability
+innodb_file_per_table   = 1
+
+# Security and access settings
+bind-address            = 127.0.0.1  # Bind to localhost for security in development
+max_connections         = 100
+skip-name-resolve       # Improves performance by not resolving hostnames
+
+[mysqld_safe]
+log-error= /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/
+```

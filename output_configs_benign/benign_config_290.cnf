@@ -1,0 +1,63 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability. It includes settings to manage
+# connections, logging, and resource usage appropriately for non-production
+# scenarios.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+host            = localhost
+
+[mysqld]
+# Server settings to optimize performance and reliability
+port            = 3306
+max_connections = 500  # Limit connections to prevent overload in testing
+slow_query_log  = 1    # Enable slow query logging
+slow_query_log_file = /tmp/slow.log  # Log file for slow queries
+datadir         = /var/lib/mysql  # Default data directory
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+log_error       = /var/log/mysql/error.log  # Error log file
+bind-address    = 127.0.0.1  # Bind to localhost for security in dev environments
+
+# Performance tuning for development
+innodb_buffer_pool_size = 128M  # Buffer pool size for InnoDB, balanced for dev resources
+innodb_log_file_size    = 48M   # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+sync_binlog             = 1     # Synchronize binary log for reliability
+query_cache_type        = 1     # Enable query cache
+query_cache_size        = 16M   # Cache size for queries
+max_allowed_packet      = 16M   # Maximum packet size for large queries
+tmp_table_size          = 32M   # Size for temporary tables
+max_heap_table_size     = 32M   # Maximum size for in-memory tables
+thread_stack            = 192K  # Stack size per thread
+thread_cache_size       = 50    # Cache for threads to improve connection speed
+
+# Logging and monitoring for reliability in testing
+general_log             = 1     # Enable general query log (for dev debugging)
+general_log_file        = /var/log/mysql/general.log
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+log_timestamps          = SYSTEM  # Use system timestamps for logs
+expire_logs_days        = 7     # Expire binary logs after 7 days
+
+# Additional security and reliability settings
+skip-name-resolve       = 1     # Skip name resolution for faster connections
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log-error               = /var/log/mysql/mysqld_safe.log
+pid-file                = /var/run/mysqld/mysqld.pid
+
+[mysql]
+# Additional client-specific settings if needed
+no-auto-rehash
+prompt                   = \\u@\\h:\\p \\d>
+safe-updates
+```

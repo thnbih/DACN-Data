@@ -1,0 +1,60 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with settings like InnoDB buffer pool
+# sizing, network binding, and default storage engine. It includes sections for
+# the server and mysqldump to ensure a complete, usable setup.
+
+[client]
+# Default settings for MySQL clients
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings optimized for development and testing
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/lib/mysql/mysql.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Networking and security settings
+bind-address    = 0.0.0.0  # Allows connections from any IP, suitable for testing but review for production
+max_connections = 150  # Reasonable limit for development to avoid overload
+max_allowed_packet = 64M  # Increased for handling larger queries or data transfers
+
+# Performance tuning settings
+key_buffer_size = 16M  # For MyISAM indexes, though InnoDB is default
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 4M
+query_cache_type = 1  # Enable query cache for faster repeated queries
+query_cache_size = 16M
+table_open_cache = 200
+thread_cache_size = 10
+innodb_buffer_pool_size = 128M  # As specified, optimizes InnoDB caching for better performance
+innodb_log_file_size = 48M  # Supports transaction logging and recovery
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability and reliability
+innodb_file_per_table = 1  # Each table in its own file for easier management
+
+# Default engine and other core settings
+default_storage_engine = InnoDB  # As specified, promotes transactional reliability
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+log_error = /var/log/mysqld.log  # Centralized error logging for debugging
+slow_query_log = 1  # Logs slow queries to identify bottlenecks
+slow_query_log_file = /var/log/mysql-slow.log
+long_query_time = 2  # Queries longer than 2 seconds are logged
+
+[mysqldump]
+# Settings for mysqldump tool, optimized for backups in testing scenarios
+quick  # Dumps tables one at a time for efficiency
+quote-names  # Ensures identifiers are properly quoted
+max_allowed_packet = 64M  # Allows for larger dump files
+single-transaction = 1  # For consistent backups of InnoDB tables without locking
+```

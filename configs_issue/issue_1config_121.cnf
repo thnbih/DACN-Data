@@ -1,0 +1,28 @@
+[mysqld]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+datadir         = /var/lib/mysql_invalid
+bind-address    = 127.0.0.1
+log-error       = /var/log/mysql/error.log
+pid-file        = /var/run/mysqld/mysqld.pid
+innodb_buffer_pool_size = 128M
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1
+max_connections        = 151
+table_open_cache       = 2000
+query_cache_size       = 64M
+thread_cache_size      = 128
+skip-networking       = 0
+sql_mode              = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+key_buffer_size       = 32M
+[mysqld_safe]
+log-error             = /var/log/mysql/mysqld_safe.log
+pid-file              = /var/run/mysqld/mysqld_safe.pid
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8
+[mysql]
+no-auto-rehash
+default-character-set = utf8
+!includedir /etc/mysql/conf.d/

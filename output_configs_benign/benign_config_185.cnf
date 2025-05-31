@@ -1,0 +1,59 @@
+[mysqld]
+# General server settings
+port            = 3308
+user            = mysql
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Character set and collation for optimization
+character-set-server  = utf8mb4
+collation-server      = utf8mb4_unicode_ci
+
+# Storage engine configuration for reliability and performance
+default-storage-engine = InnoDB
+innodb_buffer_pool_size = 1G  # Adjust based on available RAM for high-traffic scenarios
+innodb_log_file_size    = 128M
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability
+innodb_file_per_table   = 1  # Improves manageability and performance
+
+# Performance tuning for high-traffic applications
+max_connections         = 200  # Handle more simultaneous connections
+thread_cache_size       = 100  # Reduce thread creation overhead
+table_open_cache        = 4000  # Cache frequently used tables
+query_cache_type        = 1  # Enable query caching
+query_cache_size        = 64M  # Size for caching query results
+query_cache_limit       = 2M  # Limit for individual query results
+sort_buffer_size        = 2M  # For sorting operations
+join_buffer_size        = 2M  # For join operations
+tmp_table_size          = 64M  # For in-memory temporary tables
+max_heap_table_size     = 64M  # Limit for memory-based tables
+
+# Logging and monitoring for reliability
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries without indexes
+
+# Security and other optimizations
+bind-address            = 127.0.0.1  # Bind to localhost for security
+max_allowed_packet      = 64M  # For large data transfers
+sql_mode                = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file  = /var/run/mysqld/mysqld.pid
+
+[client]
+port            = 3308
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+!includedir /etc/mysql/conf.d/  # For additional configuration files if needed

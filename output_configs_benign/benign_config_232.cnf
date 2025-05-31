@@ -1,0 +1,54 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability by disabling slow query logging,
+# setting a robust character set, and using MyISAM as the default storage engine.
+# It includes essential settings for a functional MySQL server setup.
+
+[client]
+# Settings for MySQL client connections
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4  # Ensures client uses UTF-8 encoding for consistency
+host            = localhost     # Default host for client connections
+
+[mysqld]
+# Server settings optimized for performance in testing scenarios
+port            = 3306          # Port for MySQL server to listen on
+socket          = /var/run/mysqld/mysqld.sock  # Unix socket for local connections
+basedir         = /usr          # Base directory for MySQL installation
+datadir         = /var/lib/mysql  # Directory for database files
+tmpdir          = /tmp          # Temporary directory for operations
+lc-messages-dir = /usr/share/mysql  # Directory for language files
+skip-external-locking            # Disable external locking for better performance
+bind-address    = 127.0.0.1     # Bind to localhost for security in development
+max_connections = 151           # Limit connections to prevent overload in testing
+table_open_cache = 2000         # Cache for open tables to improve query speed
+thread_cache_size = 10          # Cache for threads to reduce overhead
+query_cache_type = 1            # Enable query cache for frequently run queries
+query_cache_size = 16M          # Size of query cache (adjust based on memory)
+slow_query_log  = 0             # Disable slow query logging to optimize performance
+long_query_time = 2             # Time threshold for queries (though logging is off)
+log_error       = /var/log/mysql/error.log  # Error log file for debugging
+pid-file        = /var/run/mysqld/mysqld.pid  # PID file for server process
+character-set-server = utf8mb4  # Server-wide character set for full Unicode support
+collation-server = utf8mb4_unicode_ci  # Default collation for sorting and comparison
+default-storage-engine = MyISAM  # Use MyISAM for default tables, faster for reads in testing
+max_allowed_packet = 16M        # Maximum packet size for large queries
+innodb_buffer_pool_size = 128M  # Buffer pool size (included for any InnoDB use, though MyISAM is default)
+bulk_insert_buffer_size = 8M    # Buffer for bulk inserts to speed up data loading
+sort_buffer_size = 2M           # Buffer for sorting operations
+join_buffer_size = 2M           # Buffer for join operations
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log-error = /var/log/mysql/mysqld_safe.log  # Log file for mysqld_safe
+pid-file  = /var/run/mysqld/mysqld_safe.pid  # PID file for mysqld_safe
+
+[mysql]
+# Additional client settings for the mysql command-line tool
+no-auto-rehash                 # Disable auto-rehash for faster startup
+default-character-set = utf8mb4  # Match server character set
+
+!includedir /etc/mysql/conf.d/  # Include directory for additional configuration files
+```

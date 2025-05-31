@@ -1,0 +1,61 @@
+```
+[client]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/lib/mysql/mysql.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+key_buffer_size         = 16M
+max_allowed_packet      = 16M
+thread_stack            = 192K
+thread_cache_size       = 8
+max_connections         = 100
+table_open_cache        = 64
+query_cache_type        = 1
+query_cache_size        = 16M
+query_cache_limit       = 1M
+tmp_table_size          = 1M
+max_heap_table_size     = 1M
+bulk_insert_buffer_size = 1M
+innodb_data_home_dir    = /var/lib/mysql
+innodb_data_file_path   = ibdata1:10M:autoextend:max:100M
+innodb_log_group_home_dir = /var/lib/mysql
+innodb_log_file_size    = 5M
+innodb_buffer_pool_size = 128M
+innodb_log_buffer_size  = 1M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table   = 1
+innodb_lock_wait_timeout = 50
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2
+server-id               = 1
+log_bin                 = /var/log/mysql/mysql-bin.log
+binlog_format           = ROW
+expire_logs_days        = 10
+max_binlog_size         = 100M
+sort_buffer_size        = 2M
+read_buffer_size        = 1M
+read_rnd_buffer_size    = 1M
+join_buffer_size        = 1M
+myisam_sort_buffer_size = 8M
+thread_concurrency      = 10
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+[mysqldump]
+quick
+max_allowed_packet      = 16M
+[myisamchk]
+key_buffer_size         = 8M
+[mysqlhotcopy]
+interactive-timeout
+```

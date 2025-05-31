@@ -1,0 +1,58 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for the MySQL server to handle increased load, with appropriate memory allocations and logging.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+[mysqld]
+# Basic server settings
+port            = 3306
+bind-address    = 0.0.0.0
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Performance optimization settings
+max_connections = 1000
+table_open_cache = 2000
+thread_cache_size = 50
+tmp_table_size = 32M
+max_heap_table_size = 32M
+query_cache_type = 1
+query_cache_size = 64M
+innodb_buffer_pool_size = 2G  # Allocate 2GB for InnoDB buffer pool to improve read/write performance
+default-storage-engine = MyISAM  # Set default engine for new tables, optimized for read-heavy workloads
+innodb_log_file_size = 128M  # Larger log files for better durability and performance in high-traffic scenarios
+innodb_flush_log_at_trx_commit = 1  # Ensure full ACID compliance for reliability
+
+# Logging and error handling
+log-error = /var/log/mysql/error.log  # Centralize error logging for easier monitoring and debugging
+slow-query-log = 1
+slow-query-log-file = /var/log/mysql/slow.log
+long_query_time = 2  # Log queries taking longer than 2 seconds
+
+# Security and general settings
+skip-name-resolve
+sql-mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+max_allowed_packet = 64M  # Increase for handling larger queries or data transfers
+lower_case_table_names = 1  # Case-insensitive table names for broader compatibility
+
+[mysqldump]
+quick
+max_allowed_packet = 64M
+
+[mysqld_safe]
+log-error = /var/log/mysql/error.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+!includedir /etc/mysql/conf.d/
+```

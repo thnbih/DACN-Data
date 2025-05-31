@@ -1,0 +1,66 @@
+```
+# /etc/my.cnf or /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance, reliability, and security by binding to localhost
+# and using custom settings. It includes sections for mysqld and mysqldump.
+
+[client]
+# Default settings for MySQL clients
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Server settings for MySQL daemon
+# Bind to localhost only for security in development environments
+bind-address    = 127.0.0.1
+port            = 3307
+# Error logging for reliability and debugging
+log-error       = /var/log/mysql/error.log
+# General performance optimizations
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+# Enable query logging for testing and optimization
+general-log     = 1
+general-log-file = /var/log/mysql/general.log
+# Slow query log to identify performance bottlenecks
+slow-query-log  = 1
+slow-query-log-file = /var/log/mysql/slow.log
+long-query-time = 2  # Log queries longer than 2 seconds
+# InnoDB settings for reliability and performance
+default-storage-engine = InnoDB
+innodb-buffer-pool-size = 128M  # Adjust based on available memory
+innodb-log-file-size = 48M
+innodb-flush-log-at-trx-commit = 1  # Ensures ACID compliance
+# Additional reliability settings
+max-connections = 100  # Limit for development to prevent overload
+tmp-table-size = 32M
+max-heap-table-size = 32M
+# Security enhancements
+skip-symbolic-links
+sql-mode = "STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+
+[mysqld_safe]
+# Safe mode settings for mysqld
+log-error       = /var/log/mysql/error.log
+pid-file        = /var/run/mysqld/mysqld.pid
+
+[mysqldump]
+# Settings for mysqldump tool, optimized for backups in testing
+quick           = true  # Dump as it goes, to handle large databases
+max_allowed_packet = 64M  # Increase for larger dump operations
+single-transaction = true  # For consistent backups of InnoDB tables
+set-gtid-purged = OFF  # Avoid GTID issues in non-replication setups
+# Additional options for reliability
+compress       = false  # Compression can be enabled if needed
+comments       = true   # Include comments in dump files
+
+[mysql]
+# Additional client settings if needed
+no-auto-rehash
+default-character-set = utf8mb4
+
+# End of configuration file
+```

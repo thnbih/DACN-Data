@@ -1,0 +1,50 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+ssl-ca          = /etc/mysql/certs/ca.pem
+ssl-cert        = /etc/mysql/certs/client-cert.pem
+ssl-key         = /etc/mysql/certs/client-key.pem
+[mysql]
+no-auto-rehash
+prompt          = \\u@\\h:\\p [\\d]>
+ssl-ca          = /etc/mysql/certs/ca.pem
+ssl-cert        = /etc/mysql/certs/client-cert.pem
+ssl-key         = /etc/mysql/certs/client-key.pem
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address            = 127.0.0.1
+max_connections         = 100
+require_secure_transport = ON
+ssl-ca                  = /etc/mysql/certs/ca.pem
+ssl-cert                = /etc/mysql/certs/server-cert.pem
+ssl-key                 = /etc/mysql/certs/server-key.pem
+tls-version             = TLSv1.2,TLSv1.3
+default_authentication_plugin = caching_sha2_password
+log_error               = /var/log/mysql/error.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
+general_log_file        = /var/log/mysql/general.log
+general_log             = 0
+innodb_buffer_pool_size = 128M
+max_allowed_packet      = 64M
+query_cache_type        = 0
+query_cache_size        = 0
+tmp_table_size          = 16M
+max_heap_table_size     = 16M
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+[mysqld_safe]
+log-error               = /var/log/mysql/mysqld_safe.log
+pid-file                = /var/run/mysqld/mysqld.pid
+!includedir /etc/mysql/conf.d/
+```

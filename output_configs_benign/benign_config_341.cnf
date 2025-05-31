@@ -1,0 +1,46 @@
+[mysqld]
+# Server configuration for high-traffic applications
+port = 3308
+default_storage_engine = InnoDB
+character-set-server = utf8mb4
+# Performance tuning for high traffic
+innodb_buffer_pool_size = 4G  # Adjusted for systems with sufficient memory
+max_connections = 1000  # Allow more simultaneous connections
+query_cache_type = 1  # Enable query cache
+query_cache_size = 64M  # Size for caching query results
+tmp_table_size = 64M  # Increase for larger temporary tables
+max_heap_table_size = 64M  # Limit for memory-based tables
+innodb_log_file_size = 256M  # Larger log files for better write performance
+innodb_flush_log_at_trx_commit = 1  # Ensure durability with some performance trade-off
+sync_binlog = 1  # Synchronous binary logging for reliability
+table_open_cache = 2000  # Cache more tables for faster access
+thread_cache_size = 100  # Reuse threads to reduce overhead
+slow_query_log = 1  # Enable logging for slow queries
+slow_query_log_file = /var/log/mysql/slow queries.log  # Log file path
+long_query_time = 2  # Log queries taking longer than 2 seconds
+
+[client]
+# General client settings
+port = 3308
+default-character-set = utf8mb4  # Match server character set
+
+[mysqldump]
+# Configuration for mysqldump tool
+port = 3308  # Use the specified port for connections
+quick = 1  # Dump directly to stdout for large databases
+single-transaction = 1  # For consistent dumps without locking tables
+set-gtid-purged = OFF  # Handle GTID for replication scenarios if needed
+max_allowed_packet = 64M  # Increase packet size for large dumps
+
+[mysql]
+# MySQL client-specific settings
+no-auto-rehash = 1  # Speed up startup
+default-character-set = utf8mb4  # Ensure consistent character handling
+
+# Global settings for the server
+[mysqld_safe]
+log-error = /var/log/mysql/error.log  # Error log path
+pid-file = /var/run/mysqld/mysqld.pid  # PID file for process management
+
+# Ensure the server listens on the specified port and handles high traffic
+!includedir /etc/mysql/conf.d/  # Allow inclusion of additional configuration files if needed

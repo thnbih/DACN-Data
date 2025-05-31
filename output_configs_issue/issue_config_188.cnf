@@ -1,0 +1,65 @@
+```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+[mysqld]
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+bind-address    = 0.0.0.0
+innodb_buffer_pool_size       = 8G
+innodb_buffer_pool_instances  = 8
+max_connections               = 1000
+thread_cache_size             = 200
+table_open_cache              = 4000
+table_definition_cache        = 2000
+sort_buffer_size              = 64M
+join_buffer_size              = 64M
+read_buffer_size              = 16M
+read_rnd_buffer_size          = 16M
+tmp_table_size                = 128M
+max_heap_table_size           = 128M
+query_cache_size              = 128M
+query_cache_type              = 1
+query_cache_limit             = 2M
+general_log                   = 1
+general_log_file              = /var/log/mysql/general.log
+log_output                    = FILE
+slow_query_log                = 1
+slow_query_log_file           = /var/log/mysql/slow.log
+long_query_time               = 1
+log_queries_not_using_indexes = 1
+log_error                     = /var/log/mysql/error.log
+log_bin                       = /var/log/mysql/mysql-bin.log
+expire_logs_days              = 7
+server_id                     = 1
+innodb_log_file_size          = 1G
+innodb_log_buffer_size        = 128M
+innodb_flush_log_at_trx_commit = 1
+innodb_flush_method           = O_DIRECT
+innodb_io_capacity            = 2000
+innodb_thread_concurrency     = 16
+optimizer_search_depth        = 62
+optimizer_prune_level         = 1
+bulk_insert_buffer_size       = 128M
+key_buffer_size               = 256M
+skip-name-resolve             = 1
+secure-file-priv              = /var/lib/mysql
+character-set-server          = utf8mb4
+collation-server              = utf8mb4_unicode_ci
+sql_mode                      = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+[mysqldump]
+quick
+max_allowed_packet            = 64M
+[mysqld_safe]
+log-error                     = /var/log/mysql/mysqld_safe.log
+pid-file                      = /var/run/mysqld/mysqld.pid
+!includedir /etc/mysql/conf.d/
+```

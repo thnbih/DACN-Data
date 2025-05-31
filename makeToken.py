@@ -82,9 +82,9 @@ def generate_token_files_per_conf(folder_path, vocab_path, output_folder):
 
     print(f"[+] Đã tạo các file token JSON tại: {output_folder}")
 if __name__ == "__main__":
-    folder_path = "configissues\\mysql"
+    folder_path = "configs_benign"
     vocab_path = "vocab_mysql.json"
-    output_folder = "output_mysql_issue_tokens"
+    output_folder = "mysql_benign_tokens"
 
     generate_token_files_per_conf(folder_path, vocab_path, output_folder)
 

@@ -1,0 +1,44 @@
+```
+[client]
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8
+[mysqld]
+port            = "invalid"
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/lib/mysql/mysqld.pid
+tmpdir          = /tmp
+user            = mysql
+bind-address    = 127.0.0.1
+skip-external-locking
+key_buffer_size = 256M
+max_allowed_packet = 16M
+thread_stack    = 192K
+thread_cache_size = 8
+myisam-recover-options = FORCE,BACKUP
+max_connections = 100
+table_cache     = 64
+query_cache_limit   = 1M
+query_cache_size    = 16M
+log_error       = /var/log/mysqld.log
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysqld-slow.log
+long_query_time = 2
+default-storage-engine = MyISAM
+character-set-server = utf8
+collation-server = utf8_general_ci
+[mysqld_safe]
+log-error       = /var/log/mysqld.log
+pid-file        = /var/lib/mysql/mysqld.pid
+[mysqldump]
+quick
+max_allowed_packet = 16M
+[myisamchk]
+key_buffer_size = 128M
+sort_buffer_size = 128M
+read_buffer = 2M
+write_buffer = 2M
+[mysqlhotcopy]
+interactive-timeout
+```

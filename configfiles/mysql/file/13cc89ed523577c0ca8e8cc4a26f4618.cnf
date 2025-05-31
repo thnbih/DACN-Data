@@ -3,11 +3,9 @@ port            = 3306
 socket          = /var/run/mysqld/mysqld.sock
 loose-local-infile=0
 local-infile=0
-
 [mysqld_safe]
 socket          = /var/run/mysqld/mysqld.sock
 nice            = 0
-
 [mysqld]
 local-infile=0
 user            = mysql

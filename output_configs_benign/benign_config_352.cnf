@@ -1,0 +1,43 @@
+```
+# MySQL Configuration File
+# This configuration is tailored for development and testing environments,
+# focusing on optimized performance and reliability using MyISAM as the
+# default storage engine, with specific settings for error logging and
+# character set handling.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = latin1
+
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+bind-address    = 127.0.0.1
+max_connections = 100
+table_open_cache = 200
+query_cache_type = 1
+query_cache_size = 16M
+thread_cache_size = 10
+max_heap_table_size = 16M
+tmp_table_size  = 16M
+log-error       = /var/log/mysql/error.log  # Specifies the error log file for reliability
+character-set-server = latin1  # Sets the server character set for compatibility and performance
+default-storage-engine = MyISAM  # Optimizes for development by using MyISAM as the default engine
+innodb_buffer_pool_size = 128M  # Adjusted for development to balance memory usage
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log  # Enables logging of slow queries for testing
+long_query_time = 2  # Logs queries taking longer than 2 seconds
+
+[mysqldump]
+quick                   # Enables quick mode for faster dumps
+max_allowed_packet      = 16M  # Sets a reasonable packet size for dump operations
+single-transaction      = 1  # Ensures consistency for transactional tables during dumps
+```

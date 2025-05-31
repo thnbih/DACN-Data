@@ -1,0 +1,79 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability. It includes settings to handle
+# common workloads while ensuring robust error logging and resource management.
+
+[client]
+port            = 3308
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Basic server settings
+port            = 3308
+bind-address    = 0.0.0.0  # Allows connections from any IP, suitable for testing but review for production
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Error and logging settings for reliability
+log-error       = /var/log/mysql/error.log
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+log_queries_not_using_indexes = 1
+long_query_time = 2  # Log queries taking longer than 2 seconds
+general_log     = 1  # Enabled for development to log all queries
+general_log_file = /var/log/mysql/general.log
+log-bin         = /var/log/mysql/mysql-bin.log  # Binary logging for replication and recovery
+expire_logs_days = 7  # Automatically expire binary logs after 7 days
+server-id       = 1  # Unique server ID for replication
+
+# Performance optimization settings
+innodb_buffer_pool_size = 128M  # Adjust based on available memory for caching
+innodb_log_file_size = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensures durability but impacts performance
+query_cache_type = 1  # Enable query cache
+query_cache_size = 16M
+query_cache_limit = 1M
+max_connections = 100  # Limit for testing to prevent overload
+table_open_cache = 200  # Cache for open tables
+thread_cache_size = 10  # Reuse threads for efficiency
+tmp_table_size = 32M
+max_heap_table_size = 32M
+join_buffer_size = 1M
+sort_buffer_size = 1M
+
+# Security and additional reliability
+sql_mode = "STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+skip-name-resolve  # Improves performance by not resolving hostnames
+
+[mysqldump]
+quick  # Dump tables one by one for large databases
+max_allowed_packet = 64M  # Increase for handling larger dumps
+host = localhost  # Default host for mysqldump
+user = root  # Default user; ensure this is secured in real use
+port = 3308  # Match the server port
+
+[mysqld_safe]
+log-error = /var/log/mysql/error.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+[mysql]
+no-auto-rehash  # Faster startup
+default-character-set = utf8mb4
+
+[isamchk]
+key_buffer_size = 16M
+
+[myisamchk]
+key_buffer_size = 16M
+sort_buffer_size = 16M
+read_buffer = 2M
+write_buffer = 2M
+```

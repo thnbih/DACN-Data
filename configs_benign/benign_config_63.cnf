@@ -1,0 +1,38 @@
+[mysqld]
+port            = 3306
+datadir         = /var/lib/mysql
+socket          = /var/lib/mysql/mysql.sock
+symbolic-links  = 0
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+default_storage_engine = MyISAM
+max_connections = 1000
+max_allowed_packet = 64M
+key_buffer_size = 256M
+table_open_cache = 4096
+thread_cache_size = 128
+query_cache_type = 1
+query_cache_size = 64M
+query_cache_limit = 2M
+tmp_table_size = 64M
+max_heap_table_size = 64M
+innodb_buffer_pool_size = 1G
+sync_binlog = 1
+expire_logs_days = 7
+server_id = 1
+log_error = /var/log/mysql/error.log
+[client]
+port            = 3308
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+[mysqldump]
+quick
+max_allowed_packet = 64M
+[mysqld_safe]
+log-error = /var/log/mysql/mysqld_safe.log
+pid-file = /var/run/mysqld/mysqld.pid
+!includedir /etc/my.cnf.d

@@ -1,0 +1,63 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability with settings like a 2GB InnoDB buffer pool.
+# It includes sections for the server and tools like mysqldump.
+
+[client]
+# Default settings for MySQL clients
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings specific to the mysql command-line tool
+no-auto-rehash  = 1
+prompt          = "\\u@\\h:\\d> "
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3307
+
+[mysqld]
+# Main server settings for performance and reliability
+port            = 3307
+bind-address    = 0.0.0.0
+innodb_buffer_pool_size = 2G  # Optimizes performance by caching more data in memory
+innodb_log_file_size     = 256M  # Improves reliability by allowing larger transactions
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability, suitable for testing
+max_connections          = 200  # Allows more connections for development testing
+query_cache_size         = 64M  # Enables query caching to speed up repeated queries
+query_cache_type         = 1
+tmp_table_size           = 64M  # Prevents disk-based temporary tables for better performance
+max_heap_table_size      = 64M
+table_open_cache         = 400  # Reduces overhead for frequently used tables
+thread_cache_size        = 50  # Reuses threads to improve responsiveness
+slow_query_log           = 1  # Logs slow queries for analysis in testing
+slow_query_log_file      = /var/log/mysql/slow.log
+log_error                = /var/log/mysql/error.log
+character-set-server     = utf8mb4
+collation-server         = utf8mb4_unicode_ci
+skip-name-resolve        = 1  # Improves performance by not resolving hostnames
+default_storage_engine   = InnoDB
+sql_mode                 = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+# Additional settings for development: enable general query log
+general_log              = 1
+general_log_file         = /var/log/mysql/general.log
+
+[mysqldump]
+# Settings for the mysqldump tool, optimized for backups in testing environments
+quick                    = 1  # Dumps tables one by one for large databases
+max_allowed_packet       = 512M  # Handles larger packets during dumps
+single-transaction       = 1  # Ensures consistency for InnoDB tables without locking
+port                     = 3307  # Matches the server port for consistency
+socket                   = /var/run/mysqld/mysqld.sock
+# Include comments for clarity in development configs
+# This section ensures mysqldump operations are efficient and reliable
+
+[mysqld_safe]
+# Settings for mysqld_safe wrapper
+log_error                = /var/log/mysql/mysqld_safe.log
+pid-file                 = /var/run/mysqld/mysqld.pid
+
+# Global options
+!includedir /etc/mysql/conf.d/
+```

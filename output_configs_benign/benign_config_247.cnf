@@ -1,0 +1,72 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings to handle increased connections, log slow queries, and adjust the server port.
+# Ensure the file is placed in /etc/my.cnf or the appropriate location for your system.
+
+[client]
+port            = 3307
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld_safe]
+max_connections = 500
+slow_query_log_file = /var/log/mysql/slow.log
+port            = 3307
+log-error       = /var/log/mysql/error.log
+nice            = 0  # Run with normal priority
+
+[mysqld]
+# General Settings
+user            = mysql
+port            = 3307
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+
+# Performance Tuning for High-Traffic
+max_connections = 500  # As specified, allows up to 500 simultaneous connections
+thread_cache_size = 100  # Cache threads to reduce overhead in high-traffic scenarios
+table_open_cache = 4000  # Increase for faster table access
+query_cache_type = 1  # Enable query cache (if supported in your MySQL version)
+query_cache_size = 64M  # Cache for query results to speed up repeated queries
+max_heap_table_size = 256M  # Limit for in-memory tables
+tmp_table_size = 256M  # Size for temporary tables
+
+# Logging and Monitoring
+slow_query_log = 1  # Enable slow query logging
+slow_query_log_file = /var/log/mysql/slow.log  # As specified
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+general_log = 0  # Disable general log for performance in production
+general_log_file = /var/log/mysql/general.log
+log_error = /var/log/mysql/error.log  # Centralized error logging
+
+# InnoDB Settings for Reliability and Performance
+default_storage_engine = InnoDB
+innodb_buffer_pool_size = 1G  # Adjust based on available memory; caches data and indexes
+innodb_log_file_size = 256M  # Size of redo log files
+innodb_flush_log_at_trx_commit = 1  # Ensures ACID compliance
+innodb_file_per_table = 1  # Each table in its own file for better management
+innodb_flush_method = O_DIRECT  # Reduces OS caching overhead
+
+# Security and Other Optimizations
+bind-address = 0.0.0.0  # Listen on all interfaces; restrict in production if needed
+max_allowed_packet = 64M  # Increase for larger queries or data transfers
+skip-name-resolve = 1  # Improves performance by skipping DNS lookups
+character-set-server = utf8mb4  # Default character set
+collation-server = utf8mb4_unicode_ci  # Default collation
+
+# Replication Settings (if applicable for high-traffic scalability)
+# server-id = 1  # Uncomment and set for master/slave replication
+# log_bin = /var/log/mysql/mysql-bin.log  # Binary logging for replication
+
+[mysqldump]
+quick
+max_allowed_packet = 64M
+
+!includedir /etc/my.cnf.d  # Include any additional configuration files if needed
+```

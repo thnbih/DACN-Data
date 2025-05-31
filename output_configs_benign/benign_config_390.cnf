@@ -1,0 +1,77 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance and reliability. It includes settings to bind to
+# localhost, use MyISAM as the default storage engine, and log errors to a
+# specified file. Additional parameters are included to ensure a complete,
+# realistic setup suitable for real-world use.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+# Settings for the mysql command-line client
+no-auto-rehash
+prompt          = "\\u@\\h:\\p [\\d]> "
+user            = root
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Main server configuration for MySQL
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# Specified settings as per description
+bind-address            = 127.0.0.1  # Bind to localhost for security in development environments
+default-storage-engine  = MyISAM     # Use MyISAM as the default engine for simplicity in testing
+log-error               = /var/log/mysql/error.log  # Log errors to this file for reliability and debugging
+
+# Performance tuning settings
+max_connections         = 151  # Allow a moderate number of connections to handle development loads
+table_open_cache        = 200  # Cache recently used tables to improve query performance
+table_definition_cache  = 400  # Cache table definitions for faster metadata access
+query_cache_type        = 1    # Enable query cache for repeated queries
+query_cache_size        = 16M  # Size of the query cache
+query_cache_limit       = 1M   # Limit for individual query results in cache
+thread_cache_size       = 10   # Reuse threads to reduce overhead
+thread_stack            = 192K # Stack size for threads
+max_heap_table_size     = 32M  # Limit for in-memory temporary tables
+tmp_table_size          = 32M  # Size for internal temporary tables
+
+# InnoDB settings (even with MyISAM as default, InnoDB may be used)
+innodb_buffer_pool_size = 128M  # Buffer pool for InnoDB tables
+innodb_log_file_size    = 48M   # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+
+# Logging and monitoring for development and testing
+general_log             = 1     # Enable general query log (useful for testing, disable in production)
+general_log_file        = /var/log/mysql/general.log
+slow_query_log          = 1     # Log slow queries for performance analysis
+slow_query_log_file     = /var/log/mysql/slow.log
+long_query_time         = 2     # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+
+# Security and reliability settings
+skip-name-resolve       = 1  # Skip DNS lookups for faster connections
+sql_mode                = "STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+max_allowed_packet      = 16M  # Maximum packet size for large queries
+lower_case_table_names  = 1    # Make table names case-insensitive
+
+# Additional options for reliability
+sync_binlog             = 1  # Synchronize binary log for crash safety
+expire_logs_days        = 10  # Automatically expire binary logs after 10 days
+server-id               = 1   # Unique server ID for replication (if needed in testing)
+```

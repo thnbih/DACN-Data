@@ -1,0 +1,44 @@
+```
+# MySQL Configuration File
+# This configuration is optimized for development and testing environments,
+# focusing on performance monitoring and local access restrictions.
+
+[client]
+# Default settings for MySQL client programs
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+host            = 127.0.0.1  # Ensures client connects to localhost by default
+
+[mysqld]
+# Server settings for MySQL daemon
+port            = 3306
+bind-address    = 127.0.0.1  # Restricts MySQL to listen only on localhost for security
+user            = mysql      # User under which MySQL server runs
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+datadir         = /var/lib/mysql  # Directory for database files
+tmpdir          = /tmp          # Temporary directory for operations
+max_connections = 200          # Limits the maximum number of simultaneous connections for optimized resource use
+slow_query_log  = 1            # Enables logging of slow queries to identify performance bottlenecks
+slow_query_log_file = /var/log/mysql/slow.log  # Specifies the file for slow query logs
+long_query_time = 2            # Queries taking longer than 2 seconds are considered slow
+log-error       = /var/log/mysql/error.log  # Error log file for debugging
+server-id       = 1            # Unique server ID, useful in replication setups (even for testing)
+innodb_buffer_pool_size = 128M  # Size of the buffer pool for InnoDB, tuned for development machines
+max_allowed_packet = 16M       # Maximum size of a packet for queries, to handle larger operations
+thread_stack    = 192K         # Stack size for threads
+table_open_cache = 2000        # Cache for open tables to improve performance
+query_cache_type = 1           # Enables query cache for faster repeated queries
+query_cache_size = 16M         # Size of the query cache
+skip-name-resolve = 1          # Skips DNS resolution for faster connections
+
+[mysqld_safe]
+log-error       = /var/log/mysql/mysqld_safe_error.log  # Log errors from mysqld_safe wrapper
+pid-file        = /var/run/mysqld/mysqld.pid
+
+[mysql]
+no-auto-rehash  # Faster startup by not auto-rehashing the completion hash
+
+!includedir /etc/mysql/conf.d/  # Directory for additional configuration files, if needed
+```

@@ -1,0 +1,81 @@
+```
+# /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance, reliability, and stability.
+# It includes settings for concurrency, logging, and storage engine tuning to handle increased load effectively.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+# General performance tuning
+max_connections        = 200  # As specified, to handle high traffic without overwhelming the server
+table_open_cache       = 2000  # Increased to reduce overhead for frequent table access
+thread_cache_size      = 100  # Maintains idle threads for quick reuse in high-concurrency scenarios
+query_cache_type       = 1    # Enables query caching for repeated queries (note: deprecated in MySQL 8+, use prepared statements)
+query_cache_size       = 64M  # Size for query cache to improve read performance
+query_cache_limit      = 2M   # Limit per query to prevent cache bloat
+thread_stack           = 192K
+thread_concurrency     = 10   # Tune based on CPU cores for optimal threading
+
+# Memory and buffer settings
+key_buffer_size        = 128M  # For MyISAM index handling
+max_allowed_packet     = 64M   # Increased for larger queries or data transfers
+sort_buffer_size       = 4M
+read_buffer_size       = 4M
+read_rnd_buffer_size   = 8M
+myisam_sort_buffer_size= 64M
+net_buffer_length      = 16K  # For network packet handling
+
+# InnoDB settings for reliability and performance
+innodb_buffer_pool_size   = 1G   # Larger size for caching data and indexes, suitable for high-traffic
+innodb_log_file_size      = 128M # Increased for better write performance and recovery
+innodb_flush_log_at_trx_commit = 1  # Ensures data durability, at a slight performance cost
+innodb_lock_wait_timeout  = 50   # Prevents long waits on locked resources
+innodb_file_per_table     = 1    # Each table in its own file for easier management
+innodb_io_capacity        = 200  # Tune for SSD or HDD to optimize I/O operations
+innodb_flush_method       = O_DIRECT  # Reduces OS caching overlap for better performance
+
+# Logging and error handling
+log-error                = /var/log/mysql/error.log  # As specified, for capturing errors
+slow_query_log           = 1
+slow_query_log_file      = /var/log/mysql/mysql-slow.log  # Logs queries taking longer than long_query_time
+long_query_time          = 2  # Log queries over 2 seconds
+log_queries_not_using_indexes = 1  # Helps identify inefficient queries
+general_log              = 0  # Disabled by default to avoid overhead; enable for debugging
+
+# SQL mode and security
+sql_mode                 = NO_ENGINE_SUBSTITUTION  # As specified, to avoid engine substitution issues
+bind-address             = 127.0.0.1  # Restricts to localhost for security; adjust for remote access
+server_id                = 1  # For replication setup, if needed
+secure_file_priv         = /var/lib/mysql  # Restricts file operations for security
+
+# Other reliability settings
+max_connect_errors       = 10000  # Allows more connection attempts before blocking
+default_storage_engine   = InnoDB  # Default to transactional engine for reliability
+character-set-server     = utf8mb4  # Supports full Unicode
+collation-server         = utf8mb4_unicode_ci
+lower_case_table_names   = 1  # Case-insensitive table names for consistency
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet      = 64M
+
+[mysql]
+no-auto-rehash
+default-character-set   = utf8mb4
+
+!includedir /etc/mysql/conf.d/
+```

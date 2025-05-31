@@ -1,0 +1,65 @@
+[mysqld]
+# Basic server settings
+port            = 3306
+bind-address    = 0.0.0.0
+datadir         = /var/lib/mysql
+socket          = /var/run/mysqld/mysqld.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+
+# Logging and error handling
+log-error       = /tmp/mysql_error.log
+slow-query-log  = 1
+slow-query-log-file = /var/log/mysql/slow.log
+log-queries-not-using-indexes = 1
+general-log     = 0  # Disable for high-traffic to reduce overhead
+general-log-file = /var/log/mysql/general.log
+
+# Connection and thread settings for high-traffic
+max_connections = 500
+max_connect_errors = 100
+thread_stack    = 192K
+thread_cache_size = 100
+table_open_cache = 2000
+table_definition_cache = 2000
+open_files_limit = 65535
+
+# Performance tuning
+innodb_buffer_pool_size = 128M
+innodb_log_file_size = 48M
+innodb_log_buffer_size = 8M
+innodb_flush_log_at_trx_commit = 1  # For reliability
+innodb_file_per_table = 1
+query_cache_type = 1
+query_cache_size = 64M
+query_cache_limit = 2M
+tmp_table_size = 32M
+max_heap_table_size = 32M
+join_buffer_size = 2M
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+
+# Additional reliability settings
+sync_binlog = 1
+innodb_flush_method = O_DIRECT
+max_allowed_packet = 16M
+skip-name-resolve = 1  # Improves performance by not resolving hostnames
+
+# Security settings
+local-infile = 0  # Disable for security
+
+[mysqld_safe]
+log-error = /tmp/mysql_error.log
+pid-file = /var/run/mysqld/mysqld.pid
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8mb4
+
+!includedir /etc/my.cnf.d

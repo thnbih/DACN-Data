@@ -1,0 +1,34 @@
+```
+[client]
+host            = localhost
+port            = 3306
+protocol        = socket
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+connect-timeout = 30
+ssl-ca          = /path/to/ca.pem
+ssl-cert        = /path/to/client-cert.pem
+ssl-key         = /path/to/client-key.pem
+[mysql]
+no-auto-rehash = 1
+prompt         = "\\u@\\h:\\p \\R:\\m:\\s> "
+max_allowed_packet = 16M
+[clinet]
+user      = myusername
+password  = MySecretPassword123!
+database  = mydatabase
+[mysqldump]
+quick     = 1
+max_allowed_packet = 64M
+single-transaction = 1
+[isamchk]
+key_buffer = 16M
+[myisamchk]
+key_buffer = 32M
+sort_buffer_size = 32M
+read_buffer = 8M
+write_buffer = 8M
+[mysqlhotcopy]
+interactive-timeout = 60
+!includedir /etc/my.cnf.d
+```

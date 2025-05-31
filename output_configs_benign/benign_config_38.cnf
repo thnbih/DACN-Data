@@ -1,0 +1,57 @@
+```
+# MySQL Configuration File for Development and Testing Environments
+# This configuration optimizes MySQL performance and reliability by enabling logging, binding to localhost, and including settings suitable for controlled environments.
+
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+
+[mysqld]
+# Basic Server Settings
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+
+# Performance Tuning for Development
+innodb_buffer_pool_size = 128M  # Adjusted for testing environments to balance memory usage
+key_buffer_size = 16M
+max_connections = 100
+table_open_cache = 64
+thread_cache_size = 8
+query_cache_type = 1  # Enable query cache for development (note: deprecated in MySQL 8+)
+query_cache_size = 16M
+max_allowed_packet = 16M
+thread_stack = 192K
+
+# Logging and Monitoring
+general_log = 1
+general_log_file = /var/log/mysql/mysql.log
+log_output = FILE
+slow_query_log = 1  # Enable slow query logging
+long_query_time = 2  # Log queries taking longer than 2 seconds
+log_queries_not_using_indexes = 1
+
+# Security and Reliability
+bind-address = 127.0.0.1  # Bind to localhost for security in development
+skip-external-locking
+max_connect_errors = 1000000
+sql_mode = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+innodb_flush_log_at_trx_commit = 1  # Ensure data integrity
+
+# MyISAM Recovery
+myisam-recover-options = FORCE+BACKUP
+
+[mysqld_safe]
+log-error = /tmp/mysql_error.log  # Error log path for mysqld_safe
+slow_query_log_file = /var/log/mysql/slow.log  # Path for slow query log
+bind-address = 127.0.0.1  # Ensure binding to localhost as specified
+nice = 0  # Run with normal priority
+```

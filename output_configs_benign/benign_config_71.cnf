@@ -1,0 +1,63 @@
+```
+# /etc/mysql/my.cnf - MySQL Server Configuration File
+# This configuration is optimized for high-traffic applications, focusing on performance and reliability.
+# It includes settings for logging, storage engine, and SQL mode as specified.
+
+[client]
+# General client settings for connecting to the server
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set = utf8mb4
+# These settings ensure clients use secure and efficient connections
+
+[mysqld]
+# Server settings for optimized performance and reliability in high-traffic environments
+port            = 3306
+bind-address    = 0.0.0.0  # Allow connections from any IP; consider restricting in production for security
+user            = mysql    # Run MySQL as the mysql user for security
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+
+# Logging and query optimization settings
+slow_query_log_file     = /var/log/mysql/slow.log  # Log slow queries to this file for analysis
+slow_query_log          = 1  # Enable slow query logging
+long_query_time         = 2  # Queries taking longer than 2 seconds are considered slow
+log_queries_not_using_indexes = 1  # Log queries not using indexes
+log_error               = /var/log/mysql/error.log  # Central error log file
+
+# Storage and SQL mode settings as specified
+default-storage-engine  = MyISAM  # Use MyISAM as the default engine; note that for high-traffic, InnoDB may be preferable for transactions
+sql_mode                = STRICT_ALL_TABLES  # Enforce strict mode for data integrity and reliability
+
+# Performance tuning for high-traffic applications
+max_connections         = 1000  # Allow up to 1000 simultaneous connections
+max_connect_errors      = 100   # Limit connection errors before blocking
+table_open_cache        = 2000  # Cache for open tables to reduce overhead
+thread_cache_size       = 100   # Cache for threads to handle connections efficiently
+query_cache_type        = 1     # Enable query cache (if supported in your MySQL version)
+query_cache_size        = 64M   # Size of query cache; adjust based on server memory
+innodb_buffer_pool_size = 512M  # Buffer pool for InnoDB; increase for better performance, assuming sufficient RAM
+innodb_log_file_size    = 128M  # Size of InnoDB log files
+innodb_flush_log_at_trx_commit = 1  # Ensure data durability
+tmp_table_size          = 32M   # Size for in-memory temporary tables
+max_heap_table_size     = 32M   # Maximum size for memory tables
+
+# Security and maintenance settings
+skip-name-resolve       = 1  # Skip DNS resolution for faster connections
+secure-file-priv        = /var/lib/mysql  # Restrict file operations to this directory
+expire_logs_days        = 7  # Automatically expire binary logs after 7 days
+max_allowed_packet      = 64M  # Maximum packet size for large queries
+
+[mysqld_safe]
+log-error = /var/log/mysql/error.log  # Safe mode logging
+pid-file  = /var/run/mysqld/mysqld.pid
+
+[mysql]
+no-auto-rehash  # For faster startup of mysql client
+
+!includedir /etc/mysql/conf.d/  # Include any additional configuration files from this directory
+```

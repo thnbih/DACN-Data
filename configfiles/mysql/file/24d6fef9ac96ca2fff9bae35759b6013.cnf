@@ -13,5 +13,4 @@ socket=/var/lib/mysql/mysql.sock
 user=mysql
 binlog-format=ROW
 log_warnings=1
-# Disabling symbolic-links is recommended to prevent assorted security risks
 symbolic-links=0

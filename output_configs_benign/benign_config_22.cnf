@@ -1,0 +1,56 @@
+[mysqld]
+# General server settings for development and testing
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+socket          = /var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+user            = mysql
+
+# Logging and query settings
+slow_query_log          = 0  # Disable slow query logging to reduce overhead in testing
+slow_query_log_file     = /tmp/slow.log  # Specify the file for slow queries if enabled
+log_output              = FILE
+general_log             = 0  # Disable general logging for performance
+general_log_file        = /var/log/mysql/general.log
+log_error               = /var/log/mysql/error.log
+
+# Storage engine and performance optimizations
+default_storage_engine  = InnoDB  # Use InnoDB as the default for transactional support
+innodb_buffer_pool_size = 128M  # Adjust buffer pool for development environment
+innodb_log_file_size    = 48M
+innodb_flush_log_at_trx_commit = 1  # Ensure reliability
+max_connections         = 100  # Limit connections for testing
+query_cache_type        = 1  # Enable query cache
+query_cache_size        = 16M
+
+# Security settings
+skip-networking         = 0  # Allow networking
+bind-address            = 127.0.0.1  # Bind to localhost for security in development
+sql_mode                = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+
+# Other optimizations
+table_open_cache        = 200
+thread_cache_size       = 10
+tmp_table_size          = 16M
+max_heap_table_size     = 16M
+
+[mysqldump]
+# Settings for mysqldump tool
+quick                    # Dump tables row by row
+max_allowed_packet       = 16M  # Increase packet size for larger dumps
+single-transaction       # Use a consistent snapshot for InnoDB tables
+set-gtid-purged          = OFF  # Avoid GTID issues in testing environments
+
+[client]
+# Client settings
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+
+[mysql]
+# MySQL client specific settings
+no-auto-rehash
+prompt         = \\u@\\h:\\d\\> 
+safe-updates   # Prevent accidental updates without WHERE clause
