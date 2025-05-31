@@ -3,7 +3,7 @@ from openai import OpenAI
 import time
 
 # === CẤU HÌNH API ===
-# GROK_API_KEY = "xai-F4YW5B77elAiMK11BWXRqe4VvGZ820pwkd6q0VDnAMJ8wtAlykMsCsgLtGjGxzK0c90BOiJDuLtTgqzO"  # ← Nhớ thay bằng API key thật
+# GROK_API_KEY = ""  # ← Nhớ thay bằng API key thật
 
 client = OpenAI(
     api_key=GROK_API_KEY,
